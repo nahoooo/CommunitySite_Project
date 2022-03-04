@@ -8,7 +8,10 @@
 </head>
 <body>
 <div class="container" style="height: 700px">
-<h1>안녕하세요~~</h1>
+
+
+
+
 </div>
 </body>
 </html>

@@ -14,9 +14,11 @@ if (filePath == null) {
 <title>메인페이지</title>
 </head>
 <body>
+	
 	<jsp:include page="header.jsp"></jsp:include>
 	<jsp:include page='<%=filePath + ".jsp"%>' />
 	<jsp:include page="footer.jsp"></jsp:include>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </html>

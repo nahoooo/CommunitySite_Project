@@ -1,6 +1,38 @@
 @charset "UTF-8";
 
-.dropdown:hover .dropdown-menu {
-    display: block;
-    margin-top: 0;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
+
+header {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background: #ffffff;
+	color: #fff;
+}
+
+#headerbar {
+	margin: 0;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #24292f;
+	color: white;
+}
+
+#headerbar a{
+	color:white;
+}
+#headerbar ul{
+	padding-top: 5px;
+}
+
+.dropdown:hover .dropdown-menu {
+	display: block;
+	margin-top: 0;
+}
+
