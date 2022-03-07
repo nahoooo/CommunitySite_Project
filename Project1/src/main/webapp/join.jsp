@@ -14,12 +14,11 @@
 				<tr>
 					<td>아이디</td>
 					<td>
-						<input class="form-control" type="text" name="id" id="id"> <input type="checkbox" name="idchk" value="unchk" disabled="disabled" id="idchk">
+						<input class="form-control" type="text" name="id" id="id"> 
+						<font id="checkId"></font>
+						<input type="checkbox" name="idchk" value="unchk" disabled="disabled" id="idchk">
 					</td>
-				</tr>
-				<tr>
-					<font id="checkId"></font>
-				</tr>
+				</tr>				
 				<tr>
 					<td>닉네임</td>
 					<td>
@@ -93,17 +92,17 @@
 				form.submit();
 			}
 
-			 	$('.id').blur(function(){
+			 	$('#id').blur(function(){
 					let userId = $('#id').val();
 					
 						$.ajax({
-							url : "Idchkajax",
+							url : "Idchk",
 							type : "post",
 							data : {userId: userId},
 							dataType : 'json',
 							success : function(result){
 								if(result == 0){
-									$("#checkId").html('사용할 수 없는 아이디입니다.');
+									$("#checkId").html('이미 사용중인 아이디 입니다.');
 									$("#checkId").attr('color','red');
 									$("#idchk").val('unchk');
 								}else{
