@@ -2,8 +2,12 @@
 <%
 String filePath = request.getParameter("filePath");
 if (filePath == null) {
-	filePath = "home";
+	filePath = "home";	
+}else if(filePath.contains("board")){
+	filePath = "COMMUNITY";
 }
+
+String nickname =(String)session.getAttribute("nickname");
 %>
 <!DOCTYPE html>
 <html>
@@ -29,15 +33,20 @@ if (filePath == null) {
 					<li class="nav-item"><a class="nav-link">공지사항</a></li>
 					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">COMMUNITY</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<li><a class="dropdown-item">영화</a></li>
+							<li><a class="dropdown-item" href="index.jsp?filePath=community/movie/boardlist">영화</a></li>
 							<li><a class="dropdown-item">게임</a></li>
 							<li><a class="dropdown-item">음악</a></li>
 							<li><a class="dropdown-item">쇼핑</a></li>
 							<li><a class="dropdown-item">음식</a></li>
 							<li><a class="dropdown-item">자유게시판</a></li>
-						</ul></li>
+						</ul>
+					</li>
 					<li class="nav-item"><a class="nav-link">TIMELINE?채팅?</a></li>
+					<%if(nickname==null){ %>
 					<li class="nav-item"><a class="nav-link" href="index.jsp?filePath=login">LOGIN</a></li>
+					<%}else if(nickname!=null){ %>
+					<li class="nav-item"><a class="nav-link" href="Logout">LOGOUT</a></li>
+					<%} %>
 				</ul>
 			</div>
 		</nav>
@@ -47,12 +56,17 @@ if (filePath == null) {
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-4">
-					<h1><%=filePath%></h1>
+					<h3 id="CL" style="margin-bottom: 0px; text-align: left;"><%=filePath%></h3>
 				</div>
 				<div class="col-sm-8">
 					<ul class="nav justify-content-end">
+					<%
+						if(nickname==null){%>
+						<li class="nav-item"><a class="nav-link" href="#">로그인하기</a></li>							
+					<%}else if(nickname!=null){ %>
 						<li class="nav-item"><a class="nav-link" href="#">로그인시 쪽지</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">로그인정보(프로필사진드롭박스)</a></li>
+						<li class="nav-item"><a class="nav-link" href="#"><%=nickname%>님(프로필사진드롭박스)</a></li>
+						<%} %>
 						<li>
 							<form class="d-flex">
 								<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

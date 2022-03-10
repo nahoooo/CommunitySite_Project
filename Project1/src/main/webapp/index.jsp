@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+request.setCharacterEncoding("utf-8");
+
 String filePath = request.getParameter("filePath");
 if (filePath == null) {
 	filePath = "home";
 }
+String nickname =(String)session.getAttribute("nickname");
 %>
 <!DOCTYPE html>
 <html>
@@ -13,11 +16,14 @@ if (filePath == null) {
 <meta charset="UTF-8">
 <title>메인페이지</title>
 </head>
-<body>	
+<body>
+	
 	<jsp:include page="header.jsp">
 	<jsp:param value="<%=filePath%>" name="filePath"/>
 	</jsp:include>
-	<jsp:include page='<%=filePath + ".jsp"%>'/>
+	
+	<jsp:include page='<%=filePath + ".jsp"%>'></jsp:include>
+	
 	<jsp:include page="footer.jsp"></jsp:include>
 
 </body>

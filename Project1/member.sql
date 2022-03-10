@@ -11,6 +11,8 @@ GRADE VARCHAR2(7) DEFAULT 'User'
 
 DROP TABLE MEMBER
 
-insert into MEMBER VALUES('system','관리자','system@system.com','system123!',DEFAULT,'Manager');
+insert into MEMBER VALUES('system123','관리자','system@system.com','system123!',DEFAULT,'Manager');
 
-insert into MEMBER VALUES('abc','홍길동','abc@abc.com','abcabc123!',DEFAULT,DEFAULT); 
+insert into MEMBER VALUES('abc123','홍길동','abc@abc.com','abcabc123!',DEFAULT,DEFAULT); 
+
+select * from member where id='system123' and password='system123!';

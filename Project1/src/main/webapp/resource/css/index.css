@@ -3,7 +3,7 @@
 * {
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
+	box-sizing: border-box;	
 }
 
 header {
@@ -21,7 +21,7 @@ header {
 	padding-top: 20px;
 	padding-bottom: 20px;
 	background-color: #24292f;
-	color: white;
+	color: white;	
 }
 
 #headerbar a{
@@ -30,6 +30,11 @@ header {
 #headerbar ul{
 	padding-top: 5px;
 }
+#headerbar #CL{
+	margin-bottom: 0px;
+
+}
+
 
 .dropdown:hover .dropdown-menu {
 	display: block;
