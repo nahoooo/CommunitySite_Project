@@ -12,10 +12,10 @@
 			<form style="width: 350px;">
 				<img class="mb-4" src="./resource/images/logo.png" alt="" width="60" height="100">
 				<div class="form-floating" style="margin-bottom: 10px">
-					<input type="text" class="form-control" id="floatingInput" placeholder="아이디를 입력해주세요"> <label for="floatingInput">아이디</label>
+					<input type="text" class="form-control" id="floatingInput" placeholder="아이디를 입력해주세요" value="abc123"> <label for="floatingInput">아이디</label>
 				</div>
 				<div class="form-floating">
-					<input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호를 입력해주세요"> <label for="floatingPassword">비밀번호</label>
+					<input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호를 입력해주세요" value="abcabc123!"> <label for="floatingPassword">비밀번호</label>
 				</div>
 				<div class="checkbox mb-3" style="margin-top: 10px">
 					<label><input type="checkbox" id="save_id">아이디 저장하기</label>&emsp; <span class="pull-right"><a href="">아이디/비밀번호 찾기</a></span>
