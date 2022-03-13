@@ -44,7 +44,7 @@ case 5:  boardtype = "맛집&요리게시판"; break;
   </tbody>
 </table>
 <%if(nickname!=null){ %>
-<a href="index.jsp?filePath=board/addboard&boardno=<%=boardno%>">글쓰기</a>
+<a href="index.jsp?filePath=addboard&boardno=<%=boardno%>">글쓰기</a>
 <%} %>
 
 <div class="container">

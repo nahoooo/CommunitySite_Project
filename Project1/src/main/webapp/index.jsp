@@ -11,9 +11,9 @@ String nickname =(String)session.getAttribute("nickname");
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="../resource/se2/js/HuskyEZCreator.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link href="resource/css/index.css" rel="stylesheet" type="text/css">
+
 <meta charset="UTF-8">
 <title>메인페이지</title>
 </head>
