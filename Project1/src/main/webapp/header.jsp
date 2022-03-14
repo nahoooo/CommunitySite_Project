@@ -3,7 +3,7 @@
 String filePath = request.getParameter("filePath");
 if (filePath == null) {
 	filePath = "home";	
-}else if(filePath.contains("board")){
+}else if(filePath.contains("board") || filePath.contains("Board") ){
 	filePath = "COMMUNITY";
 }
 
@@ -30,13 +30,13 @@ String nickname =(String)session.getAttribute("nickname");
 				</button>
 
 				<ul class="nav justify-content-center">
-					<li class="nav-item"><a class="nav-link"  href="index.jsp?filePath=boardlist&boardno=1">공지사항</a></li>
+					<li class="nav-item"><a class="nav-link"  href="GetBoardListPro?boardno=1">공지사항</a></li>
 					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">COMMUNITY</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<li><a class="dropdown-item" href="index.jsp?filePath=boardlist&boardno=2">자유게시판</a></li>
-							<li><a class="dropdown-item" href="index.jsp?filePath=boardlist&boardno=3">게임</a></li>					
-							<li><a class="dropdown-item" href="index.jsp?filePath=boardlist&boardno=4">쇼핑</a></li>						
-							<li><a class="dropdown-item" href="index.jsp?filePath=boardlist&boardno=5">맛집&요리</a></li>
+							<li><a class="dropdown-item" href="GetBoardListPro?boardno=2">자유게시판</a></li>
+							<li><a class="dropdown-item" href="GetBoardListPro?boardno=3">게임</a></li>					
+							<li><a class="dropdown-item" href="GetBoardListPro?boardno=4">쇼핑</a></li>						
+							<li><a class="dropdown-item" href="GetBoardListPro?boardno=5">맛집&요리</a></li>
 						</ul>
 					</li>
 					<li class="nav-item"><a class="nav-link">TIMELINE?채팅?</a></li>

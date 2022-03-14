@@ -6,6 +6,7 @@ String filePath = request.getParameter("filePath");
 if (filePath == null) {
 	filePath = "home";
 }
+
 String nickname =(String)session.getAttribute("nickname");
 %>
 <!DOCTYPE html>
@@ -15,7 +16,7 @@ String nickname =(String)session.getAttribute("nickname");
 <link href="resource/css/index.css" rel="stylesheet" type="text/css">
 
 <meta charset="UTF-8">
-<title>메인페이지</title>
+<title>NaHo</title>
 </head>
 <body>
 	

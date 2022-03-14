@@ -19,6 +19,7 @@ public class JoinPro extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		String id = request.getParameter("id");
 		String nickname = request.getParameter("nickname");
 		String email = request.getParameter("email");
@@ -37,6 +38,7 @@ public class JoinPro extends HttpServlet {
 			int cnt = stmt.executeUpdate();
 			System.out.println(cnt+"개 등록되었습니다.");
 			
+			response.sendRedirect("index.jsp?filePath=login");
 			
 		} catch (ClassNotFoundException e) {			
 			e.printStackTrace();

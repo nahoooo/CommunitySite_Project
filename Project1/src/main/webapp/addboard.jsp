@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%
 String boardno = request.getParameter("boardno");
+String nickname =(String)session.getAttribute("nickname");
 %>
 <!DOCTYPE html>
 <html>
@@ -15,14 +16,13 @@ String boardno = request.getParameter("boardno");
 </head>
 <body>
 	<div class="container" style="text-align: center;">
-		<h1><%=boardno%></h1>
+		<h1>글 작성</h1>
 		<form action="AddBoardPro" method="post" name="boardAddForm"
 			id="boardAddForm">
-			<table class="table" style="width: 780px; margin: auto auto">
+			<table class="table" style="width: 820px; margin: auto auto">
 				<tr>
-				<td><input></td>
-				<td><input></td>
-				<td><input></td>
+				<td><input type="hidden" name="nickname" value="<%=nickname%>"></td>
+				<td><input type="hidden" name="boardno" value="<%=boardno%>"></td>				
 				</tr>
 				<tr>
 					<td>제목</td>
