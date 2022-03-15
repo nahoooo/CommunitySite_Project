@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.company.board.vo.BoardVO;
+import com.company.board.vo.ReplyBoardVO;
 import com.company.common.JDBCConnection;
 
 
@@ -36,7 +38,7 @@ public class GetBoardPro extends HttpServlet {
 			return;
 		}
 		
-		int num=Integer.parseInt(request.getParameter("num"));
+		int seq=Integer.parseInt(request.getParameter("seq"));
 		int boardno=Integer.parseInt(request.getParameter("boardno"));
 		
 		Connection conn=null;
@@ -49,9 +51,9 @@ public class GetBoardPro extends HttpServlet {
 			String sql="update board_ set cnt =(select cnt+1 from board_ where boardno=? and seq=?) where boardno=? and seq=?";
 			stmt=conn.prepareStatement(sql);
 			stmt.setInt(1, boardno);
-			stmt.setInt(2, num);
+			stmt.setInt(2, seq);
 			stmt.setInt(3, boardno);
-			stmt.setInt(4, num);
+			stmt.setInt(4, seq);
 			stmt.executeUpdate();
 			stmt.close();
 			
@@ -59,7 +61,7 @@ public class GetBoardPro extends HttpServlet {
 			sql="select * from board_ where boardno=? and seq=?";
 			stmt=conn.prepareStatement(sql);
 			stmt.setInt(1, boardno);
-			stmt.setInt(2, num);
+			stmt.setInt(2, seq);
 			
 			rs=stmt.executeQuery();
 			
@@ -77,8 +79,33 @@ public class GetBoardPro extends HttpServlet {
 			request.setAttribute("board", board);
 			request.setAttribute("boardno", boardno);
 			
-						
+			//해당 게시물에 포함되는 답글 리스트를 전송하는 내용을 추가.
+			stmt.close();
+			rs.close();
 			
+			sql="select boardseq,seq,boardno,nickname,reply,to_char(regdate,'YYYY-MM-DD HH24:MI:SS') from replyboard_ where boardseq=? and boardno=? order by seq desc";
+			
+			stmt=conn.prepareStatement(sql);
+			stmt.setInt(1, seq);
+			stmt.setInt(2, boardno);
+			rs=stmt.executeQuery();
+			
+			ArrayList<ReplyBoardVO> replylist = new ArrayList<ReplyBoardVO>();
+			
+			while(rs.next()) {
+				ReplyBoardVO vo = new ReplyBoardVO();
+				vo.setBoardseq(rs.getInt("boardseq"));
+				vo.setSeq(rs.getInt("seq"));
+				vo.setBoardno(rs.getInt("boardno"));
+				vo.setNickname(rs.getString("nickname"));
+				vo.setReply(rs.getString("reply"));
+				vo.setRegdate(rs.getString(6));
+				
+				replylist.add(vo);
+				System.out.println("댓글 리스트 ");
+			}		
+			request.setAttribute("replylist", replylist);
+								
 			RequestDispatcher view=request.getRequestDispatcher("index.jsp?filePath=getBoard");
 			view.forward(request, response);
 			

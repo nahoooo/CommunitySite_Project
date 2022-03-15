@@ -2,12 +2,12 @@
 <%
 String filePath = request.getParameter("filePath");
 if (filePath == null) {
-	filePath = "home";	
-}else if(filePath.contains("board") || filePath.contains("Board") ){
+	filePath = "home";
+} else if (filePath.contains("board") || filePath.contains("Board")) {
 	filePath = "COMMUNITY";
 }
 
-String nickname =(String)session.getAttribute("nickname");
+String nickname = (String) session.getAttribute("nickname");
 %>
 <!DOCTYPE html>
 <html>
@@ -19,33 +19,34 @@ String nickname =(String)session.getAttribute("nickname");
 	<header id="header">
 		<nav class="navbar navbar-expand-lg navbar-light bg-wight ">
 			<div class="container">
-			<div>
-				<a class="navbar-brand" href="index.jsp" style="font-size: xx-large;">
-					<img src="./resource/images/logo.png" alt="" width="60" height="100" class="d-inline-block align-text-top"> 
-					<span style="padding-top: 20px">NaHo</span>	
-				</a>							
-			</div>				
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
-				<ul class="nav justify-content-center">
-					<li class="nav-item"><a class="nav-link"  href="GetBoardListPro?boardno=1">공지사항</a></li>
-					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">COMMUNITY</a>
-						<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<li><a class="dropdown-item" href="GetBoardListPro?boardno=2">자유게시판</a></li>
-							<li><a class="dropdown-item" href="GetBoardListPro?boardno=3">게임</a></li>					
-							<li><a class="dropdown-item" href="GetBoardListPro?boardno=4">쇼핑</a></li>						
-							<li><a class="dropdown-item" href="GetBoardListPro?boardno=5">맛집&요리</a></li>
-						</ul>
-					</li>
-					<li class="nav-item"><a class="nav-link">TIMELINE?채팅?</a></li>
-					<%if(nickname==null){ %>
-					<li class="nav-item"><a class="nav-link" href="index.jsp?filePath=login">LOGIN</a></li>
-					<%}else if(nickname!=null){ %>
-					<li class="nav-item"><a class="nav-link" href="Logout">LOGOUT</a></li>
-					<%} %>
-				</ul>
+				<div>
+					<form class="d-flex">
+						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+						<button type="button" class="btn btn-success">search</button>
+					</form>
+				</div>
+				<div style="text-align: center;">
+					<a class="navbar-brand" href="index.jsp" style="font-size: xx-large;">
+						<img src="./resource/images/restaurant.png" alt="" width="50" height="50" class="d-inline-block align-text-top"> <span style="padding-top: 20px">NaHo</span>
+					</a>
+				</div>	
+				<div>
+					<ul class="nav justify-content-end">
+						<%
+						if (nickname == null) {
+						%>
+						<li class="nav-item"><a class="nav-link" href="index.jsp?filePath=login">Login</a></li>
+						<%
+						} else if (nickname != null) {
+						%>
+						<li class="nav-item"><a class="nav-link" href="#">쪽지</a></li>
+						<li class="nav-item"><a class="nav-link" href="#"><%=nickname%>님</a></li>
+						<li class="nav-item"><a class="nav-link" href="Logout">LOGOUT</a></li>
+						<%
+						}
+						%>
+					</ul>
+				</div>				
 			</div>
 		</nav>
 	</header>
@@ -58,19 +59,16 @@ String nickname =(String)session.getAttribute("nickname");
 				</div>
 				<div class="col-sm-8">
 					<ul class="nav justify-content-end">
-					<%
-						if(nickname==null){%>
-						<li class="nav-item"><a class="nav-link" href="index.jsp?filePath=login">로그인하기</a></li>							
-					<%}else if(nickname!=null){ %>
-						<li class="nav-item"><a class="nav-link" href="#">로그인시 쪽지</a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><%=nickname%>님(프로필사진드롭박스)</a></li>
-						<%} %>
-						<li>
-							<form class="d-flex">
-								<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-								<button type="button" class="btn btn-success">search</button>
-							</form>
-						</li>
+						<li class="nav-item"><a class="nav-link" href="">지역맛집</a></li>
+						<li class="nav-item"><a class="nav-link" href="">나만의 맛집</a></li>
+						<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">COMMUNITY</a>
+							<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+								<li><a class="dropdown-item" href="GetBoardListPro?boardno=1">공지사항</a></li>
+								<li><a class="dropdown-item" href="GetBoardListPro?boardno=2">맛집방문기</a></li>
+								<li><a class="dropdown-item" href="GetBoardListPro?boardno=3">나만의레시피</a></li>
+								<li><a class="dropdown-item" href="GetBoardListPro?boardno=4">자유게시판</a></li>
+								<li><a class="dropdown-item" href="GetBoardListPro?boardno=5">문의사항</a></li>
+							</ul></li>
 					</ul>
 				</div>
 			</div>

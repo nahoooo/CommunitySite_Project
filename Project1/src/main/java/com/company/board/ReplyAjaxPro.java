@@ -25,7 +25,7 @@ public class ReplyAjaxPro extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("/ReplyPro");
+		System.out.println("/ReplyAjaxPro");
 		request.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		String nickname = request.getParameter("nickname");
@@ -44,23 +44,25 @@ public class ReplyAjaxPro extends HttpServlet {
 
 		int result = 0;
 		try {
+
 			conn = JDBCConnection.getConnection();
-			String sql = "insert into replyboard_(boardseq,boardno,seq,nickname,reply) values(?,?,(select nvl(max(seq),0)+1 from replyboard_),?,?)";
+			String sql = "insert into replyboard_(boardseq,boardno,seq,nickname,reply) values(?,?,(select nvl(max(seq),0)+1 from replyboard_ where boardseq =? and boardno = ?),?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, seq);
-			stmt.setInt(2,boardno);
-			stmt.setString(3, nickname);
-			stmt.setString(4, comment);
+			stmt.setInt(2, boardno);
+			stmt.setInt(3, seq);
+			stmt.setInt(4, boardno);
+			stmt.setString(5, nickname);
+			stmt.setString(6, comment);
 
 			int cnt = stmt.executeUpdate();
+
 			if (cnt != 0) {
-				result=1; //댓글 입력완료.
-			}else {
-				result=0;//실패
-			}			
-			out.write(result + ""); 
-
-
+				result = 1; // 댓글 입력완료.
+			} else {
+				result = 0;// 실패
+			}
+			out.write(result + "");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -68,7 +70,6 @@ public class ReplyAjaxPro extends HttpServlet {
 		} finally {
 			JDBCConnection.close(stmt, conn);
 		}
-	
-	}
 
+	}
 }

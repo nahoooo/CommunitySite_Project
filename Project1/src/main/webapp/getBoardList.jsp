@@ -36,16 +36,16 @@ case 1:
 	boardtype = "공지사항";
 	break;
 case 2:
-	boardtype = "자유게시판";
+	boardtype = "맛집방문기";
 	break;
 case 3:
-	boardtype = "게임게시판";
+	boardtype = "나만의 레시피";
 	break;
 case 4:
-	boardtype = "쇼핑게시판";
+	boardtype = "자유게시판";
 	break;
 case 5:
-	boardtype = "맛집&요리게시판";
+	boardtype = "문의사항";
 	break;
 }
 %>
@@ -80,7 +80,7 @@ case 5:
 				<tr>
 					<td><%=board.getSeq()%></td>
 					<td>
-						<a href="GetBoardPro?num=<%=board.getSeq()%>&boardno=<%=boardno%>"><%=board.getTitle()%></a>
+						<a href="GetBoardPro?seq=<%=board.getSeq()%>&boardno=<%=boardno%>"><%=board.getTitle()%></a>
 					</td>
 					<td><%=board.getNickname()%></td>
 					<td><%=board.getRegdate()%></td>
