@@ -35,6 +35,7 @@ public class UpdateBoardPro extends HttpServlet {
 		int boardno=Integer.parseInt(request.getParameter("boardno"));
 		String title=request.getParameter("title");
 		String content=request.getParameter("content");
+		String nickname=request.getParameter("nickname");
 		
 		
 		
@@ -44,7 +45,7 @@ public class UpdateBoardPro extends HttpServlet {
 		System.out.println(content);
 		
 		
-		/*Connection conn=null;
+		Connection conn=null;
 		PreparedStatement stmt=null;
 		
 		try {
@@ -66,7 +67,7 @@ public class UpdateBoardPro extends HttpServlet {
 			e.printStackTrace();
 		}finally {
 			JDBCConnection.close(stmt, conn);
-		}*/
+		}
 	}
 
 }

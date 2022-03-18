@@ -34,6 +34,7 @@ public class GetBoardListPro extends HttpServlet {
 			page=1;
 		else 
 			page=Integer.parseInt(request.getParameter("page"));
+		
 		int boardno = Integer.parseInt(request.getParameter("boardno"));
 	
 		//DB접속
@@ -66,6 +67,7 @@ public class GetBoardListPro extends HttpServlet {
 						String title=rs.getString("title");
 						Date regdate=rs.getDate("regdate");
 						int cnt=rs.getInt("cnt");
+						int comment_cnt=rs.getInt("comment_cnt");
 						
 						BoardVO board=new BoardVO();
 						board.setSeq(seq);
@@ -74,6 +76,7 @@ public class GetBoardListPro extends HttpServlet {
 						board.setTitle(title);
 						board.setRegdate(regdate);
 						board.setCnt(cnt);
+						board.setComment_cnt(comment_cnt);
 						
 						boardList.add(board);   // 각 줄을 리스트에 담는다.
 					}

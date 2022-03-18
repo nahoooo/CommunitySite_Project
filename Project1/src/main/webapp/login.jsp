@@ -9,16 +9,22 @@
 <body>
 	<div class="container" id="form-signin" style="margin-top: 120px; height: 700px" align="center">
 		<main class="form-signin">
-			<form style="width: 350px;">
+			<%String cookie = "";
+		Cookie[] cookies = request.getCookies(); //쿠키생성
+		if(cookies !=null&& cookies.length > 0)
+		for (int i = 0; i < cookies.length; i++){
+			if (cookies[i].getName().equals("userId")) { // 내가 원하는 쿠키명 찾아서 값 저장
+				cookie = cookies[i].getValue();}}%>
+			<form style="width: 350px;" name="loginForm" action="LoginPro">
 				<img class="mb-4" src="./resource/images/restaurant.png" alt="" width="50" height="50">
 				<div class="form-floating" style="margin-bottom: 10px">
-					<input type="text" class="form-control" id="floatingInput" placeholder="아이디를 입력해주세요" value="eee123"> <label for="floatingInput">아이디</label>
+					<input type="text" class="form-control" name="Id" id="floatingInput" placeholder="아이디를 입력해주세요"  value="<%=cookie%>" > <label for="floatingInput">아이디</label>
 				</div>
 				<div class="form-floating">
-					<input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호를 입력해주세요" value="qweqwe123!"> <label for="floatingPassword">비밀번호</label>
+					<input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호를 입력해주세요" > <label for="floatingPassword">비밀번호</label>
 				</div>
 				<div class="checkbox mb-3" style="margin-top: 10px">
-					<label><input type="checkbox" id="save_id">아이디 저장하기</label>&emsp; <span class="pull-right"><a href="">아이디/비밀번호 찾기</a></span>
+					<label><input type="checkbox" id="saveid" name="saveid" value="chk">아이디 저장하기</label>&emsp; <span class="pull-right"><a href="">아이디/비밀번호 찾기</a></span>
 				</div>
 				<font id="checkLogin"></font><br>
 				<br>
@@ -34,20 +40,12 @@
 
 function loginchk(){	
 	let Id = $('#floatingInput').val();
-	let Password = $('#floatingPassword').val();
-	
-	//아이디 저장. 쿠키? localStorage?
-	let saveIdCheck = $('#save_id:checked').val();
-	
-	console.log(saveIdCheck+"저장된 아이디");
-	
-	if(saveIdCheck == 'on'){
-		localStorage.setItem("saveId",Id);
-	}else{
-		localStorage.setItem("saveId",'N');
-	}
+	let Password = $('#floatingPassword').val();	
 
+	let saveid = $('input[name="saveid"]').val();
 	
+	console.log(saveid);
+			
 	if(Id==""){
 		$('#checkLogin').html('아이디를 입력해주세요.');
 		$('#checkLogin').attr('color', 'red');
@@ -61,11 +59,12 @@ function loginchk(){
 		return false;
 	}else{
 		 $.ajax({
-				url: "http://localhost:8081/Project1/LoginChk",
+				url: "LoginChk",
 				type: "post",
 				data: {
 					"Id" : Id,
-					"Password" : Password
+					"Password" : Password,	
+					"saveid" : saveid
 				},
 				dataType: 'json', //text,html,xml,json
 				success: function(result) {
@@ -75,8 +74,8 @@ function loginchk(){
 						$("#floatingPassword").focus();	
 						return false;
 					} else if(result == 1) {						
-						 location.href="http://localhost:8081/Project1/LoginPro?Id="+Id;			
-					
+						 /* location.href="http://localhost:8081/Project1/LoginPro?Id="+Id+"saveid="+saveid; */	
+						document.loginForm.submit();		
 					}
 				},
 				error: function() {

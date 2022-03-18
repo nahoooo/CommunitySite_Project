@@ -48,7 +48,7 @@ ArrayList<ReplyBoardVO> replylist = (ArrayList<ReplyBoardVO>) request.getAttribu
 							if (nickname.equals(boardNn)) {
 							%>
 							<button type="button" class="btn btn-success" onclick="location='UpdateBoard?boardno=<%=boardno%>&seq=<%=board.getSeq()%>'">수정</button>
-							<button type="button" class="btn btn-success">삭제</button>
+							<button type="button" class="btn btn-success" onclick="deleteBoard();">삭제</button>
 							<%
 							}
 							%>
@@ -84,7 +84,7 @@ ArrayList<ReplyBoardVO> replylist = (ArrayList<ReplyBoardVO>) request.getAttribu
 		}
 		%>
 		</table>
-		<br><br><br><br>
+		<br><br>
 		<jsp:include page="comments.jsp">
 			<jsp:param value="<%=nickname%>" name="nickname" />
 			<jsp:param value="<%=board.getSeq()%>" name="seq" />
@@ -94,8 +94,12 @@ ArrayList<ReplyBoardVO> replylist = (ArrayList<ReplyBoardVO>) request.getAttribu
 	
 	<script type="text/javascript">
 	
-	function update() {
-		
+	function deleteBoard() {
+		if(confirm("게시글을 삭제하시겠습니까?")){
+			location.href="DeleteBoardPro?boardno="+<%=boardno%>+"&seq="+<%=board.getSeq()%>;
+		}else{
+			return false;
+		}
 	}
 	
 	</script>

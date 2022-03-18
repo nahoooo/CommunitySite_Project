@@ -57,6 +57,8 @@ public class GetBoardPro extends HttpServlet {
 			stmt.executeUpdate();
 			stmt.close();
 			
+			
+			
 			//해당 게시물 데이터 가져오기
 			sql="select * from board_ where boardno=? and seq=?";
 			stmt=conn.prepareStatement(sql);
@@ -74,6 +76,7 @@ public class GetBoardPro extends HttpServlet {
 				board.setContent(rs.getString("content"));				
 				board.setRegdate(rs.getDate("regdate"));
 				board.setCnt(rs.getInt("cnt"));
+				board.setComment_cnt(rs.getInt("comment_cnt"));
 			}
 			
 			request.setAttribute("board", board);
@@ -92,20 +95,34 @@ public class GetBoardPro extends HttpServlet {
 			
 			ArrayList<ReplyBoardVO> replylist = new ArrayList<ReplyBoardVO>();
 			
+			int comment_cnt = 0;
+			
 			while(rs.next()) {
-				ReplyBoardVO vo = new ReplyBoardVO();
+				ReplyBoardVO vo = new ReplyBoardVO();				
 				vo.setBoardseq(rs.getInt("boardseq"));
 				vo.setSeq(rs.getInt("seq"));
 				vo.setBoardno(rs.getInt("boardno"));
 				vo.setNickname(rs.getString("nickname"));
 				vo.setReply(rs.getString("reply"));
-				vo.setRegdate(rs.getString(6));
-				
+				vo.setRegdate(rs.getString(6));				
 				replylist.add(vo);
+				comment_cnt++;
 				System.out.println("댓글 리스트 ");
 			}		
 			request.setAttribute("replylist", replylist);
-								
+			
+			stmt.close();
+			rs.close();
+			
+			//게시판 게시글 댓글 수 업데이트
+			sql="update board_ set comment_cnt =? where boardno=? and seq=?";
+			stmt=conn.prepareStatement(sql);
+			stmt.setInt(1, comment_cnt);
+			stmt.setInt(2, boardno);
+			stmt.setInt(3, seq);			
+			stmt.executeUpdate();
+			stmt.close();
+			
 			RequestDispatcher view=request.getRequestDispatcher("index.jsp?filePath=getBoard");
 			view.forward(request, response);
 			

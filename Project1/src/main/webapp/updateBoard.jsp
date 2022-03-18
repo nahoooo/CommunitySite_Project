@@ -21,17 +21,15 @@ BoardVO board = (BoardVO) request.getAttribute("board");
 <title>게시글 작성</title>
 </head>
 <body>
-	<div class="container" style="text-align: center;">
-	<h1><%=boardno %></h1>
-	<h1><%=seq %></h1>
-		<h1>글 수정</h1>
+	<div class="container" style="text-align: center;">	
+		<h1>게시글 수정</h1>
 		<form action="UpdateBoardPro" method="post" name="boardUpdateForm"
 			id="boardUpdateForm">
 			<table class="table" style="width: 820px; margin: auto auto">
 				<tr>
-				<td><input  name="nickname" value="<%=nickname%>"></td>
-				<td><input  id="boardno" name="boardno" value="<%=boardno%>"></td>				
-				<td><input  name="boardno" value="<%=seq%>"></td>				
+				<td><input type="hidden"  name="nickname" value="<%=nickname%>"></td>
+				<td><input type="hidden"  id="boardno" name="boardno" value="<%=boardno%>"></td>				
+				<td><input  type="hidden" name="seq" value="<%=seq%>"></td>				
 				</tr>
 				<tr>
 					<td>제목</td>
@@ -86,7 +84,7 @@ BoardVO board = (BoardVO) request.getAttribute("board");
 		
 			// id가 smarteditor인 textarea에 에디터에서 대입 
 			oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []); 		
-		 /* 	$("#boardUpdateForm").submit(); 		 */ 
+		 	$("#boardUpdateForm").submit(); 		 
 	}); 
 	
 

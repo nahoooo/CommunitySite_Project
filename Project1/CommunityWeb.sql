@@ -24,6 +24,8 @@ boardno number(2) not null, --게시판 타입
 constraint board_PK primary key(seq,boardno)
 )
 
+select * from BOARD_
+
 --게시판 댓글 테이블
 create table replyboard_(
 boardseq number(5) not null, --board테이블에서 seq를 참고하는 필드(외래키)
@@ -34,6 +36,12 @@ regdate date default sysdate, --댓글 남긴 시간.
 reply varchar2(1000) not null, --댓글 내용.
 primary key(boardseq,boardno,seq) --두 개의 필드를 조합해서 기본키로 정의
 )
+
+ALTER TABLE replyboard_ ADD CONSTRAINT reply_fk foreign KEY(boardseq,boardno) references board_ (seq,boardno) ON DELETE CASCADE;
+
+ALTER TABLE replyboard_ DROP CONSTRAINT reply_fk;
+
+
 
 --대댓글도 만들어야
 

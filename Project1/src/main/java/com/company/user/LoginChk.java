@@ -29,6 +29,8 @@ public class LoginChk extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	System.out.println("/LoginChk");
+		
 	String Id =	request.getParameter("Id");
 	String Password = request.getParameter("Password");
 		

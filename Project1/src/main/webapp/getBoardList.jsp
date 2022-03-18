@@ -58,36 +58,40 @@ case 5:
 <title>게시글 리스트</title>
 </head>
 <body>
-	<div class="container" style="width: 920px; height: 700px; text-align: center; margin-top: 100px">
-		<h1><%=boardtype%></h1>
-
+	<div class="container" style="width: 920px; height: 900px; text-align: center; margin-top: 50px">
+		<h3><%=boardtype%></h3><br><br><br>
+	<div class="table-responsive">
 		<table class="table table-hover">
 			<thead style="text-align: center">
 				<tr>
-					<th scope="col" width="50">글번호</th>
+					<th scope="col" width="55">번호</th>
 					<th scope="col" width="250">제목</th>
 					<th scope="col" width="100">작성자</th>
 					<th scope="col" width="120">작성일</th>
 					<th scope="col" width="50">조회</th>
-					<th scope="col" width="70">좋아요</th>
+					<th scope="col" width="75">좋아요</th>
 				</tr>
 			</thead>
 			<tbody>								
 				<%			
 				for (int i = 0; i < boardList.size(); i++) {
-					BoardVO board = boardList.get(i);
+					BoardVO board = boardList.get(i);				
 				%>
 				<tr>
 					<td><%=board.getSeq()%></td>
 					<td>
-						<a href="GetBoardPro?seq=<%=board.getSeq()%>&boardno=<%=boardno%>"><%=board.getTitle()%></a>
+						<a href="GetBoardPro?seq=<%=board.getSeq()%>&boardno=<%=boardno%>"><%=board.getTitle()%>
+					<%if(board.getComment_cnt()!=0){ %>	
+						(<%=board.getComment_cnt() %>)
+						<%} %>
+						</a>
 					</td>
 					<td><%=board.getNickname()%></td>
 					<td><%=board.getRegdate()%></td>
 					<td>
 						&nbsp;&nbsp;&nbsp;&nbsp;<%=board.getCnt()%></td>
 					<td>
-						&nbsp;&nbsp;&nbsp;&nbsp;<%=board.getComment_cnt()%></td>
+						&nbsp;&nbsp;&nbsp;&nbsp;<%=board.getLike_cnt()%></td>
 				</tr>
 				<%
 					}
@@ -95,6 +99,7 @@ case 5:
 				%>
 			</tbody>
 		</table>
+		</div>
 		<!-- 페이지 리스트 삽입 시작 부분-->
 		<%
 		int countList = 10; // 한 페이지에 출력될 게시물 수(10개를 기준으로 잡음)

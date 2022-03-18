@@ -15,7 +15,7 @@ String nickname =(String)session.getAttribute("nickname");
 <title>게시글 작성</title>
 </head>
 <body>
-	<div class="container" style="text-align: center;">
+	<div class="container" style="text-align: center; height: 1200px ">
 		<h1>글 작성</h1>
 		<form action="AddBoardPro" method="post" name="boardAddForm"
 			id="boardAddForm">

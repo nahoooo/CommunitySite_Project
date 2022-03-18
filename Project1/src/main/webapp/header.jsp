@@ -59,6 +59,7 @@ String nickname = (String) session.getAttribute("nickname");
 				</div>
 				<div class="col-sm-8">
 					<ul class="nav justify-content-end">
+						<li class="nav-item"><a class="nav-link" href="">맛집지도</a></li>
 						<li class="nav-item"><a class="nav-link" href="">지역맛집</a></li>
 						<li class="nav-item"><a class="nav-link" href="">나만의 맛집</a></li>
 						<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">COMMUNITY</a>
