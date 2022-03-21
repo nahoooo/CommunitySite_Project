@@ -56,52 +56,158 @@ ArrayList<ReplyBoardVO> replylist = (ArrayList<ReplyBoardVO>) request.getAttribu
 					</td>
 				</tr>
 			</tbody>
-		</table><br><br><br>
-
-		<!--댓글 리스트  -->
-		<table  style="width: 820px; margin: auto auto">
-		<%
-		if (replylist.size() == 0) {//답글이 없는 경우. null이 아니라 size로 해줘야 함.
-		%>
-		<tr>
-			<td>댓글이 없습니다. 댓글을 작성해주세요!</td>
-		</tr>
-		<%
-		} else {
-
-		for (int i = 0; i < replylist.size(); i++) {
-			ReplyBoardVO vo = replylist.get(i);
-		%>
-		<tr>
-			<td colspan="2">
-				<b style="color: blue;"><%=vo.getNickname()%></b> <br> <span style="font-size: 16px;"> <%=vo.getReply()%>
-				</span> - &nbsp;&nbsp;<span style="color: gray; font-size: 12px;"> <%=vo.getRegdate()%>
-				</span>
-			</td>
-		</tr>
-		<%
-		}
-		}
-		%>
 		</table>
-		<br><br>
+		<br>
+		<br>
+		<br>
+
+		<!--댓글 리스트-->
+		<div id="replyList" style="width: 820px; margin: auto auto">
+
+			<ul style="list-style: none;">
+				<%
+				if (replylist.size() == 0) {//답글이 없는 경우. null이 아니라 size로 해줘야 함.
+				%>
+
+				<li>댓글이 없습니다. 댓글을 작성해주세요!</li>
+
+				<%
+				} else {
+				for (int i = 0; i < replylist.size(); i++) {
+					ReplyBoardVO vo = replylist.get(i);
+				%>
+				<li style="margin-bottom: 15px">
+					<div class="container">
+
+
+						<span><b><%=vo.getNickname()%></b></span><span style="color: gray; font-size: 12px;">(<%=vo.getRegdate()%>)
+						</span>
+
+
+						<!--세션 닉네임과 댓글 닉네임이 같을 경우 수정/삭제 가능  -->
+						<%
+						if (nickname.equals(vo.getNickname())) {
+						%>
+						<form action="" name="replymodi<%=vo.getSeq()%>">
+							<button type="button" id="modifyR_Btn">수정</button>
+							<button type="button" style="display: none;" id="modifyRS_Btn" onclick="replymodi();">전송</button>
+							<button type="button" style="display: none;" id="modifyRC_Btn">취소</button>
+							<button type="button" onclick="delectR_Btn(); return false;">삭제</button>
+
+							<%
+							}
+							%>
+
+							<input class="boardno" value="<%=vo.getBoardno()%>"> <input class="boardseq" value="<%=vo.getBoardseq()%>"> <input class="seq" value="<%=vo.getSeq()%>"> <input class="nickname" value="<%=vo.getNickname()%>">
+							<textarea id="replaytext<%=vo.getSeq()%>" class="form-control replyarea" rows="2" style="border: 0 solid black; background-color: white; resize: none" cols="90" readonly="readonly"><%=vo.getReply()%></textarea>
+						</form>
+						<hr>
+					</div>
+				</li>
+
+				<%
+				}
+				}
+				%>
+			</ul>
+		</div>
+		<br>
+		<br>
+		<!--댓글 작성은 include로 연결  -->
 		<jsp:include page="comments.jsp">
 			<jsp:param value="<%=nickname%>" name="nickname" />
 			<jsp:param value="<%=board.getSeq()%>" name="seq" />
 			<jsp:param value="<%=boardno%>" name="seq" />
 		</jsp:include>
 	</div>
-	
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script type="text/javascript">
-	
-	function deleteBoard() {
-		if(confirm("게시글을 삭제하시겠습니까?")){
-			location.href="DeleteBoardPro?boardno="+<%=boardno%>+"&seq="+<%=board.getSeq()%>;
-		}else{
-			return false;
+		//게시글 삭제
+		function deleteBoard() {
+			if (confirm("게시글을 삭제하시겠습니까?")) {
+				location.href = "DeleteBoardPro?boardno=" +
+	<%=boardno%>
+		+ "&seq=" +
+	<%=board.getSeq()%>
+		;
+			} else {
+				return false;
+			}
 		}
-	}
-	
+
+		//댓글 수정
+		const modifyR_Btn = document.querySelectorAll('#modifyR_Btn');
+
+		modifyR_Btn.forEach(function(item) {
+			item.addEventListener('click', function() { // 클릭 이벤트 발생시,
+				$(this).nextAll("textarea").attr("readonly", false).focus(); // 클릭 이벤트가 발생한 버튼에 제일 가까운 textarea 찾고, 
+
+				$(this).nextAll("#modifyRS_Btn").css("display", '');
+				$(this).nextAll("#modifyRC_Btn").css("display", '');
+			});
+		});
+
+		//댓글 전송
+
+		
+
+		function replymodi() {
+			
+			var nickname = $(".nickname").val();
+			var seq = $(".seq").val();
+			var boardno = $(".boardno").val();
+			var boardseq = $(".boardseq").val();
+			var replytext = $("#replytext").val();
+
+			console.log(nickname);
+			console.log(seq);
+			console.log(boardno);
+			console.log(boardseq);
+			console.log(replytext);
+
+// 			$.ajax({
+// 				type : "post", //통신타입 설정. get,post등의 방식 사용.
+// 				url : "ReplyUpdateAjaxPro", //요청 url 자원의 고유 위치
+// 				data : {
+// 					nickname : nickname,
+// 					seq : seq,
+// 					boardno : boardno,
+// 					boardseq : boardseq,
+// 					replytext : replytext
+// 				},
+// 				//서버에 요청할때 보낼 매개변수 설정. 보낼변수 이름 : 변수 값				
+// 				async : true, //기본값은 false. 비동기 전송 여부
+// 				success : function(result) { //요청한 페이지에서 보내온 값을 data란 변수로 받아온다.
+// 					if (result == 1) {
+// 						location.reload();
+// 					} else {
+// 						alert('댓글 수정 실패');
+// 					}
+
+// 				}, //요청응답에 성공했을 때 처리 할 구문.
+// 				error : function() {
+// 					alert('전송 실패')
+// 				}//요청 실패시 나오는 구문.
+// 			});
+		}
+
+		//댓글 수정 취소
+		const modifyRC_Btn = document.querySelectorAll('#modifyRC_Btn');
+
+		modifyRC_Btn.forEach(function(item) {
+			item.addEventListener('click', function() { // 클릭 이벤트 발생시,
+				$(this).nextAll("textarea").attr("readonly", true); // 클릭 이벤트가 발생한 버튼에 제일 가까운 textarea 찾고,   
+				$(this).nextAll("#modifyRS_Btn").css("display", '');
+				$(this).nextAll("#modifyRC_Btn").css("display", '');
+				location.reload();
+			});
+		});
+
+		//댓글 삭제	
+		function delectR_Btn() {
+			alert("댓글 삭제");
+		}
 	</script>
 </body>
 </html>

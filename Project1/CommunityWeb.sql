@@ -28,8 +28,8 @@ select * from BOARD_
 
 --게시판 댓글 테이블
 create table replyboard_(
-boardseq number(5) not null, --board테이블에서 seq를 참고하는 필드(외래키)
-boardno number(2) not null,
+boardseq number(5) not null, --board테이블의 seq를 참고하는 필드(외래키)
+boardno number(2) not null, --board테이블의 게시판 타입 필드(외래키)
 seq number(5) not null, --같은 게시물의 댓글들의 순번을 지정하는 필드
 nickname varchar2(30) not null, --댓글 남긴 사람 닉네임.
 regdate date default sysdate, --댓글 남긴 시간.

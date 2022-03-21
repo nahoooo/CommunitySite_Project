@@ -8,7 +8,8 @@
 <%@page import="org.apache.commons.fileupload.FileItem"%>
 <%@page import="java.util.List"%>
 <%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
-<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>   
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>  
+ 
 <%
 	
 String sFileInfo = "";
@@ -18,7 +19,7 @@ String ext = name.substring(name.lastIndexOf(".")+1);
 //파일 기본경로
 String defaultPath = request.getServletContext().getRealPath("/");
 //파일 기본경로 _ 상세경로
-String path = defaultPath + "upload" + File.separator;
+String path = defaultPath + "resource/upload" + File.separator;
 File file = new File(path);
 if(!file.exists()) {
   file.mkdirs();
@@ -37,7 +38,7 @@ if(is != null) {
 }
 os.flush();
 os.close();
-sFileInfo += "&bNewLine=true&sFileName="+ name+"&sFileURL="+"/upload/"+realname;
+sFileInfo += "&bNewLine=true&sFileName="+ name+"&sFileURL="+"/resource/upload/"+realname;
 out.println(sFileInfo);
 
 %>

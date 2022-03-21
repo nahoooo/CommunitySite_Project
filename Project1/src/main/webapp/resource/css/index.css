@@ -16,6 +16,11 @@ header {
 	color: #fff;
 }
 
+#replyList ul{
+	list-style: none;
+}
+
+
 #headerbar {
 	margin: 0;
 	padding-top: 20px;
@@ -40,4 +45,13 @@ header {
 	display: block;
 	margin-top: 0;
 }
+
+
+textarea .replyarea:focus {
+    outline: none;
+    resize:none
+}
+
+
+
 

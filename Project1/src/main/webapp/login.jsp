@@ -21,7 +21,7 @@
 					<input type="text" class="form-control" name="Id" id="floatingInput" placeholder="아이디를 입력해주세요"  value="<%=cookie%>" > <label for="floatingInput">아이디</label>
 				</div>
 				<div class="form-floating">
-					<input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호를 입력해주세요" > <label for="floatingPassword">비밀번호</label>
+					<input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호를 입력해주세요" value="qweqwe123!" > <label for="floatingPassword">비밀번호</label>
 				</div>
 				<div class="checkbox mb-3" style="margin-top: 10px">
 					<label><input type="checkbox" id="saveid" name="saveid" value="chk">아이디 저장하기</label>&emsp; <span class="pull-right"><a href="">아이디/비밀번호 찾기</a></span>

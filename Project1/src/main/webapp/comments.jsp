@@ -51,7 +51,7 @@ String boardno = request.getParameter("boardno");
 		} else {
 			$.ajax({
 				type : "post", //통신타입 설정. get,post등의 방식 사용.
-				url : "http://localhost:8081/Project1/ReplyAjaxPro", //요청 url 자원의 고유 위치
+				url : "ReplyAjaxPro", //요청 url 자원의 고유 위치
 				data : {nickname : nickname,seq : seq,boardno : boardno,comment : comment},							
 				//서버에 요청할때 보낼 매개변수 설정. 보낼변수 이름 : 변수 값				
 				async : true, //기본값은 false. 비동기 전송 여부
