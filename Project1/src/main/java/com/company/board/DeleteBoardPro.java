@@ -35,7 +35,7 @@ public class DeleteBoardPro extends HttpServlet {
 		}
 		
 		
-		int boardno = Integer.parseInt(request.getParameter("boardno"));
+		String boardtype = request.getParameter("boardtype");
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		
 		Connection conn=null;
@@ -43,17 +43,17 @@ public class DeleteBoardPro extends HttpServlet {
 		
 		try {
 			conn=JDBCConnection.getConnection();
-			String sql="delete from board_ where seq=? and boardno=?";
+			String sql="delete from board_ where seq=? and boardtype=?";
 			stmt=conn.prepareStatement(sql);
 			stmt.setInt(1, seq);
-			stmt.setInt(2, boardno);
+			stmt.setString(2, boardtype);
 			
 			int cnt=stmt.executeUpdate();
 			
 			if(cnt!=0)
 				System.out.println(cnt+"개 삭제");
 				
-				response.sendRedirect("GetBoardListPro?boardno="+boardno);
+				response.sendRedirect("GetBoardListPro?boardtype="+boardtype);
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

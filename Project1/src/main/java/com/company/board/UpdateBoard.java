@@ -34,7 +34,7 @@ public class UpdateBoard extends HttpServlet {
 		}
 
 		int seq = Integer.parseInt(request.getParameter("seq"));
-		int boardno = Integer.parseInt(request.getParameter("boardno"));
+		String boardtype = request.getParameter("boardtype");
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -44,9 +44,9 @@ public class UpdateBoard extends HttpServlet {
 			conn = JDBCConnection.getConnection();
 
 			// 해당 게시물 데이터 가져오기
-			String sql = "select * from board_ where boardno=? and seq=?";
+			String sql = "select * from board_ where boardtype=? and seq=?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, boardno);
+			stmt.setString(1, boardtype);
 			stmt.setInt(2, seq);
 
 			rs = stmt.executeQuery();
@@ -63,7 +63,7 @@ public class UpdateBoard extends HttpServlet {
 			}
 
 			request.setAttribute("board", board);
-			request.setAttribute("boardno", boardno);
+			request.setAttribute("boardtype", boardtype);
 			request.setAttribute("seq", seq);
 
 			RequestDispatcher view = request.getRequestDispatcher("index.jsp?filePath=updateBoard");

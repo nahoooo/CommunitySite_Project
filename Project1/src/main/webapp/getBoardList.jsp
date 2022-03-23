@@ -4,7 +4,7 @@
 <%
 String nickname = (String) session.getAttribute("nickname");
 
-int boardno = Integer.parseInt(request.getParameter("boardno"));
+String boardtype = request.getParameter("boardtype");
 
 int pg = 0; // page변수로 현재 페이지 값을 받아서 페이징 처리에 이용..
 int totalCount = 0;
@@ -30,22 +30,22 @@ String searchCondition = request.getParameter("searchCondition");
 
 ArrayList<BoardVO> boardList = (ArrayList<BoardVO>) request.getAttribute("boardList");
 
-String boardtype = null;
-switch (boardno) {
-case 1:
-	boardtype = "공지사항";
+String boardname = null;
+switch (boardtype) {
+case "notice":
+	boardname = "공지사항";
 	break;
-case 2:
-	boardtype = "맛집방문기";
+case "review":
+	boardname = "맛집방문기";
 	break;
-case 3:
-	boardtype = "나만의 레시피";
+case "recipe":
+	boardname = "나만의 레시피";
 	break;
-case 4:
-	boardtype = "자유게시판";
+case "free":
+	boardname = "자유게시판";
 	break;
-case 5:
-	boardtype = "문의사항";
+case "questions":
+	boardname = "문의사항";
 	break;
 }
 %>
@@ -59,46 +59,52 @@ case 5:
 </head>
 <body>
 	<div class="container" style="width: 920px; height: 900px; text-align: center; margin-top: 50px">
-		<h3><%=boardtype%></h3><br><br><br>
-	<div class="table-responsive">
-		<table class="table table-hover">
-			<thead style="text-align: center">
-				<tr>
-					<th scope="col" width="55">번호</th>
-					<th scope="col" width="250">제목</th>
-					<th scope="col" width="100">작성자</th>
-					<th scope="col" width="120">작성일</th>
-					<th scope="col" width="50">조회</th>
-					<th scope="col" width="75">좋아요</th>
-				</tr>
-			</thead>
-			<tbody>								
-				<%			
-				for (int i = 0; i < boardList.size(); i++) {
-					BoardVO board = boardList.get(i);				
-				%>
-				<tr>
-					<td><%=board.getSeq()%></td>
-					<td>
-						<a href="GetBoardPro?seq=<%=board.getSeq()%>&boardno=<%=boardno%>"><%=board.getTitle()%>
-					<%if(board.getComment_cnt()!=0){ %>	
-						(<%=board.getComment_cnt() %>)
-						<%} %>
-						</a>
-					</td>
-					<td><%=board.getNickname()%></td>
-					<td><%=board.getRegdate()%></td>
-					<td>
-						&nbsp;&nbsp;&nbsp;&nbsp;<%=board.getCnt()%></td>
-					<td>
-						&nbsp;&nbsp;&nbsp;&nbsp;<%=board.getLike_cnt()%></td>
-				</tr>
-				<%
+		<h3><%=boardname%></h3>
+		<br>
+		<br>
+		<br>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead style="text-align: center">
+					<tr>
+						<th scope="col" width="55">번호</th>
+						<th scope="col" width="250">제목</th>
+						<th scope="col" width="100">작성자</th>
+						<th scope="col" width="120">작성일</th>
+						<th scope="col" width="50">조회</th>
+						<th scope="col" width="75">좋아요</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+					for (int i = 0; i < boardList.size(); i++) {
+						BoardVO board = boardList.get(i);
+					%>
+					<tr>
+						<td><%=board.getSeq()%></td>
+						<td>
+							<a href="GetBoardPro?seq=<%=board.getSeq()%>&boardtype=<%=boardtype%>"><%=board.getTitle()%>
+								<%
+								if (board.getComment_cnt() != 0) {
+								%>
+								(<%=board.getComment_cnt()%>)
+								<%
+								}
+								%>
+							</a>
+						</td>
+						<td><%=board.getNickname()%></td>
+						<td><%=board.getRegdate()%></td>
+						<td>
+							&nbsp;&nbsp;&nbsp;&nbsp;<%=board.getCnt()%></td>
+						<td>
+							&nbsp;&nbsp;&nbsp;&nbsp;<%=board.getLike_cnt()%></td>
+					</tr>
+					<%
 					}
-				
-				%>
-			</tbody>
-		</table>
+					%>
+				</tbody>
+			</table>
 		</div>
 		<!-- 페이지 리스트 삽입 시작 부분-->
 		<%
@@ -133,13 +139,13 @@ case 5:
 		if (searchKeyword == null) {
 			if (startPage > 1) {
 		%>
-		<a href="GetBoardListPro?page=1&boardno=<%=boardno%>">처음</a>
+		<a href="GetBoardListPro?page=1&boardtype=<%=boardtype%>">처음</a>
 		<%
 		}
 
 		if (pg > 1) {
 		%>
-		<a href="GetBoardListPro?page=<%=pg - 1%>&boardno=<%=boardno%>">이전</a>
+		<a href="GetBoardListPro?page=<%=pg - 1%>&boardtype=<%=boardtype%>">이전</a>
 		<%
 		}
 
@@ -154,7 +160,7 @@ case 5:
 		%>
 
 		&nbsp;
-		<a href="GetBoardListPro?page=<%=iCount%>&boardno=<%=boardno%>"><%=iCount%></a>
+		<a href="GetBoardListPro?page=<%=iCount%>&boardtype=<%=boardtype%>"><%=iCount%></a>
 		&nbsp;
 
 		<%
@@ -163,25 +169,25 @@ case 5:
 
 		if (pg < totalPage) {
 		%>
-		<a href="GetBoardListPro?page=<%=pg + 1%>&boardno=<%=boardno%>">다음</a>
+		<a href="GetBoardListPro?page=<%=pg + 1%>&boardtype=<%=boardtype%>">다음</a>
 		<%
 		}
 
 		if (endPage < totalPage) {
 		%>
-		<a href="GetBoardListPro?page=<%=totalPage%>&boardno=<%=boardno%>">끝</a>
+		<a href="GetBoardListPro?page=<%=totalPage%>&boardtype=<%=boardtype%>">끝</a>
 		<%
 		}
 		} else if (searchKeyword != null) {
 		if (startPage > 1) {
 		%>
-		<a href="SearchPro?page=1&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardno=<%=boardno%>">처음</a>
+		<a href="SearchPro?page=1&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardtype=<%=boardtype%>">처음</a>
 		<%
 		}
 
 		if (pg > 1) {
 		%>
-		<a href="SearchPro?page=<%=pg - 1%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardno=<%=boardno%>">이전</a>
+		<a href="SearchPro?page=<%=pg - 1%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardtype=<%=boardtype%>">이전</a>
 		<%
 		}
 
@@ -196,7 +202,7 @@ case 5:
 		%>
 
 		&nbsp;
-		<a href="SearchPro?page=<%=iCount%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardno=<%=boardno%>"><%=iCount%></a>
+		<a href="SearchPro?page=<%=iCount%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardtype=<%=boardtype%>"><%=iCount%></a>
 		&nbsp;
 
 		<%
@@ -205,13 +211,13 @@ case 5:
 
 		if (pg < totalPage) {
 		%>
-		<a href="SearchPro?page=<%=pg + 1%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardno=<%=boardno%>">다음</a>
+		<a href="SearchPro?page=<%=pg + 1%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardtype=<%=boardtype%>">다음</a>
 		<%
 		}
 
 		if (endPage < totalPage) {
 		%>
-		<a href="SearchPro?page=<%=totalPage%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardno=<%=boardno%>">끝</a>
+		<a href="SearchPro?page=<%=totalPage%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardtype=<%=boardtype%>">끝</a>
 		<%
 		}
 		}
@@ -221,7 +227,8 @@ case 5:
 		<%
 		if (nickname != null) {
 		%>
-		<a href="index.jsp?filePath=addboard&boardno=<%=boardno%>">글쓰기</a>&nbsp;&nbsp; 
+		<a href="index.jsp?filePath=addboard&boardtype=<%=boardtype%>">글쓰기</a>
+		&nbsp;&nbsp;
 		<%
 		}
 		%>

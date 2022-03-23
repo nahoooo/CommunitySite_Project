@@ -30,8 +30,8 @@ public class AddBoardPro extends HttpServlet {
 		String nickname = request.getParameter("nickname");
 		String content = request.getParameter("content");
 		System.out.println(content);
-		int boardno = Integer.parseInt(request.getParameter("boardno"));
-		System.out.println(boardno);
+		String boardtype = request.getParameter("boardtype");
+		System.out.println(boardtype);
 	
 
 		Connection conn = null;
@@ -39,18 +39,18 @@ public class AddBoardPro extends HttpServlet {
 
 		try {
 			conn = JDBCConnection.getConnection();
-			String sql = "insert into board_(seq,title,nickname,content,boardno) values((select nvl(max(seq),0)+1 from board_ where boardno = ? ),?,?,?,?)";
+			String sql = "insert into board_(seq,title,nickname,content,boardtype) values((select nvl(max(seq),0)+1 from board_ where boardtype = ? ),?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, boardno);
+			stmt.setString(1, boardtype);
 			stmt.setString(2, title);
 			stmt.setString(3, nickname);
 			stmt.setString(4, content);
-			stmt.setInt(5, boardno);
+			stmt.setString(5, boardtype);
 
 			int cnt = stmt.executeUpdate();
 			if (cnt != 0)
 			
-			response.sendRedirect("GetBoardListPro?boardno="+boardno);	
+			response.sendRedirect("GetBoardListPro?boardtype="+boardtype);	
 				
 			
 

@@ -6,7 +6,7 @@ public class ReplyBoardVO {
 	private String nickname;
 	private String regdate;
 	private String reply;
-	private int boardno;
+	private String boardtype;
 
 	public int getBoardseq() {
 		return boardseq;
@@ -48,12 +48,14 @@ public class ReplyBoardVO {
 		this.reply = reply;
 	}
 
-	public int getBoardno() {
-		return boardno;
+	public String getBoardtype() {
+		return boardtype;
 	}
 
-	public void setBoardno(int boardno) {
-		this.boardno = boardno;
+	public void setBoardtype(String boardtype) {
+		this.boardtype = boardtype;
 	}
+
+	
 
 }

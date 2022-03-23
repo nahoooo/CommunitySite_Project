@@ -35,7 +35,7 @@ public class GetBoardListPro extends HttpServlet {
 		else 
 			page=Integer.parseInt(request.getParameter("page"));
 		
-		int boardno = Integer.parseInt(request.getParameter("boardno"));
+		String boardtype = request.getParameter("boardtype");
 	
 		//DB접속
 				Connection conn=null;
@@ -46,14 +46,14 @@ public class GetBoardListPro extends HttpServlet {
 					conn=JDBCConnection.getConnection();
 //					String sql="select * from board order by seq desc";
 					
-					String sql="select * from (select rownum as rnum,B.* from (select * from board_ where boardno = ? order by seq desc) B) where rnum between ? and ?";
+					String sql="select * from (select rownum as rnum,B.* from (select * from board_ where boardtype = ? order by seq desc) B) where rnum between ? and ?";
 					// page 1: 1-10
 					// page 2: 11-20
 					// page 3: 21-30
 					stmt=conn.prepareStatement(sql);
 					
 					// page를 이용하여 각 페이지에 담기는 레코드의 rownum값을 환산
-					stmt.setInt(1, boardno);
+					stmt.setString(1, boardtype);
 					stmt.setInt(2, page*10-9);
 					stmt.setInt(3, page*10);
 					
@@ -85,9 +85,9 @@ public class GetBoardListPro extends HttpServlet {
 					stmt.close();
 					rs.close();
 					
-					sql="select max(seq) from board_ where boardno=?";
+					sql="select max(seq) from board_ where boardtype=?";
 					stmt=conn.prepareStatement(sql);
-					stmt.setInt(1, boardno);
+					stmt.setString(1, boardtype);
 					rs=stmt.executeQuery();
 					
 					int totalCount=0; //전체 게시글 수 담는 변수
@@ -101,7 +101,7 @@ public class GetBoardListPro extends HttpServlet {
 					// 1. 전달할 데이터를 request에 담는다.
 					request.setAttribute("boardList", boardList);
 					request.setAttribute("totalRows", totalCount);
-					request.setAttribute("boardno", boardno);
+					request.setAttribute("boardtype", boardtype);
 					
 					// 2. 지금 사용하는 request와 response를 지정한 페이지로 전달해서
 					// 동일한 request와 response를 사용하도록 지정

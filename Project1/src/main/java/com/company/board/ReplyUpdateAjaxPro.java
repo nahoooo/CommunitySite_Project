@@ -32,19 +32,18 @@ public class ReplyUpdateAjaxPro extends HttpServlet {
 		System.out.println("/ReplyUpdateAjaxPro");
 	
 		PrintWriter out = response.getWriter();
-		request.setCharacterEncoding("utf-8");
-		String nickname=request.getParameter("nickname");
+		request.setCharacterEncoding("utf-8");	
 		int seq=Integer.parseInt(request.getParameter("seq"));
-		int boardno=Integer.parseInt(request.getParameter("boardno"));
+		String boardtype = request.getParameter("boardtype");
 		int boardseq=Integer.parseInt(request.getParameter("boardseq"));		
 		String reply=request.getParameter("replytext");
 		
 		
 				
 		
-		System.out.println(nickname);
+
 		System.out.println(seq);
-		System.out.println(boardno);		
+		System.out.println(boardtype);		
 		System.out.println(boardseq);
 		System.out.println(reply);
 		
@@ -55,13 +54,12 @@ public class ReplyUpdateAjaxPro extends HttpServlet {
 		int result = 0;
 		try {
 			conn=JDBCConnection.getConnection();
-			String sql="update replyboard_ set reply=?,nickname=? where seq=? and boardno=? and boardseq=?";
+			String sql="update replyboard_ set reply=? where seq=? and boardtype=? and boardseq=?";
 			stmt=conn.prepareStatement(sql);
 			stmt.setString(1, reply);
-			stmt.setString(2, nickname);
-			stmt.setInt(3, seq);
-			stmt.setInt(4, boardno);
-			stmt.setInt(5, boardseq);
+			stmt.setInt(2, seq);
+			stmt.setString(3, boardtype);
+			stmt.setInt(4, boardseq);
 			
 			int cnt=stmt.executeUpdate();
 			

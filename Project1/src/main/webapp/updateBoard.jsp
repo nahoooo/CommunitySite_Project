@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-int boardno =(int) request.getAttribute("boardno");
+String boardtype = (String)request.getAttribute("boardtype");
 int seq =(int) request.getAttribute("seq");
 
 String nickname =(String)session.getAttribute("nickname");
@@ -18,7 +18,7 @@ BoardVO board = (BoardVO) request.getAttribute("board");
 	charset="utf-8"></script>
 <script type="text/javascript"
 	src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<title>게시글 작성</title>
+<title>게시글 수정</title>
 </head>
 <body>
 	<div class="container" style="text-align: center;">	
@@ -28,7 +28,7 @@ BoardVO board = (BoardVO) request.getAttribute("board");
 			<table class="table" style="width: 820px; margin: auto auto">
 				<tr>
 				<td><input type="hidden"  name="nickname" value="<%=nickname%>"></td>
-				<td><input type="hidden"  id="boardno" name="boardno" value="<%=boardno%>"></td>				
+				<td><input type="hidden"  id="boardtype" name="boardtype" value="<%=boardtype%>"></td>				
 				<td><input  type="hidden" name="seq" value="<%=seq%>"></td>				
 				</tr>
 				<tr>
@@ -54,7 +54,7 @@ BoardVO board = (BoardVO) request.getAttribute("board");
 	var oEditors = [];
 	var title = $("#title").val();
 	var content = $("#content").val();
-	var boardno = $("#boardno").val();
+	var boardtype = $("#boardtype").val();
 	$(function() {
 		nhn.husky.EZCreator.createInIFrame({
 			oAppRef : oEditors,
@@ -80,7 +80,7 @@ BoardVO board = (BoardVO) request.getAttribute("board");
 		
 		console.log(title);
 		console.log(content);
-		console.log(boardno);
+		console.log(boardtype);
 		
 			// id가 smarteditor인 textarea에 에디터에서 대입 
 			oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []); 		

@@ -32,7 +32,7 @@ public class UpdateBoardPro extends HttpServlet {
 		
 		request.setCharacterEncoding("utf-8");
 		int seq=Integer.parseInt(request.getParameter("seq"));
-		int boardno=Integer.parseInt(request.getParameter("boardno"));
+		String boardtype=request.getParameter("boardtype");
 		String title=request.getParameter("title");
 		String content=request.getParameter("content");
 		String nickname=request.getParameter("nickname");
@@ -40,7 +40,7 @@ public class UpdateBoardPro extends HttpServlet {
 		
 		
 		System.out.println(seq);
-		System.out.println(boardno);
+		System.out.println(boardtype);
 		System.out.println(title);
 		System.out.println(content);
 		
@@ -50,16 +50,16 @@ public class UpdateBoardPro extends HttpServlet {
 		
 		try {
 			conn=JDBCConnection.getConnection();
-			String sql="update board_ set title=?,content=?,nickname=? where seq=? and boardno=?";
+			String sql="update board_ set title=?,content=?,nickname=? where seq=? and boardtype=?";
 			stmt=conn.prepareStatement(sql);
 			stmt.setString(1, title);
 			stmt.setString(2, content);
 			stmt.setString(3, nickname);
 			stmt.setInt(4, seq);
-			stmt.setInt(5, boardno);
+			stmt.setString(5, boardtype);
 			
 			int cnt=stmt.executeUpdate();
-			if(cnt!=0) response.sendRedirect("GetBoardPro?seq="+seq+"&boardno="+boardno);
+			if(cnt!=0) response.sendRedirect("GetBoardPro?seq="+seq+"&boardtype="+boardtype);
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

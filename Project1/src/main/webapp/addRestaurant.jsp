@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%
-String boardtype = request.getParameter("boardtype");
+
 String nickname =(String)session.getAttribute("nickname");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript" src="./smarteditor2/js/HuskyEZCreator.js"
+<script type="text/javascript" src="../smarteditor2/js/HuskyEZCreator.js"
 	charset="utf-8"></script>
 <script type="text/javascript"
 	src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -16,26 +16,56 @@ String nickname =(String)session.getAttribute("nickname");
 </head>
 <body>
 	<div class="container" style="text-align: center; height: 1200px ">
-		<h1>글 작성</h1>
+		<h1>맛집을 추천해 주세요!</h1>
 		<form action="AddBoardPro" method="post" name="boardAddForm"
 			id="boardAddForm">
 			<table class="table" style="width: 820px; margin: auto auto">
 				<tr>
-				<td><input type="hidden" name="nickname" value="<%=nickname%>"></td>
-				<td><input type="hidden" name="boardtype" value="<%=boardtype%>"></td>				
+				<td><input type="hidden" name="nickname" value="<%=nickname%>"></td>						
 				</tr>
 				<tr>
-					<td>제목</td>
-					<td align="left"><input type="text" name="title"
+					<th>제목</th>
+					<td align="left" colspan="3"><input type="text" name="title"
 						class="form-control" /></td>
 				</tr>
 				<tr>
-					<td>내용</td>
-					<td align="left"><textarea class="form-control" row="20"
-							style="width: 100%;" name="content" id="content"></textarea></td>
+					<th>상호명</th>
+					<td align="left" colspan="3" ><input type="text" class="form-control"></td>
 				</tr>
 				<tr>
-					<td colspan="2" align="center">
+					<th>주소</th>
+					<td align="left" colspan="3"><input type="text" class="form-control"></td>
+				</tr>
+				<tr>
+					<th>한줄평</th>
+					<td align="left" colspan="3"><input type="text" class="form-control"></td>
+				</tr>
+				<tr>
+					<th>전화번호</th>
+					<td><input type="text" class="form-control"></td>
+					<th>영업시간</th>
+					<td><input type="text" class="form-control"></td>
+				</tr>
+				<tr>
+					<th>주차가능여부</th>
+					<td><input type="text" class="form-control"></td>
+					<th>휴무</th>
+					<td><input type="text" class="form-control"></td>
+				</tr>
+				<tr>
+					<th colspan="4">내용</th>					
+				</tr>
+				<tr>
+					<td colspan="4">
+						<div style="text-align: right">
+							<textarea style="margin-left: 50px" class="form-control" row="20" name="content" id="content"></textarea>
+							
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td colspan="4" align="center" >
 						<button type="button" class="btn btn-success" id="savebutton">새 글 등록</button>
 					</td>
 				</tr>
@@ -51,7 +81,7 @@ String nickname =(String)session.getAttribute("nickname");
 			oAppRef : oEditors,
 			elPlaceHolder : "content",
 			//SmartEditor2Skin.html 파일이 존재하는 경로
-			sSkinURI : "./smarteditor2/SmartEditor2Skin.html",
+			sSkinURI : "../smarteditor2/SmartEditor2Skin.html",
 			htParams : {
 				// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
 				bUseToolbar : true,
@@ -90,4 +120,3 @@ String nickname =(String)session.getAttribute("nickname");
 
 </script>
 </html>
-

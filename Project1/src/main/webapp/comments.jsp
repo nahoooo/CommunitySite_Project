@@ -3,7 +3,7 @@
 request.setCharacterEncoding("utf-8");
 String nickname = request.getParameter("nickname");
 String seq = request.getParameter("seq");
-String boardno = request.getParameter("boardno");
+String boardtype = request.getParameter("boardtype");
 %>
 <!DOCTYPE html>
 <html>
@@ -22,7 +22,7 @@ String boardno = request.getParameter("boardno");
 				<tr>
 					<td>
 						<input type="hidden" value="<%=nickname%>" name="nickname" id="nickname"> <input type="hidden" value="<%=seq%>" name="seq" id="seq">
-						<input type="hidden" value="<%=boardno%>" name="boardno" id="boardno">
+						<input type="hidden" value="<%=boardtype%>" name="boardtype" id="boardtype">
 						<textarea class="form-control" rows="3" cols="30" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
 						<br>
 						<div align="right">
@@ -40,7 +40,7 @@ String boardno = request.getParameter("boardno");
 		
 		var nickname = $("#nickname").val();		
 		var seq = $("#seq").val();		
-		var boardno = $("#boardno").val();
+		var boardtype = $("#boardtype").val();
 				
 // 		var c = document.commentForm.comment;
 								
@@ -52,7 +52,7 @@ String boardno = request.getParameter("boardno");
 			$.ajax({
 				type : "post", //통신타입 설정. get,post등의 방식 사용.
 				url : "ReplyAjaxPro", //요청 url 자원의 고유 위치
-				data : {nickname : nickname,seq : seq,boardno : boardno,comment : comment},							
+				data : {nickname : nickname,seq : seq,boardtype : boardtype,comment : comment},							
 				//서버에 요청할때 보낼 매개변수 설정. 보낼변수 이름 : 변수 값				
 				async : true, //기본값은 false. 비동기 전송 여부
 				success : function(result) { //요청한 페이지에서 보내온 값을 data란 변수로 받아온다.

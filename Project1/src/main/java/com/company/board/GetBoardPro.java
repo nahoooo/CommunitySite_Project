@@ -39,7 +39,7 @@ public class GetBoardPro extends HttpServlet {
 		}
 		
 		int seq=Integer.parseInt(request.getParameter("seq"));
-		int boardno=Integer.parseInt(request.getParameter("boardno"));
+		String boardtype=request.getParameter("boardtype");
 		
 		Connection conn=null;
 		PreparedStatement stmt=null;
@@ -48,11 +48,11 @@ public class GetBoardPro extends HttpServlet {
 		try {
 			conn=JDBCConnection.getConnection();
 			// 게시물 조회수 1증가. cnt update
-			String sql="update board_ set cnt =(select cnt+1 from board_ where boardno=? and seq=?) where boardno=? and seq=?";
+			String sql="update board_ set cnt =(select cnt+1 from board_ where boardtype=? and seq=?) where boardtype=? and seq=?";
 			stmt=conn.prepareStatement(sql);
-			stmt.setInt(1, boardno);
+			stmt.setString(1, boardtype);
 			stmt.setInt(2, seq);
-			stmt.setInt(3, boardno);
+			stmt.setString(3, boardtype);
 			stmt.setInt(4, seq);
 			stmt.executeUpdate();
 			stmt.close();
@@ -60,9 +60,9 @@ public class GetBoardPro extends HttpServlet {
 			
 			
 			//해당 게시물 데이터 가져오기
-			sql="select * from board_ where boardno=? and seq=?";
+			sql="select * from board_ where boardtype=? and seq=?";
 			stmt=conn.prepareStatement(sql);
-			stmt.setInt(1, boardno);
+			stmt.setString(1, boardtype);
 			stmt.setInt(2, seq);
 			
 			rs=stmt.executeQuery();
@@ -80,17 +80,17 @@ public class GetBoardPro extends HttpServlet {
 			}
 			
 			request.setAttribute("board", board);
-			request.setAttribute("boardno", boardno);
+			request.setAttribute("boardtype", boardtype);
 			
 			//해당 게시물에 포함되는 답글 리스트를 전송하는 내용을 추가.
 			stmt.close();
 			rs.close();
 			
-			sql="select boardseq,seq,boardno,nickname,reply,to_char(regdate,'YYYY-MM-DD HH24:MI:SS') from replyboard_ where boardseq=? and boardno=? order by seq desc";
+			sql="select boardseq,seq,boardtype,nickname,reply,to_char(regdate,'YYYY-MM-DD HH24:MI:SS') from replyboard_ where boardseq=? and boardtype=? order by seq desc";
 			
 			stmt=conn.prepareStatement(sql);
 			stmt.setInt(1, seq);
-			stmt.setInt(2, boardno);
+			stmt.setString(2, boardtype);
 			rs=stmt.executeQuery();
 			
 			ArrayList<ReplyBoardVO> replylist = new ArrayList<ReplyBoardVO>();
@@ -101,7 +101,7 @@ public class GetBoardPro extends HttpServlet {
 				ReplyBoardVO vo = new ReplyBoardVO();				
 				vo.setBoardseq(rs.getInt("boardseq"));
 				vo.setSeq(rs.getInt("seq"));
-				vo.setBoardno(rs.getInt("boardno"));
+				vo.setBoardtype(rs.getString("boardtype"));
 				vo.setNickname(rs.getString("nickname"));
 				vo.setReply(rs.getString("reply"));
 				vo.setRegdate(rs.getString(6));				
@@ -115,10 +115,10 @@ public class GetBoardPro extends HttpServlet {
 			rs.close();
 			
 			//게시판 게시글 댓글 수 업데이트
-			sql="update board_ set comment_cnt =? where boardno=? and seq=?";
+			sql="update board_ set comment_cnt =? where boardtype=? and seq=?";
 			stmt=conn.prepareStatement(sql);
 			stmt.setInt(1, comment_cnt);
-			stmt.setInt(2, boardno);
+			stmt.setString(2, boardtype);
 			stmt.setInt(3, seq);			
 			stmt.executeUpdate();
 			stmt.close();

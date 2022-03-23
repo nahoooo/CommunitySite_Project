@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 String filePath = request.getParameter("filePath");
+String Currentlocation = null;
 if (filePath == null) {
-	filePath = "home";
+	Currentlocation = "home";
 } else if (filePath.contains("board") || filePath.contains("Board")) {
-	filePath = "COMMUNITY";
+	Currentlocation = "COMMUNITY";
+}else if (filePath.contains("goodRestaurant")){
+	Currentlocation="나만의 맛집";
 }
 
 String nickname = (String) session.getAttribute("nickname");
@@ -55,20 +58,20 @@ String nickname = (String) session.getAttribute("nickname");
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-4">
-					<h3 id="CL" style="margin-bottom: 0px; text-align: left;"><%=filePath%></h3>
+					<h3 id="CL" style="margin-bottom: 0px; text-align: left;"><%=Currentlocation%></h3>
 				</div>
 				<div class="col-sm-8">
 					<ul class="nav justify-content-end">
 						<li class="nav-item"><a class="nav-link" href="">맛집지도</a></li>
 						<li class="nav-item"><a class="nav-link" href="">지역맛집</a></li>
-						<li class="nav-item"><a class="nav-link" href="">나만의 맛집</a></li>
+						<li class="nav-item"><a class="nav-link" href="index.jsp?filePath=addRestaurant">나만의 맛집</a></li>
 						<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">COMMUNITY</a>
 							<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
-								<li><a class="dropdown-item" href="GetBoardListPro?boardno=1">공지사항</a></li>
-								<li><a class="dropdown-item" href="GetBoardListPro?boardno=2">맛집방문기</a></li>
-								<li><a class="dropdown-item" href="GetBoardListPro?boardno=3">나만의레시피</a></li>
-								<li><a class="dropdown-item" href="GetBoardListPro?boardno=4">자유게시판</a></li>
-								<li><a class="dropdown-item" href="GetBoardListPro?boardno=5">문의사항</a></li>
+								<li><a class="dropdown-item" href="GetBoardListPro?boardtype=notice">공지사항</a></li>
+								<li><a class="dropdown-item" href="GetBoardListPro?boardtype=review">맛집방문기</a></li>
+								<li><a class="dropdown-item" href="GetBoardListPro?boardtype=recipe">나만의레시피</a></li>
+								<li><a class="dropdown-item" href="GetBoardListPro?boardtype=free">자유게시판</a></li>
+								<li><a class="dropdown-item" href="GetBoardListPro?boardtype=questions">문의사항</a></li>
 							</ul></li>
 					</ul>
 				</div>

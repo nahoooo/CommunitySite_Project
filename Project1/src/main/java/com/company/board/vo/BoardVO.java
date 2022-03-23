@@ -11,7 +11,7 @@ public class BoardVO {
 	private int cnt;
 	private int like_cnt;
 	private int comment_cnt;
-	private int boardno;
+	private String boardtype;
 	public int getSeq() {
 		return seq;
 	}
@@ -54,17 +54,17 @@ public class BoardVO {
 	public void setComment_cnt(int comment_cnt) {
 		this.comment_cnt = comment_cnt;
 	}
-	public int getBoardno() {
-		return boardno;
-	}
-	public void setBoardno(int boardno) {
-		this.boardno = boardno;
-	}
 	public int getLike_cnt() {
 		return like_cnt;
 	}
 	public void setLike_cnt(int like_cnt) {
 		this.like_cnt = like_cnt;
+	}
+	public String getBoardtype() {
+		return boardtype;
+	}
+	public void setBoardtype(String boardtype) {
+		this.boardtype = boardtype;
 	}
 	
 }
