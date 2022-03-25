@@ -16,6 +16,13 @@ header {
 	color: #fff;
 }
 
+a .boardtitle{
+	text-decoration : none;
+	color: black;
+}
+	
+}
+
 #replyList ul{
 	list-style: none;
 }

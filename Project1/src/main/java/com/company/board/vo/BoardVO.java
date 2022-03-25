@@ -12,6 +12,8 @@ public class BoardVO {
 	private int like_cnt;
 	private int comment_cnt;
 	private String boardtype;
+	private String imageurl;
+	
 	public int getSeq() {
 		return seq;
 	}
@@ -66,5 +68,12 @@ public class BoardVO {
 	public void setBoardtype(String boardtype) {
 		this.boardtype = boardtype;
 	}
+	public String getImageurl() {
+		return imageurl;
+	}
+	public void setImageurl(String imageurl) {
+		this.imageurl = imageurl;
+	}
+	
 	
 }

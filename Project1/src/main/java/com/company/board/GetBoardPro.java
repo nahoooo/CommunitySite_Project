@@ -77,6 +77,7 @@ public class GetBoardPro extends HttpServlet {
 				board.setRegdate(rs.getDate("regdate"));
 				board.setCnt(rs.getInt("cnt"));
 				board.setComment_cnt(rs.getInt("comment_cnt"));
+				board.setImageurl(rs.getString("imageurl"));
 			}
 			
 			request.setAttribute("board", board);

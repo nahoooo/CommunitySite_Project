@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,6 +32,19 @@ public class AddBoardPro extends HttpServlet {
 		String nickname = request.getParameter("nickname");
 		String content = request.getParameter("content");
 		System.out.println(content);
+		String imageurl="";
+		  
+		Pattern pattern = Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>"); //img 태그 src 추출 정규표현식
+	    Matcher matcher = pattern.matcher(content);
+	         
+	        while(matcher.find()){
+	        	imageurl+=matcher.group(1);
+	            System.out.println(imageurl);
+	            
+	        }
+
+	
+		
 		String boardtype = request.getParameter("boardtype");
 		System.out.println(boardtype);
 	
@@ -39,13 +54,14 @@ public class AddBoardPro extends HttpServlet {
 
 		try {
 			conn = JDBCConnection.getConnection();
-			String sql = "insert into board_(seq,title,nickname,content,boardtype) values((select nvl(max(seq),0)+1 from board_ where boardtype = ? ),?,?,?,?)";
+			String sql = "insert into board_(seq,title,nickname,content,boardtype,imageurl) values((select nvl(max(seq),0)+1 from board_ where boardtype = ? ),?,?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, boardtype);
 			stmt.setString(2, title);
 			stmt.setString(3, nickname);
 			stmt.setString(4, content);
 			stmt.setString(5, boardtype);
+			stmt.setString(6, imageurl);
 
 			int cnt = stmt.executeUpdate();
 			if (cnt != 0)
@@ -62,4 +78,7 @@ public class AddBoardPro extends HttpServlet {
 			JDBCConnection.close(stmt, conn);
 		}
 	}
-}
+
+	}
+
+

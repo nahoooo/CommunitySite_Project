@@ -37,9 +37,9 @@ String nickname =(String)session.getAttribute("nickname");
 				<tr>
 					<td colspan="2" align="center">
 						<button type="button" class="btn btn-success" id="savebutton">새 글 등록</button>
+						<a class="btn btn-success" href="javascript:history.back();">이전 페이지로 이동</a>
 					</td>
 				</tr>
-
 			</table>
 		</form>
 	</div>
@@ -69,14 +69,16 @@ String nickname =(String)session.getAttribute("nickname");
 	$("#savebutton").click(function(){ 
 		//if(confirm("저장하시겠습니까?")) { 
 			// id가 smarteditor인 textarea에 에디터에서 대입 
-			oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []); 
+			oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []); 			
 		// 이부분에 에디터 validation 검증 
-		if(validation()) { $("#boardAddForm").submit(); 
-		} 
-		//} 
-	}); 
-	
-
+		if(validation()) { 
+			
+			$("#boardAddForm").submit(); 
+		} 				
+		//} 		
+	}); 	
+		
+		
 		function validation(){ 
 			var contents = $.trim(oEditors[0].getContents()); 
 			if(contents === '<p>&bnsp;</p>' || contents === ''){ 

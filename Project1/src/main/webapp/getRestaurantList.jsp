@@ -1,10 +1,11 @@
-<%@page import="com.company.board.vo.BoardVO"%>
+<%@page import="com.company.board.vo.RestaurantVO"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
 String nickname = (String) session.getAttribute("nickname");
 
-String boardtype = request.getParameter("boardtype");
+
 
 int pg = 0; // page변수로 현재 페이지 값을 받아서 페이징 처리에 이용..
 int totalCount = 0;
@@ -28,38 +29,19 @@ String searchCondition = request.getParameter("searchCondition");
 
 //2.request에 사용할 데이터가 들어가 있다.
 
-ArrayList<BoardVO> boardList = (ArrayList<BoardVO>) request.getAttribute("boardList");
+ArrayList<RestaurantVO> RestaurantList  = (ArrayList<RestaurantVO>)request.getAttribute("RestaurantList");
 
-String boardname = null;
-switch (boardtype) {
-case "notice":
-	boardname = "공지사항";
-	break;
-case "review":
-	boardname = "맛집방문기";
-	break;
-case "recipe":
-	boardname = "나만의 레시피";
-	break;
-case "free":
-	boardname = "자유게시판";
-	break;
-case "questions":
-	boardname = "문의사항";
-	break;
-}
-%>
 
+%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<title>게시글 리스트</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<div class="container" style="width: 920px; height: 900px; text-align: center; margin-top: 50px">
-		<h3><%=boardname%></h3>
+<div class="container" style="width: 920px; height: 900px; text-align: center; margin-top: 50px">
+		<h3>맛집리스트</h3>
 		<br>
 		<br>
 		<br>
@@ -68,6 +50,7 @@ case "questions":
 				<thead style="text-align: center">
 					<tr>
 						<th scope="col" width="55">번호</th>
+						<th scope="col" width="55">썸네일</th>
 						<th scope="col" width="250">제목</th>
 						<th scope="col" width="100">작성자</th>
 						<th scope="col" width="120">작성일</th>
@@ -77,35 +60,46 @@ case "questions":
 				</thead>
 				<tbody>
 					<%
-					for (int i = 0; i < boardList.size(); i++) {
-						BoardVO board = boardList.get(i);
+					for (int i = 0; i < RestaurantList.size(); i++) {
+						RestaurantVO restaurant = RestaurantList.get(i);
 					%>
 					<tr>
-						<td><%=board.getSeq()%></td>
+						<td><%=restaurant.getSeq()%></td>
 						<td>
-							<a class="boardtitle" href="GetBoardPro?seq=<%=board.getSeq()%>&boardtype=<%=boardtype%>"><%=board.getTitle()%>
+						<%if(restaurant.getImageurl()!=null){
+						String imageurl = restaurant.getImageurl();
+						String [] imageurlArry = imageurl.split(",");
+						%>
+						<img alt="" src="<%=imageurlArry[0]%>" width="100" height="80"> 
+						<%}else{ %>
+						<img alt="" src="./resource/images/no_image.png" width="100" height="80"> 
+						<%} %>										
+						</td>
+						<td>
+							<a class="boardtitle" href="GetRestaurantPro?seq=<%=restaurant.getSeq()%>"><%=restaurant.getTitle()%>
 								<%
-								if (board.getComment_cnt() != 0) {
+								if (restaurant.getComment_cnt() != 0) {
 								%>
-								(<%=board.getComment_cnt()%>)
+								(<%=restaurant.getComment_cnt()%>)
 								<%
 								}								
 								%>	
 								<%
-								if (board.getImageurl() != null) {
+								if (restaurant.getImageurl() != null) {
 								%>
 									<img  src="./resource/images/image.svg">
 								<%
 								}								
 								%>												
-							</a>																			
+							</a><br>
+							<p><%=restaurant.getOnelinereview()%></p>																			
 						</td>
-						<td><%=board.getNickname()%></td>
-						<td><%=board.getRegdate()%></td>
+						<td><%=restaurant.getNickname()%></td>
+						<td><%=restaurant.getRegdate()%></td>
 						<td>
-							&nbsp;&nbsp;&nbsp;&nbsp;<%=board.getCnt()%></td>
+							&nbsp;&nbsp;&nbsp;&nbsp;<%=restaurant.getCnt()%></td>
 						<td>
-							&nbsp;&nbsp;&nbsp;&nbsp;<%=board.getLike_cnt()%></td>
+							&nbsp;&nbsp;&nbsp;&nbsp;<%=restaurant.getLike_cnt()%></td>
 					</tr>
 					<%
 					}
@@ -146,13 +140,13 @@ case "questions":
 		if (searchKeyword == null) {
 			if (startPage > 1) {
 		%>
-		<a href="GetBoardListPro?page=1&boardtype=<%=boardtype%>">처음</a>
+		<a href="GetRestaurantListPro?page=1">처음</a>
 		<%
 		}
 
 		if (pg > 1) {
 		%>
-		<a href="GetBoardListPro?page=<%=pg - 1%>&boardtype=<%=boardtype%>">이전</a>
+		<a href="GetRestaurantListPro?page=<%=pg - 1%>">이전</a>
 		<%
 		}
 
@@ -167,7 +161,7 @@ case "questions":
 		%>
 
 		&nbsp;
-		<a href="GetBoardListPro?page=<%=iCount%>&boardtype=<%=boardtype%>"><%=iCount%></a>
+		<a href="GetRestaurantListPro?page=<%=iCount%>"><%=iCount%></a>
 		&nbsp;
 
 		<%
@@ -176,25 +170,25 @@ case "questions":
 
 		if (pg < totalPage) {
 		%>
-		<a href="GetBoardListPro?page=<%=pg + 1%>&boardtype=<%=boardtype%>">다음</a>
+		<a href="GetRestaurantListPro?page=<%=pg + 1%>">다음</a>
 		<%
 		}
 
 		if (endPage < totalPage) {
 		%>
-		<a href="GetBoardListPro?page=<%=totalPage%>&boardtype=<%=boardtype%>">끝</a>
+		<a href="GetRestaurantListPro?page=<%=totalPage%>">끝</a>
 		<%
 		}
 		} else if (searchKeyword != null) {
 		if (startPage > 1) {
 		%>
-		<a href="SearchPro?page=1&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardtype=<%=boardtype%>">처음</a>
+		<a href="SearchPro?page=1&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>">처음</a>
 		<%
 		}
 
 		if (pg > 1) {
 		%>
-		<a href="SearchPro?page=<%=pg - 1%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardtype=<%=boardtype%>">이전</a>
+		<a href="SearchPro?page=<%=pg - 1%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>">이전</a>
 		<%
 		}
 
@@ -209,7 +203,7 @@ case "questions":
 		%>
 
 		&nbsp;
-		<a href="SearchPro?page=<%=iCount%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardtype=<%=boardtype%>"><%=iCount%></a>
+		<a href="SearchPro?page=<%=iCount%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>"><%=iCount%></a>
 		&nbsp;
 
 		<%
@@ -218,13 +212,13 @@ case "questions":
 
 		if (pg < totalPage) {
 		%>
-		<a href="SearchPro?page=<%=pg + 1%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardtype=<%=boardtype%>">다음</a>
+		<a href="SearchPro?page=<%=pg + 1%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>">다음</a>
 		<%
 		}
 
 		if (endPage < totalPage) {
 		%>
-		<a href="SearchPro?page=<%=totalPage%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>&boardtype=<%=boardtype%>">끝</a>
+		<a href="SearchPro?page=<%=totalPage%>&searchCondition=<%=searchCondition%>&searchKeyword=<%=searchKeyword%>">끝</a>
 		<%
 		}
 		}
@@ -234,12 +228,12 @@ case "questions":
 		<%
 		if (nickname != null) {
 		%>
-		<a href="index.jsp?filePath=addboard&boardtype=<%=boardtype%>">글쓰기</a>
+		<a href="index.jsp?filePath=addRestaurant">글쓰기</a>
 		&nbsp;&nbsp;
 		<%
 		}
 		%>
-		<a href="GetBoardListPro?boardtype=<%=boardtype%>">글 목록</a>
+		<a href="GetRestaurantListPro">글 목록</a>
 		<div class="container">
 			<!-- 검색 시작 -->
 			<form method="get" action="SearchPro">

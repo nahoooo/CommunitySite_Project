@@ -4,9 +4,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("utf-8");
-
+//사용자의 닉네임이 세션으로 저장되어있음.
 String nickname = (String) session.getAttribute("nickname");
-/* String boardno = (String) session.getAttribute("boardno"); */
+
 
 //1.Servlet이 전달한 데이터를 받는다.
 String boardtype = request.getParameter("boardtype");
@@ -43,7 +43,7 @@ ArrayList<ReplyBoardVO> replylist = (ArrayList<ReplyBoardVO>) request.getAttribu
 						</div>
 						<div><%=board.getContent()%></div>
 						<div style="text-align: center;">
-							<button type="button" class="btn btn-success">목록</button>
+							<button type="button" class="btn btn-success" onclick="location='GetBoardListPro?boardtype=<%=boardtype%>'">목록</button>
 							<%
 							if (nickname.equals(boardNn)) {
 							%>

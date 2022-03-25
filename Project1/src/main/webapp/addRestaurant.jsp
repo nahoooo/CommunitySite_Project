@@ -15,11 +15,11 @@ String nickname =(String)session.getAttribute("nickname");
 <title>게시글 작성</title>
 </head>
 <body>
-	<div class="container" style="text-align: center; height: 1200px ">
+	<div class="container" style="text-align: center; height: 2000px ">
 		<h1>맛집을 추천해 주세요!</h1>
-		<form action="AddBoardPro" method="post" name="boardAddForm"
-			id="boardAddForm">
-			<table class="table" style="width: 820px; margin: auto auto">
+		<form action="AddRestaurantPro" method="post" name="AddRestaurantForm"
+			id="AddRestaurantForm">
+			<table class="table" style="width: 880px; margin: auto auto">
 				<tr>
 				<td><input type="hidden" name="nickname" value="<%=nickname%>"></td>						
 				</tr>
@@ -30,27 +30,42 @@ String nickname =(String)session.getAttribute("nickname");
 				</tr>
 				<tr>
 					<th>상호명</th>
-					<td align="left" colspan="3" ><input type="text" class="form-control"></td>
+					<td align="left" colspan="3" ><input type="text" name="restaurantname" class="form-control"></td>
 				</tr>
 				<tr>
 					<th>주소</th>
-					<td align="left" colspan="3"><input type="text" class="form-control"></td>
+					<td align="left" colspan="3"><input type="text" name="restaurantaddr" class="form-control"></td>
 				</tr>
 				<tr>
 					<th>한줄평</th>
-					<td align="left" colspan="3"><input type="text" class="form-control"></td>
+					<td align="left" colspan="3"><input type="text" name="onelinereview" class="form-control"></td>
 				</tr>
 				<tr>
 					<th>전화번호</th>
-					<td><input type="text" class="form-control"></td>
+					<td><input type="text" name="tel" class="form-control"></td>
 					<th>영업시간</th>
-					<td><input type="text" class="form-control"></td>
+					<td><input type="text" name="openinghours" class="form-control"></td>
 				</tr>
 				<tr>
 					<th>주차가능여부</th>
-					<td><input type="text" class="form-control"></td>
+					<td><input type="text" name="parking" class="form-control"></td>
 					<th>휴무</th>
-					<td><input type="text" class="form-control"></td>
+					<td><input type="text" name="closed" class="form-control"></td>
+				</tr>
+				<tr>
+					<th colspan="1" style="vertical-align: middle;">지도</th>
+					<td colspan="4">
+						<jsp:include page="kakaomap.jsp"></jsp:include>												
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<!--식당 위치 위도 경도 추츨값 저장.  -->
+						<input type="hidden" id="placeLa" name="placeLa" value="">
+						<input type="hidden" id="placeLo" name="placeLo" value="">
+						<!--지도에서 선택한 식당의 이름과 위도경도 확인 출력  -->	
+						<p id="result" ></p>
+					</td>
 				</tr>
 				<tr>
 					<th colspan="4">내용</th>					
@@ -58,19 +73,17 @@ String nickname =(String)session.getAttribute("nickname");
 				<tr>
 					<td colspan="4">
 						<div style="text-align: right">
-							<textarea style="margin-left: 50px" class="form-control" row="20" name="content" id="content"></textarea>
-							
+							<textarea style="margin-left: 50px" class="form-control" row="20" name="content" id="content"></textarea>							
 						</div>
 					</td>
-				</tr>
-				
+				</tr>				
 				<tr>
 					<td colspan="4" align="center" >
 						<button type="button" class="btn btn-success" id="savebutton">새 글 등록</button>
+						<a class="btn btn-success" href="javascript:history.back();">이전 페이지로 이동</a>
 					</td>
 				</tr>
-
-			</table>
+			</table>											
 		</form>
 	</div>
 </body>
@@ -101,7 +114,7 @@ String nickname =(String)session.getAttribute("nickname");
 			// id가 smarteditor인 textarea에 에디터에서 대입 
 			oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []); 
 		// 이부분에 에디터 validation 검증 
-		if(validation()) { $("#boardAddForm").submit(); 
+		if(validation()) { $("#AddRestaurantForm").submit(); 
 		} 
 		//} 
 	}); 
@@ -116,7 +129,8 @@ String nickname =(String)session.getAttribute("nickname");
 				return false; } 
 			return true; }
 
-	
+		
+
 
 </script>
 </html>

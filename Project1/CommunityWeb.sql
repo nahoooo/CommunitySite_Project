@@ -21,11 +21,14 @@ cnt number(5) default 0, --게시글 조회수
 like_cnt number(5) default 0, --게시글 좋아요
 comment_cnt number(5) default 0, --게시글 댓글수
 boardtype varchar2(20) not null, --게시판 타입
+imageurl varchar2(500), --이미지 경로
 constraint board_PK primary key(seq,boardtype)
 )
 
 select * from BOARD_
 drop table BOARD_
+
+
 --게시판 댓글 테이블  대댓글도 만들어야....
 create table replyboard_(
 boardseq number(5) not null, --board테이블의 seq를 참고하는 필드(외래키)
@@ -42,31 +45,31 @@ ALTER TABLE replyboard_ DROP CONSTRAINT reply_fk;
 
 
 --나만의 맛집 추천 테이블
+
 create table recommend_R(
 seq number(5) not null primary key, --게시글 번호
 title varchar2(200) not null, -- 게시글 제목
 nickname varchar2(20) not null, -- 작성자 닉네임
 restaurantname varchar2(40) not null, --식당이름
-addr varchar2(100) not null, --식당 주소
-onelinereview varcher2(100) not null, --식당 한줄평
+restaurantaddr varchar2(100) not null, --식당 주소
+onelinereview varchar2(100) not null, --식당 한줄평
 tel varchar2(20), --식당 전화번호
 openinghours varchar2(20), --식당 영업시간
 parking varchar2(20), --식당 주차가능여부
 closed varchar2(20), --식당 휴뮤일
 content varchar2(2000) not null, --게시글 내용
+imageurl varchar2(500), --이미지 경로
 regdate date default sysdate, --게시글 작성일
 cnt number(5) default 0, --게시글 조회수
 like_cnt number(5) default 0, --게시글 좋아요
 comment_cnt number(5) default 0, --게시글 댓글수
-placeLa varchar2(20), --식당 위도
-placeMa varchar2(20) --식당 경도
+placeLa varchar2(30), --식당 위도
+placeLO varchar2(30) --식당 경도
 )
 
+select * from recommend_R
 
-
-select * from REPLYBOARD_
-
-drop table replyboard_
+drop table recommend_R
 
 insert into board_(seq,title,nickname,content,regdate,boardno)
 values ((select nvl(max(seq),0)+1 from board_ where boardno = 3),'2 번째 게시물','홍길동','2 번째 게시물 내용.','2022-02-01',3);

@@ -39,6 +39,11 @@ if(is != null) {
 os.flush();
 os.close();
 sFileInfo += "&bNewLine=true&sFileName="+ name+"&sFileURL="+"/resource/upload/"+realname;
+
+
+
 out.println(sFileInfo);
+
+
 
 %>

@@ -64,7 +64,7 @@ String nickname = (String) session.getAttribute("nickname");
 					<ul class="nav justify-content-end">
 						<li class="nav-item"><a class="nav-link" href="">맛집지도</a></li>
 						<li class="nav-item"><a class="nav-link" href="">지역맛집</a></li>
-						<li class="nav-item"><a class="nav-link" href="index.jsp?filePath=addRestaurant">나만의 맛집</a></li>
+						<li class="nav-item"><a class="nav-link" href="GetRestaurantListPro">나만의 맛집</a></li>
 						<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">COMMUNITY</a>
 							<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
 								<li><a class="dropdown-item" href="GetBoardListPro?boardtype=notice">공지사항</a></li>

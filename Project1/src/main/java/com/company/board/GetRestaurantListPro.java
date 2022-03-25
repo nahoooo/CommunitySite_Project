@@ -16,18 +16,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.company.board.vo.BoardVO;
+import com.company.board.vo.RestaurantVO;
 import com.company.common.JDBCConnection;
 
 
-@WebServlet("/GetBoardListPro")
-public class GetBoardListPro extends HttpServlet {
+@WebServlet("/GetRestaurantListPro")
+public class GetRestaurantListPro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   
+       
+    
    
 
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("/GetBoardListPro");
+System.out.println("/GetBoardListPro");
 		
 		int page;
 		if(request.getParameter("page")==null)
@@ -46,51 +47,70 @@ public class GetBoardListPro extends HttpServlet {
 					conn=JDBCConnection.getConnection();
 //					String sql="select * from board order by seq desc";
 					
-					String sql="select * from (select rownum as rnum,B.* from (select * from board_ where boardtype = ? order by seq desc) B) where rnum between ? and ?";
+					String sql="select * from (select rownum as rnum,B.* from (select * from recommend_R order by seq desc) B) where rnum between ? and ?";
 					// page 1: 1-10
 					// page 2: 11-20
 					// page 3: 21-30
 					stmt=conn.prepareStatement(sql);
 					
-					// page를 이용하여 각 페이지에 담기는 레코드의 rownum값을 환산
-					stmt.setString(1, boardtype);
-					stmt.setInt(2, page*10-9);
-					stmt.setInt(3, page*10);
+					// page를 이용하여 각 페이지에 담기는 레코드의 rownum값을 환산				
+					stmt.setInt(1, page*10-9);
+					stmt.setInt(2, page*10);
 					
 					rs=stmt.executeQuery();
-					ArrayList<BoardVO> boardList=new ArrayList<BoardVO>();
+					ArrayList<RestaurantVO> RestaurantList=new ArrayList<RestaurantVO>();
 					
 					while(rs.next()) {
+																																		
 						int seq=rs.getInt("seq");
 						String nickname=rs.getString("nickname");
-						String content=rs.getString("content");
 						String title=rs.getString("title");
+						String restaurantname = rs.getString("restaurantname");
+						String restaurantaddr = rs.getString("restaurantaddr");
+						String onelinereview = rs.getString("onelinereview");
+						String tel = rs.getString("tel");
+						String openinghours = rs.getString("openinghours");
+						String parking = rs.getString("parking");
+						String closed = rs.getString("closed");
+						String placeLa = rs.getString("placeLa");
+						String placeLo = rs.getString("placeLo");
+						String content = rs.getString("content");										
+						String imageurl=rs.getString("imageurl");
 						Date regdate=rs.getDate("regdate");
 						int cnt=rs.getInt("cnt");
+						int like_cnt=rs.getInt("like_cnt");
 						int comment_cnt=rs.getInt("comment_cnt");
-						String imageurl=rs.getString("imageurl");
+					
+						RestaurantVO restaurant = new RestaurantVO();
+						restaurant.setSeq(seq);
+						restaurant.setNickname(nickname);
+						restaurant.setTitle(title);
+						restaurant.setRestaurantname(restaurantname);
+						restaurant.setRestaurantaddr(restaurantaddr);
+						restaurant.setOnelinereview(onelinereview);
+						restaurant.setTel(tel);
+						restaurant.setOpeninghours(openinghours);
+						restaurant.setParking(parking);
+						restaurant.setClosed(closed);
+						restaurant.setPlaceLa(placeLa);
+						restaurant.setPlaceLO(placeLo);
+						restaurant.setContent(content);
+						restaurant.setImageurl(imageurl);
+						restaurant.setRegdate(regdate);
+						restaurant.setCnt(cnt);
+						restaurant.setLike_cnt(like_cnt);
+						restaurant.setComment_cnt(comment_cnt);
 						
-						BoardVO board=new BoardVO();
-						board.setSeq(seq);
-						board.setNickname(nickname);
-						board.setContent(content);
-						board.setTitle(title);
-						board.setRegdate(regdate);
-						board.setCnt(cnt);
-						board.setComment_cnt(comment_cnt);
-						board.setImageurl(imageurl);
-						
-						
-						boardList.add(board);   // 각 줄을 리스트에 담는다.
+																												
+						RestaurantList.add(restaurant);   // 각 줄을 리스트에 담는다.
 					}
 					
 					// PrepareStatmement와 Resultset을 재활용하기 위해 자원을 닫고 다시 사용.
 					stmt.close();
 					rs.close();
 					
-					sql="select max(seq) from board_ where boardtype=?";
-					stmt=conn.prepareStatement(sql);
-					stmt.setString(1, boardtype);
+					sql="select max(seq) from recommend_R";
+					stmt=conn.prepareStatement(sql);					
 					rs=stmt.executeQuery();
 					
 					int totalCount=0; //전체 게시글 수 담는 변수
@@ -102,13 +122,12 @@ public class GetBoardListPro extends HttpServlet {
 					
 					
 					// 1. 전달할 데이터를 request에 담는다.
-					request.setAttribute("boardList", boardList);
-					request.setAttribute("totalRows", totalCount);
-					request.setAttribute("boardtype", boardtype);
+					request.setAttribute("RestaurantList", RestaurantList);
+					request.setAttribute("totalRows", totalCount);					
 					
 					// 2. 지금 사용하는 request와 response를 지정한 페이지로 전달해서
 					// 동일한 request와 response를 사용하도록 지정
-					RequestDispatcher view=request.getRequestDispatcher("index.jsp?filePath=getBoardList");
+					RequestDispatcher view=request.getRequestDispatcher("index.jsp?filePath=getRestaurantList");
 					view.forward(request, response);
 					
 				} catch (ClassNotFoundException e) {
@@ -119,7 +138,6 @@ public class GetBoardListPro extends HttpServlet {
 					JDBCConnection.close(rs, stmt, conn);
 				}
 				
-		
 	}
 
 	
