@@ -40,13 +40,13 @@ ArrayList<RestaurantVO> RestaurantList  = (ArrayList<RestaurantVO>)request.getAt
 <title>Insert title here</title>
 </head>
 <body>
-<div class="container" style="width: 920px; height: 900px; text-align: center; margin-top: 50px">
+<div class="col align-self-center" style="width: 920px; height: 900px; text-align: center; margin-top: 50px">
 		<h3>맛집리스트</h3>
 		<br>
 		<br>
 		<br>
 		<div class="table-responsive">
-			<table class="table table-hover">
+			<table class="table table-hover" style="width: 850px; margin: auto auto" >
 				<thead style="text-align: center">
 					<tr>
 						<th scope="col" width="55">번호</th>

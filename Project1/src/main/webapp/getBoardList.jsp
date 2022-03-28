@@ -58,13 +58,13 @@ case "questions":
 <title>게시글 리스트</title>
 </head>
 <body>
-	<div class="container" style="width: 920px; height: 900px; text-align: center; margin-top: 50px">
+	<div class="col align-self-center" style="width: 920px; height: 900px; text-align: center; margin-top: 50px">
 		<h3><%=boardname%></h3>
 		<br>
 		<br>
 		<br>
-		<div class="table-responsive">
-			<table class="table table-hover">
+		<div class="table-responsive" >
+			<table class="table table-hover" style="width: 850px; margin: auto auto" >
 				<thead style="text-align: center">
 					<tr>
 						<th scope="col" width="55">번호</th>

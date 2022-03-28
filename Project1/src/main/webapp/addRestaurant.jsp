@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-
 String nickname =(String)session.getAttribute("nickname");
+
+if (nickname == null) {
+	response.sendRedirect("index.jsp?filePath=login");
+	return;
+}
+
 %>
 <!DOCTYPE html>
 <html>

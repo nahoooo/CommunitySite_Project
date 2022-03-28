@@ -19,82 +19,40 @@ String[] imageurlArry = imageurl.split(",");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+
+<title>맛집 상세보기</title>
 </head>
-<body>
+<body >
+	<div class="container" style="margin: auto auto; width: 100%">
 
-	<div class="container" style="width: 920px; margin: auto auto">
-		<h1>식당 정보</h1>
-
-		<div class="product__details__pic__slider owl-carousel owl-loaded owl-drag">
-			<div class="owl-stage-outer">
-				<div class="owl-stage" style="transform: translate3d(-525px, 0px, 0px); transition: all 1.2s ease 0s; width: 1050px;">
-					
-					<%=imageurlArry[i]%>
-							<%
-							for (int i = 0; i < imageurlArry.length; i++) {
-							%>
-							<div class="owl-item cloned" style="width: 67.5px; margin-right: 20px;">
-							<img data-imgbigurl="img/product/details/product-details-2.jpg" src="img/product/details/thumb-1.jpg" alt="">
-							</div>
-							
-							
-							<%
-							}
-							%>
-																			
-					<div class="owl-item cloned" style="width: 67.5px; margin-right: 20px;">
-						<img data-imgbigurl="img/product/details/product-details-2.jpg" src="img/product/details/thumb-1.jpg" alt="">
-					</div>
-					<div class="owl-item cloned" style="width: 67.5px; margin-right: 20px;">
-						<img data-imgbigurl="img/product/details/product-details-3.jpg" src="img/product/details/thumb-2.jpg" alt="">
-					</div>
-					<div class="owl-item cloned" style="width: 67.5px; margin-right: 20px;">
-						<img data-imgbigurl="img/product/details/product-details-5.jpg" src="img/product/details/thumb-3.jpg" alt="">
-					</div>
-					<div class="owl-item cloned" style="width: 67.5px; margin-right: 20px;">
-						<img data-imgbigurl="img/product/details/product-details-4.jpg" src="img/product/details/thumb-4.jpg" alt="">
-					</div>
-					<div class="owl-item" style="width: 67.5px; margin-right: 20px;">
-						<img data-imgbigurl="img/product/details/product-details-2.jpg" src="img/product/details/thumb-1.jpg" alt="">
-					</div>
-					<div class="owl-item" style="width: 67.5px; margin-right: 20px;">
-						<img data-imgbigurl="img/product/details/product-details-3.jpg" src="img/product/details/thumb-2.jpg" alt="">
-					</div>
-					<div class="owl-item active" style="width: 67.5px; margin-right: 20px;">
-						<img data-imgbigurl="img/product/details/product-details-5.jpg" src="img/product/details/thumb-3.jpg" alt="">
-					</div>
-					<div class="owl-item active" style="width: 67.5px; margin-right: 20px;">
-						<img data-imgbigurl="img/product/details/product-details-4.jpg" src="img/product/details/thumb-4.jpg" alt="">
-					</div>
-					<div class="owl-item cloned active" style="width: 67.5px; margin-right: 20px;">
-						<img data-imgbigurl="img/product/details/product-details-2.jpg" src="img/product/details/thumb-1.jpg" alt="">
-					</div>
-					<div class="owl-item cloned active" style="width: 67.5px; margin-right: 20px;">
-						<img data-imgbigurl="img/product/details/product-details-3.jpg" src="img/product/details/thumb-2.jpg" alt="">
-					</div>
-					<div class="owl-item cloned" style="width: 67.5px; margin-right: 20px;">
-						<img data-imgbigurl="img/product/details/product-details-5.jpg" src="img/product/details/thumb-3.jpg" alt="">
-					</div>
-					<div class="owl-item cloned" style="width: 67.5px; margin-right: 20px;">
-						<img data-imgbigurl="img/product/details/product-details-4.jpg" src="img/product/details/thumb-4.jpg" alt="">
-					</div>
+		<div id="carouselExampleSlidesOnly" style="width: 500px; height: 300px" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-inner">
+				<%
+				for (int i = 0; i < imageurlArry.length; i++) {
+					if (i > 0) {
+				%>
+				<div class="carousel-item">
+					<img src="<%=imageurlArry[i]%>"  height="300" width="500" class="d-block w-100" style="object-fit:contain">
 				</div>
-			</div>
-			<div class="owl-nav disabled">
-				<button type="button" role="presentation" class="owl-prev">
-					<span aria-label="Previous">‹</span>
-				</button>
-				<button type="button" role="presentation" class="owl-next">
-					<span aria-label="Next">›</span>
-				</button>
-			</div>
-			<div class="owl-dots disabled">
-				<button role="button" class="owl-dot active">
-					<span></span>
-				</button>
+				<%
+				} else {
+				%>
+				<div class="carousel-item active">
+					<img src="<%=imageurlArry[i]%>" height="300" width="500" class="d-block w-100" style="object-fit:contain">
+				</div>
+				<%
+				}
+				}
+				%>
 			</div>
 		</div>
+		
 	</div>
+
+
 </body>
 </html>

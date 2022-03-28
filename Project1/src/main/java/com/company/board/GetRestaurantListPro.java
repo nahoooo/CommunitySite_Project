@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.company.board.vo.BoardVO;
 import com.company.board.vo.RestaurantVO;
@@ -29,6 +30,8 @@ public class GetRestaurantListPro extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 System.out.println("/GetBoardListPro");
+
+	request.setCharacterEncoding("utf-8");
 		
 		int page;
 		if(request.getParameter("page")==null)
@@ -37,6 +40,14 @@ System.out.println("/GetBoardListPro");
 			page=Integer.parseInt(request.getParameter("page"));
 		
 		String boardtype = request.getParameter("boardtype");
+		
+		HttpSession session=request.getSession();
+		String nickname2=(String)session.getAttribute("nickname");
+		
+		if (nickname2 == null) {
+			response.sendRedirect("index.jsp?filePath=login");
+			return;
+		}
 	
 		//DB접속
 				Connection conn=null;

@@ -19,13 +19,21 @@ String nickname =(String)session.getAttribute("nickname");
 <title>NaHo</title>
 </head>
 <body>
-	
+	<!--헤더  -->
 	<jsp:include page="header.jsp">
 	<jsp:param value="<%=filePath%>" name="filePath"/>
 	</jsp:include>
 	
-	<jsp:include page='<%=filePath + ".jsp"%>'></jsp:include>
-	
+	<!--바디  -->
+	<div style="display: flex ;margin: auto auto; width: 1250px">
+		<!-- 사이드 바 -->
+		<%if(!filePath.equals("home") && !filePath.equals("login") && !filePath.equals("join")){ %>
+		<jsp:include page="sidebar.jsp"></jsp:include>
+		<%}%>
+		<!--본문 -->
+		<jsp:include page='<%=filePath + ".jsp"%>'></jsp:include>
+	</div>
+	<!--푸터-->
 	<jsp:include page="footer.jsp"></jsp:include>
 
 </body>
