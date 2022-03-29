@@ -13,7 +13,7 @@ String boardtype = request.getParameter("boardtype");
 BoardVO board = (BoardVO) request.getAttribute("board");
 
 //게시글 작성자의 닉네임.
-String boardNn = board.getNickname();
+String WriterNn = board.getNickname();
 
 ArrayList<ReplyBoardVO> replylist = (ArrayList<ReplyBoardVO>) request.getAttribute("replylist");
 %>
@@ -45,7 +45,7 @@ ArrayList<ReplyBoardVO> replylist = (ArrayList<ReplyBoardVO>) request.getAttribu
 						<div style="text-align: center;">
 							<button type="button" class="btn btn-success" onclick="location='GetBoardListPro?boardtype=<%=boardtype%>'">목록</button>
 							<%
-							if (nickname.equals(boardNn)) {
+							if (nickname.equals(WriterNn)) {
 							%>
 							<button type="button" class="btn btn-success" onclick="location='UpdateBoard?boardtype=<%=boardtype%>&seq=<%=board.getSeq()%>'">수정</button>
 							<button type="button" class="btn btn-success" onclick="deleteBoard();">삭제</button>

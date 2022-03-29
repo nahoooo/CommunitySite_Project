@@ -20,11 +20,11 @@ if (nickname == null) {
 <title>게시글 작성</title>
 </head>
 <body>
-	<div class="container" style="text-align: center; height: 2000px ">
+	<div class="container" style="text-align: center;">
 		<h1>맛집을 추천해 주세요!</h1>
 		<form action="AddRestaurantPro" method="post" name="AddRestaurantForm"
 			id="AddRestaurantForm">
-			<table class="table" style="width: 880px; margin: auto auto">
+			<table class="table" style="width: 900px; margin: auto auto">
 				<tr>
 				<td><input type="hidden" name="nickname" value="<%=nickname%>"></td>						
 				</tr>
@@ -39,7 +39,7 @@ if (nickname == null) {
 				</tr>
 				<tr>
 					<th>주소</th>
-					<td align="left" colspan="3"><input type="text" name="restaurantaddr" class="form-control"></td>
+					<td align="left" colspan="3"><input type="text" name="restaurantaddr" placeholder="지도검색으로 정확히 입력해주세요~!" class="form-control"></td>
 				</tr>
 				<tr>
 					<th>한줄평</th>
@@ -58,7 +58,9 @@ if (nickname == null) {
 					<td><input type="text" name="closed" class="form-control"></td>
 				</tr>
 				<tr>
-					<th colspan="1" style="vertical-align: middle;">지도</th>
+					<th colspan="1" style="vertical-align: middle;">지도<br>
+					<span>*식당 마커클릭!</span>
+					</th>
 					<td colspan="4">
 						<jsp:include page="kakaomap.jsp"></jsp:include>												
 					</td>
@@ -78,7 +80,7 @@ if (nickname == null) {
 				<tr>
 					<td colspan="4">
 						<div style="text-align: right">
-							<textarea style="margin-left: 50px" class="form-control" row="20" name="content" id="content"></textarea>							
+							<textarea style="width: 100%" class="form-control" row="20" name="content" id="content"></textarea>							
 						</div>
 					</td>
 				</tr>				

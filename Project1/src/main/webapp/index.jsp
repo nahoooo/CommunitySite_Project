@@ -25,7 +25,7 @@ String nickname =(String)session.getAttribute("nickname");
 	</jsp:include>
 	
 	<!--바디  -->
-	<div style="display: flex ;margin: auto auto; width: 1250px">
+	<div style="display: flex ;margin: auto auto; width:75%">
 		<!-- 사이드 바 -->
 		<%if(!filePath.equals("home") && !filePath.equals("login") && !filePath.equals("join")){ %>
 		<jsp:include page="sidebar.jsp"></jsp:include>

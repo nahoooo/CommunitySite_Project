@@ -19,7 +19,7 @@ String nickname =(String)session.getAttribute("nickname");
 		<h1>글 작성</h1>
 		<form action="AddBoardPro" method="post" name="boardAddForm"
 			id="boardAddForm">
-			<table class="table" style="width: 820px; margin: auto auto">
+			<table class="table" style="width: 100%; margin: auto auto">
 				<tr>
 				<td><input type="hidden" name="nickname" value="<%=nickname%>"></td>
 				<td><input type="hidden" name="boardtype" value="<%=boardtype%>"></td>				

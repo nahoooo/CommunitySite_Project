@@ -28,11 +28,10 @@ String nickname = (String) session.getAttribute("nickname");
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="resource/css/styles.css" rel="stylesheet" />
+        <link href="./resource/css/styles.css" rel="stylesheet" />
     </head>
-    <body id="page-top" >
-        <!-- Navigation-->
-     
+    <body >
+           
         <!-- Masthead-->          
           <nav class="navbar navbar-expand-lg navbar-dark" id="mainNav" style="background : rgba(0, 0, 0, 0.8)";>
 
@@ -43,10 +42,11 @@ String nickname = (String) session.getAttribute("nickname");
                     <i class="fas fa-bars ms-1"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">                                   
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">    
+                    	  <li class="nav-item"><a class="nav-link" href="GetRestaurantListPro">맛지도</a></li>                                
                         <li class="nav-item"><a class="nav-link" href="GetRestaurantListPro">나만의 맛집</a></li>                       
                         <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">COMMUNITY</a>
-							<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenuLink">
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 								<li><a class="dropdown-item" href="GetBoardListPro?boardtype=notice">공지사항</a></li>
 								<li><a class="dropdown-item" href="GetBoardListPro?boardtype=review">맛집방문기</a></li>
 								<li><a class="dropdown-item" href="GetBoardListPro?boardtype=recipe">나만의레시피</a></li>
@@ -75,6 +75,7 @@ String nickname = (String) session.getAttribute("nickname");
                 <div class="masthead-subheading">오늘 뭐먹지?</div>
                 <div class="masthead-heading text-uppercase">여러분의 맛집을 공유해주세요!</div>
                 <a class="btn btn-primary btn-xl text-uppercase" href="GetRestaurantListPro">맛집공유하기</a>
+                <a class="btn btn-outline-warning" href="GetRestaurantListPro">맛집공유하기</a>
             </div>
         </header>
         <%}else{ %>
@@ -86,6 +87,6 @@ String nickname = (String) session.getAttribute("nickname");
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->   
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+      <!--   <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
     </body>
 </html>

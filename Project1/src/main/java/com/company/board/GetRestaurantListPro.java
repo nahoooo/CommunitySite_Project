@@ -65,8 +65,8 @@ System.out.println("/GetBoardListPro");
 					stmt=conn.prepareStatement(sql);
 					
 					// page를 이용하여 각 페이지에 담기는 레코드의 rownum값을 환산				
-					stmt.setInt(1, page*10-9);
-					stmt.setInt(2, page*10);
+					stmt.setInt(1, page*9-8);
+					stmt.setInt(2, page*9);
 					
 					rs=stmt.executeQuery();
 					ArrayList<RestaurantVO> RestaurantList=new ArrayList<RestaurantVO>();

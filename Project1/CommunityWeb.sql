@@ -20,7 +20,7 @@ regdate date default sysdate, --게시글 작성일
 cnt number(5) default 0, --게시글 조회수
 like_cnt number(5) default 0, --게시글 좋아요
 comment_cnt number(5) default 0, --게시글 댓글수
-boardtype varchar2(20) not null, --게시판 타입
+boardtype varchar2(20) not null, --게시판 타입(타입을 나누어서 하나의 테이블로 다수의 게시판을 구현할 수 있음)
 imageurl varchar2(500), --이미지 경로
 constraint board_PK primary key(seq,boardtype)
 )
@@ -45,7 +45,6 @@ ALTER TABLE replyboard_ DROP CONSTRAINT reply_fk;
 
 
 --나만의 맛집 추천 테이블
-
 create table recommend_R(
 seq number(5) not null primary key, --게시글 번호
 title varchar2(200) not null, -- 게시글 제목
@@ -54,10 +53,10 @@ restaurantname varchar2(40) not null, --식당이름
 restaurantaddr varchar2(100) not null, --식당 주소
 onelinereview varchar2(100) not null, --식당 한줄평
 tel varchar2(20), --식당 전화번호
-openinghours varchar2(20), --식당 영업시간
-parking varchar2(20), --식당 주차가능여부
-closed varchar2(20), --식당 휴뮤일
-content varchar2(2000) not null, --게시글 내용
+openinghours varchar2(50), --식당 영업시간
+parking varchar2(50), --식당 주차가능여부
+closed varchar2(50), --식당 휴뮤일
+content varchar2(4000) not null, --게시글 내용
 imageurl varchar2(500), --이미지 경로
 regdate date default sysdate, --게시글 작성일
 cnt number(5) default 0, --게시글 조회수

@@ -6,7 +6,7 @@
 	box-sizing: border-box;	
 }
 
-header {
+/* header {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -14,7 +14,7 @@ header {
 	padding-bottom: 20px;
 	background: #ffffff;
 	color: #fff;
-}
+} */
 
 a .boardtitle{
 	text-decoration : none;
@@ -28,14 +28,8 @@ a .boardtitle{
 }
 
 
-#headerbar {
-	margin: 0;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	background-color: #ff0707c2;
-	color: white;	
-}
 
+/* 
 #headerbar a{
 	color:white;
 }
@@ -45,13 +39,10 @@ a .boardtitle{
 #headerbar #CL{
 	margin-bottom: 0px;
 
-}
+} */
 
 
-.dropdown:hover .dropdown-menu {
-	display: block;
-	margin-top: 0;
-}
+
 
 
 textarea .replyarea:focus {

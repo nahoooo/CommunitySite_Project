@@ -27,6 +27,7 @@ public class AddRestaurantPro extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		System.out.println("/AddRestaurantPro");
 
 		String nickname = request.getParameter("nickname"); // 작성자 닉네임
 		String title = request.getParameter("title"); // 제목
@@ -48,9 +49,9 @@ public class AddRestaurantPro extends HttpServlet {
 
 		while (matcher.find()) {
 			imageurl += matcher.group(1)+",";
-			System.out.println(imageurl);
+			
 		}
-
+		System.out.println(imageurl);
 		Connection conn = null;
 		PreparedStatement stmt = null;
 
