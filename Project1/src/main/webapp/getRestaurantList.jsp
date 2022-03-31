@@ -37,69 +37,7 @@ ArrayList<RestaurantVO> RestaurantList = (ArrayList<RestaurantVO>) request.getAt
 <body>
 	<div class="col align-self-center" style="width: 920px; text-align: center; margin-top: 50px">
 		<h3>나만의 맛집 리스트</h3>
-		<br> <br> <br>
-		<!-- <div class="table"> -->
-		<%-- <table class="table table-hover" style="width: 850px; margin: auto auto" >
-				<thead style="text-align: center">
-					<tr>
-						<th scope="col" width="55">번호</th>
-						<th scope="col" width="55">썸네일</th>
-						<th scope="col" width="250">제목</th>
-						<th scope="col" width="100">작성자</th>
-						<th scope="col" width="120">작성일</th>
-						<th scope="col" width="50">조회</th>
-						<th scope="col" width="75">좋아요</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-					for (int i = 0; i < RestaurantList.size(); i++) {
-						RestaurantVO restaurant = RestaurantList.get(i);
-					%>
-					<tr>
-						<td><%=restaurant.getSeq()%></td>
-						<td>
-						<%if(restaurant.getImageurl()!=null){
-						String imageurl = restaurant.getImageurl();
-						String [] imageurlArry = imageurl.split(",");
-						%>
-						<img alt="" src="<%=imageurlArry[0]%>" width="150" height="100" style = "object-fit: contain"> 
-						<%}else{ %>
-						<img alt="" src="./resource/images/no_image.png" width="100" height="80" style = "object-fit: contain"> 
-						<%} %>										
-						</td>
-						<td>
-							<a class="boardtitle" href="GetRestaurantPro?seq=<%=restaurant.getSeq()%>"><%=restaurant.getTitle()%>
-								<%
-								if (restaurant.getComment_cnt() != 0) {
-								%>
-								(<%=restaurant.getComment_cnt()%>)
-								<%
-								}								
-								%>	
-								<%
-								if (restaurant.getImageurl() != null) {
-								%>
-									<img  src="./resource/images/image.svg">
-								<%
-								}								
-								%>												
-							</a><br>
-							<p><%=restaurant.getOnelinereview()%></p>																			
-						</td>
-						<td><%=restaurant.getNickname()%></td>
-						<td><%=restaurant.getRegdate()%></td>
-						<td>
-							&nbsp;&nbsp;&nbsp;&nbsp;<%=restaurant.getCnt()%></td>
-						<td>
-							&nbsp;&nbsp;&nbsp;&nbsp;<%=restaurant.getLike_cnt()%></td>
-					</tr>
-					<%
-					}
-					%>
-				</tbody>
-			</table> --%>
-
+		<br> <br> <br>	
 		<div class="album py-5">
 			<div class="container">
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -108,24 +46,24 @@ ArrayList<RestaurantVO> RestaurantList = (ArrayList<RestaurantVO>) request.getAt
 						RestaurantVO r = RestaurantList.get(i);
 					%>
 				
-					<div class="col">
+					<div class="col" style="width: 280px; height: 402px; ">
 						<div class="card shadow-sm">							
-							<div class="card-body">
+							<div class="card-body" style="padding: 0px; ">
 							<%if(r.getImageurl()!=null){
 						String imageurl = r.getImageurl();
 						String [] imageurlArry = imageurl.split(",");
 						%>
-					 <div><img alt="" src="<%=imageurlArry[0]%>" width="250px" height="225px" style = "object-fit: contain"></div> 
+					 <img class="card-img-top"  src="<%=imageurlArry[0]%>" width="280px" height="224px"  >
 						<%}else{ %>
-						<div><img alt="" src="./resource/images/no_image.png" width="100%" height="100%" style = "object-fit: contain"></div> 
+						<div><img alt="" src="./resource/images/no_image.png" width="280px" height="224px" style = "object-fit: fill"></div> 
 						<%} %>
 								<a class="boardtitle" href="GetRestaurantPro?seq=<%=r.getSeq()%>"><%=r.getTitle()%></a>
 								<p class="card-text"><%=r.getRestaurantname() %><br><%=r.getNickname() %><br><%=r.getOnelinereview() %></p>
 								<div class="d-flex justify-content-between align-items-center">
 									<div class="btn-group">
 										
-										<p><%=r.getCnt() %> 조회수</p>
-										<p><%=r.getComment_cnt() %> 댓글수</p>
+										<p> <img src="./resource/images/eye.svg">  <%=r.getCnt() %></p>&nbsp;&nbsp;
+										<p> <img src="./resource/images/chat-dots.svg">  <%=r.getComment_cnt() %></p>
 										
 									</div>
 									<small class="text-muted"><%=r.getRegdate()%></small>

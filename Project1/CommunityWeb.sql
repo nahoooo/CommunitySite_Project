@@ -66,6 +66,10 @@ placeLa varchar2(30), --식당 위도
 placeLO varchar2(30) --식당 경도
 )
 
+select seq,placeLa,placeLO from recommend_R
+
+select seq,restaurantname,placeLa,placeLO,title,nickname from recommend_R where placeLa is not null and placeLO is not null
+
 select * from recommend_R
 
 drop table recommend_R

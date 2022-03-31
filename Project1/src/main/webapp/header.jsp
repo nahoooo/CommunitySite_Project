@@ -43,7 +43,7 @@ String nickname = (String) session.getAttribute("nickname");
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">    
-                    	  <li class="nav-item"><a class="nav-link" href="GetRestaurantListPro">맛지도</a></li>                                
+                    	  <li class="nav-item"><a class="nav-link" href="TasteMap">맛지도</a></li>                                
                         <li class="nav-item"><a class="nav-link" href="GetRestaurantListPro">나만의 맛집</a></li>                       
                         <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">COMMUNITY</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
