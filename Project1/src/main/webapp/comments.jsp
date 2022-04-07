@@ -20,6 +20,9 @@ String boardtype = request.getParameter("boardtype");
 			</div>
 			<table class="table" style="width: 800px">
 				<tr>
+				<td width="73px">
+					<img alt="" src="./resource/images/default_profile.jpg" width="72px" height="76px" style = "object-fit: fill"> 
+				</td>
 					<td>
 						<input type="hidden" value="<%=nickname%>" name="nickname" id="nickname"> <input type="hidden" value="<%=seq%>" name="seq" id="seq">
 						<input type="hidden" value="<%=boardtype%>" name="boardtype" id="boardtype">

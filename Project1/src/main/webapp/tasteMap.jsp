@@ -3,11 +3,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+request.setCharacterEncoding("utf-8");
+response.setContentType("text/html; charset=utf-8");
 ArrayList<RestaurantVO> restaurantList = (ArrayList<RestaurantVO>) request.getAttribute("restaurantList");
 %>
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <meta charset="UTF-8">
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=08b402e028254d6d57047b09a9521f83"></script>
 <title></title>
@@ -49,9 +52,7 @@ ArrayList<RestaurantVO> restaurantList = (ArrayList<RestaurantVO>) request.getAt
 .info .title {
 	padding: 5px 0 0 10px;
 	height: 30px;
-	background: #eee;
-	border-bottom: 1px solid #ddd;
-	font-size: 18px;
+	font-size: 20px;
 	font-weight: bold;
 }
 
@@ -87,10 +88,10 @@ ArrayList<RestaurantVO> restaurantList = (ArrayList<RestaurantVO>) request.getAt
 	white-space: nowrap;
 }
 
-.desc .jibun {
-	font-size: 11px;
+.desc .starrating {
+	font-size: 2em;
 	color: #888;
-	margin-top: -2px;
+	margin-top: -15PX;
 }
 
 .info .img {
@@ -125,10 +126,62 @@ ArrayList<RestaurantVO> restaurantList = (ArrayList<RestaurantVO>) request.getAt
 	<div class="d-flex">
 
 		<div id="map" style="width: 800px; height: 600px;"></div>
-		<div style="width: 300px;">식당정보</div>
+		<div style="width: 500px;">			
+			<div id="tastemapdetaile">				
+				<h1 align="center" id="restaurantname"></h1>
+						<div id="carouselExampleSlidesOnly" style="width: 500px; height: 300px" class="carousel slide" data-bs-ride="carousel">				
+							<img id="thumbnail" src="./resource/images/default_profile.jpg" height="300" width="500" class="d-block w-100" style="object-fit: contain">								
+						</div>				
+			<table>				
+				<tr>
+					<th>주소</th>
+					<td id="addr"></td>
+				</tr>
+				
+				<tr>
+					<th ><span id="nickname"></span>님의 한줄평</th>					
+					<td id="review" colspan="2"></td>
+				</tr>
+				<tr>
+					<th>전화번호</th>
+					<td id="tel"></td>										
+				</tr>	
+				<tr>
+					<th>주차가능여부</th>
+					<td id="parking"></td>
+				</tr>		
+			</table>
+			</div>
+		</div>
 	</div>
 	<script>
-/////////////////지도의 중심을 현재 위치로 변경///////////////////////
+/////////////////지도의 중심을 사용자 위치로 변경///////////////////////
+
+function detail(seq) {	
+		$.ajax({
+			type : "post", //통신타입 설정. get,post등의 방식 사용.
+			url : "TasteMapDetail", //요청 url 자원의 고유 위치			
+			data : {//서버에 요청할때 보낼 매개변수 설정. 보낼변수 이름 : 변수 값		
+				seq : seq
+			},
+			dataType : "json",
+			async: true,						
+			success : function(data) { //요청한 페이지에서 보내온 값을 data란 변수로 받아온다.
+ 				$('#restaurantname').text(data.restaurantname);
+ 				$('#nickname').text(data.nickname);
+ 				$('#review').text(data.onelinereview);
+ 				$('#addr').text(data.restaurantaddr);
+ 				$('#parking').text(${data.parking});
+ 				$('#tel').text(${data.tel}); 				
+ 				$('#thumbnail').attr("src",data.thumbnail);				 												
+			}, //요청응답에 성공했을 때 처리 할 구문.
+			error : function() {
+				alert('전송 실패')
+			}//요청 실패시 나오는 구문.
+		});
+	};
+
+
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	    mapOption = { 
 	        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
@@ -161,75 +214,120 @@ ArrayList<RestaurantVO> restaurantList = (ArrayList<RestaurantVO>) request.getAt
 	
 	// 마커를 표시할 위치와 내용을 가지고 있는 객체 배열
 	var positions = [];
-			
+	var imageurlreal =[];
+	
 	<%for (int i = 0; i < restaurantList.size(); i++) {
-	RestaurantVO r = restaurantList.get(i);%>						
+	RestaurantVO r = restaurantList.get(i);%>			
 			positions.push(
-				{
-					content : '<div class="wrap">' + 
-		            '    <div class="info">' + 
-		            '        <div class="title">' + 
-		            '            <%=r.getRestaurantname()%>' + 
-		            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-		            '        </div>' + 
-		            '        <div class="body">' + 
-		            '            <div class="img">' +		         
-		            '           </div>' + 
-		            '            <div class="desc">' + 
-		            '                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' + 
-		            '                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' + 
-		            '                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' + 
-		            '            </div>' + 
-		            '        </div>' + 
-		            '    </div>' +    
-		            '</div>',
+				{					
+					seq : <%=r.getSeq()%>,
 					latlng : new kakao.maps.LatLng(<%=r.getPlaceLO()%>, <%=r.getPlaceLa()%>),
-					seq : <%=r.getSeq()%>
+					restaurantname : '<%=r.getRestaurantname()%>', 
+					nickname : '<%=r.getNickname()%>',					
+					onelinereview : "<%=r.getOnelinereview()%>",
+					starrating : <%=r.getStarrating()%>,
+					<%if (r.getThumbnail() != null) {%>
+					image : '<%=r.getThumbnail().trim()%>'
+					<%} else {%>
+					image :  './resource/images/no_image.png'
+					<%}%>
 				}, 						
-			); 			
-			console.log("등록");
-	<%}%>
-	console.log(positions[0].seq)
-	console.log(positions[1].seq)
-	console.log(positions[2].seq)
+			); 							
+	<%}%>			
 	
- 
-	
-	for (var i = 0; i < positions.length; i++) {
-		// 마커를 생성합니다
-			var	marker  = new kakao.maps.Marker({
-			map : map, // 마커를 표시할 지도	
-			position : positions[i].latlng// 마커의 위치					
-			});		
-			//마커 위에 커스텀오버레이를 표시합니다
-			//마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
-			var overlay= new kakao.maps.CustomOverlay({
-			content: positions[i].content,
-			map: map,
-			position: positions[i].latlng       
-			});
-		
-		};
-		
-	
+	for(let i=0; i < positions.length; i++){
+	    var data = positions[i];
+	   
+	    displayMarker(data);
+
+	 	
+	// 지도에 마커를 표시하는 함수입니다    
+	function displayMarker(data) { 
+	    var marker = new kakao.maps.Marker({
+	        map: map,
+	        position : data.latlng
+	    });
+	    var overlay = new kakao.maps.CustomOverlay({
+	        yAnchor: 3,
+	        position: data.latlng  
+	    });
+	    ////////////////커스텀오버레이 작성코드//////////////////////////////
+	    				var Customcontent = document.createElement('div');
+						Customcontent.className = "wrap";
+
+						var info = document.createElement('div');
+						info.className = "info"			
+						Customcontent.appendChild(info);
+
+						//커스텀오버레이 식당이름
+						var contentTitle = document.createElement("div");
+						contentTitle.className = "title"
+						contentTitle.appendChild(document.createTextNode(data.restaurantname));
+						info.appendChild(contentTitle);
+						
+						//커스텀오버레이 닫기 버튼
+						var closeBtn = document.createElement("div");
+						closeBtn.className = "close";
+						closeBtn.setAttribute("title","닫기");
+						closeBtn.onclick = function() { overlay.setMap(null); };
+						contentTitle.appendChild(closeBtn);
+
+					 	var bodyContent = document.createElement("div");
+						bodyContent.className = "body";
+						info.appendChild(bodyContent);
+
+ 						 var imgDiv = document.createElement("div");
+						imgDiv.className = "img";
+						bodyContent.appendChild(imgDiv);
+						
+						//커스텀오버레이 이미지
+						var imgContent = document.createElement("img");
+						imgContent.setAttribute("src",data.image);
+						imgContent.setAttribute("width", "73");
+						imgContent.setAttribute("heigth", "70");
+						imgDiv.appendChild(imgContent); 
+
+				 		var descContent = document.createElement("div");
+						descContent.className = "desc"
+						bodyContent.appendChild(descContent);  
+
+						//커스텀오버레이 별점	
+						var starratingContent = document.createElement("div");
+						starratingContent.className = "starrating";
+						starratingContent.appendChild(document.createTextNode("☆"+data.starrating));
+						descContent.appendChild(starratingContent);
+
+				 		 //커스텀오버레이 한줄평
+						var onelinereviewContent = document.createElement("div");
+						onelinereviewContent.className = "onelinereview";
+						onelinereviewContent.appendChild(document.createTextNode(data.onelinereview));
+						descContent.appendChild(onelinereviewContent);
+
+						var LinkDiv = document.createElement("div");
+						descContent.appendChild(LinkDiv); 
+
+						//커스텀오버레이 상세보기
+					 	var LinkContent = document.createElement("a");						
+  						LinkContent.setAttribute("onclick",'detail('+data.seq+');');
+ 				    	//LinkContent.setAttribute("target", "_blank");						
+						LinkContent.className = "link";
+						LinkContent.appendChild(document.createTextNode("상세보기"));
+						LinkDiv.appendChild(LinkContent);   
+						
+						//마커 위에 커스텀오버레이 콘텐츠 Dom으로 구현 끝
+
+						overlay.setContent(Customcontent);
+						
+						kakao.maps.event.addListener(marker, 'click', function() {
+					        overlay.setMap(map);
+					    });
+
+	};	
+};	
 
 
-//마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-kakao.maps.event.addListener(marker, 'click', function() {
-overlay.setMap(map);
-});
 
-//커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
-function closeOverlay() {
-overlay.setMap(null);     
-}	
 
-		 
-				
-	
-
-	
-	
 
 		
 	</script>

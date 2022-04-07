@@ -7,8 +7,11 @@ NICKNAME VARCHAR2(20) NOT NULL, --회원 닉네임
 EMAIL VARCHAR2(30) NOT NULL, --회원 이메일
 PASSWORD VARCHAR2(20) NOT NULL,--회원 비밀번호
 REGIST_DATE DATE DEFAULT SYSDATE,--가입일
-GRADE VARCHAR2(7) DEFAULT 'User' --회원등급
+GRADE VARCHAR2(7) DEFAULT 'User', --회원등급
+USERPROFILE VARCHAR2(100) --회원프로필사진
 )
+
+UPDATE MEMBER SET userProfile='/userProfile/20210115051410309_photo_fe1650f3c4307.jpg' WHERE nickname='말랑카우'
 
 --커뮤니티게시판 테이블(다중게시판)
 create table board_(
@@ -25,7 +28,7 @@ imageurl varchar2(500), --이미지 경로
 constraint board_PK primary key(seq,boardtype)
 )
 
-select * from BOARD_
+select * from recommend_R
 drop table BOARD_
 
 
@@ -43,6 +46,8 @@ primary key(boardseq,boardtype,seq) --두 개의 필드를 조합해서 기본�
 ALTER TABLE replyboard_ ADD CONSTRAINT reply_fk foreign KEY(boardseq,boardtype) references board_ (seq,boardtype) ON DELETE CASCADE;
 ALTER TABLE replyboard_ DROP CONSTRAINT reply_fk;
 
+select * from recommend_R
+drop table R_replyboard_
 
 --나만의 맛집 추천 테이블
 create table recommend_R(
@@ -54,10 +59,12 @@ restaurantaddr varchar2(100) not null, --식당 주소
 onelinereview varchar2(100) not null, --식당 한줄평
 tel varchar2(20), --식당 전화번호
 openinghours varchar2(50), --식당 영업시간
-parking varchar2(50), --식당 주차가능여부
+parking varchar2(50), --식당 주차가능여부s
 closed varchar2(50), --식당 휴뮤일
 content varchar2(4000) not null, --게시글 내용
 imageurl varchar2(500), --이미지 경로
+thumbnail varchar2(100), --썸네일
+starrating number(5) default 0, --별점.
 regdate date default sysdate, --게시글 작성일
 cnt number(5) default 0, --게시글 조회수
 like_cnt number(5) default 0, --게시글 좋아요
@@ -66,13 +73,34 @@ placeLa varchar2(30), --식당 위도
 placeLO varchar2(30) --식당 경도
 )
 
-select seq,placeLa,placeLO from recommend_R
+--맛집추천 댓글(별점추가)
+create table R_replyboard_(
+boardseq number(5) not null, --board테이블의 seq를 참고하는 필드(외래키)
+seq number(5) not null, --같은 게시물의 댓글들의 순번을 지정하는 필드
+nickname varchar2(30) not null, --댓글 남긴 사람 닉네임.
+regdate date default sysdate, --댓글 남긴 시간.
+reply varchar2(1000) not null, --댓글 내용.
+starrating number(5), --별점.
+primary key(boardseq,seq) --두 개의 필드를 조합해서 기본키로 정의
+)
+
+insert into R_replyboard_(boardseq,seq,nickname,reply,starrating) values(1,(select nvl(max(seq),0)+1 from R_replyboard_ where boardseq =1),'말랑카우','말랑카우',3)
+
+update recommend_R a set(starrating)=(select avg(b.starrating) from R_replyboard_ b  where b.seq=a.seq) where a.seq=1
+
+--댓글 삭제를 위한 외래키 설정
+ALTER TABLE R_replyboard_ ADD CONSTRAINT R_reply_fk foreign KEY(boardseq) references recommend_R (seq) ON DELETE CASCADE;
+ALTER TABLE R_replyboard_ DROP CONSTRAINT R_reply_fk;
+
+select  * from R_replyboard_
+
+select seq,restaurantname,placeLa,placeLO,title,nickname,onelinereview,imageurl from recommend_R where placeLa is not null and placeLO is not null
 
 select seq,restaurantname,placeLa,placeLO,title,nickname from recommend_R where placeLa is not null and placeLO is not null
 
 select * from recommend_R
 
-drop table recommend_R
+drop table R_replyboard_
 
 insert into board_(seq,title,nickname,content,regdate,boardno)
 values ((select nvl(max(seq),0)+1 from board_ where boardno = 3),'2 번째 게시물','홍길동','2 번째 게시물 내용.','2022-02-01',3);

@@ -24,16 +24,20 @@ public class JoinPro extends HttpServlet {
 		String nickname = request.getParameter("nickname");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String userprofile = request.getParameter("userprofile_default");
+		System.out.println(userprofile);
+		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		try {
 			conn=JDBCConnection.getConnection();
-			String sql ="insert into member(id,nickname,email,password) values(?,?,?,?)";
+			String sql ="insert into member(id,nickname,email,password,userprofile) values(?,?,?,?,?)";
 			stmt=conn.prepareStatement(sql);
 			stmt.setString(1, id);
 			stmt.setString(2, nickname);
 			stmt.setString(3, email);
 			stmt.setString(4, password);
+			stmt.setString(5, userprofile);
 			
 			int cnt = stmt.executeUpdate();
 			System.out.println(cnt+"개 등록되었습니다.");

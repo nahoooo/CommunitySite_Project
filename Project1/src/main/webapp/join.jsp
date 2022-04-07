@@ -46,6 +46,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
+						<input type="hidden" name="userprofile_default" value="/resource/images/default_profile.jpg">
 						<button class="w-100 btn btn-lg btn-success" type="button" onclick="checkJoin();">회원가입</button>
 					</td>
 				</tr>

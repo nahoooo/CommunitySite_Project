@@ -43,16 +43,16 @@ System.out.println("/GetBoardPro");
 		Connection conn=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
-		
+			
 		try {
 			conn=JDBCConnection.getConnection();
 			
-		
+			
 			
 			
 			
 			//해당 게시물 데이터 가져오기
-			String sql="select seq,restaurantname,placeLa,placeLO,title,nickname from recommend_R where placeLa is not null and placeLO is not null";
+			String sql="select seq,restaurantname,placeLa,placeLO,title,nickname,onelinereview,imageurl,thumbnail,starrating from recommend_R where placeLa is not null and placeLO is not null";
 			stmt=conn.prepareStatement(sql);
 			
 			
@@ -69,6 +69,10 @@ System.out.println("/GetBoardPro");
 				restaurant.setPlaceLO(rs.getString("placeLO"));
 				restaurant.setTitle(rs.getString("title"));
 				restaurant.setNickname(rs.getString("nickname"));
+				restaurant.setOnelinereview(rs.getString("onelinereview"));
+				restaurant.setImageurl(rs.getString("imageurl"));
+				restaurant.setThumbnail(rs.getString("thumbnail"));
+				restaurant.setStarrating(rs.getInt("starrating"));
 				restaurantList.add(restaurant);
 				System.out.println("등록");
 				

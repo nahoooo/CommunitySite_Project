@@ -15,12 +15,32 @@ public class RestaurantVO {
 	private String closed;
 	private String content;
 	private String imageurl;
+	private String thumbnail;
 	private Date regdate;
 	private int cnt;
 	private int like_cnt;
 	private int comment_cnt;
 	private String placeLa;
 	private String placeLO;
+	private int starrating;
+	
+	
+	
+	
+	
+
+	public int getStarrating() {
+		return starrating;
+	}
+	public void setStarrating(int starrating) {
+		this.starrating = starrating;
+	}
+	public String getThumbnail() {
+		return thumbnail;
+	}
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
 	public int getSeq() {
 		return seq;
 	}

@@ -7,6 +7,17 @@ public class ReplyBoardVO {
 	private String regdate;
 	private String reply;
 	private String boardtype;
+	private int starrating;
+
+	
+	
+	public int getStarrating() {
+		return starrating;
+	}
+
+	public void setStarrating(int starrating) {
+		this.starrating = starrating;
+	}
 
 	public int getBoardseq() {
 		return boardseq;

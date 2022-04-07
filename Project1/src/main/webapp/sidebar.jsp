@@ -16,46 +16,53 @@ String nickname = (String) session.getAttribute("nickname");
 	<a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
 		<svg class="bi me-2" width="40" height="32">
 			<use xlink:href="#bootstrap"></use></svg>
-		<span class="fs-4">오늘뭐먹지</span>
+		<span class="fs-4">오늘뭐먹지?</span>
 	</a>
+	<br>
 	<div class="dropdown">
 		<%
 		if (nickname == null) {
 		%>
-		<p>로그인으로 더 재미있게!</p>
-		<button>로그인</button>
+		<div align="center">
+		<p>로그인으로 더 맛있게!</p>
+		<br>
+		<button class="btn btn-success">로그인</button>
+		</div>
+		<br>
 		<%
 		} else {
 		%>
-		<a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-			<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2"> <strong><%=nickname%></strong>
-		</a>
-		<ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-			<li><a class="dropdown-item" href="#">쪽지</a></li>
-			<li><a class="dropdown-item" href="#">내정보</a></li>
-			<li><hr class="dropdown-divider"></li>
-			<li><a class="dropdown-item" href="Logout">로그아웃</a></li>
-		</ul>
+			<div align="center">
+			<img src=".${sessionScope.userProfile }" alt="" width="120" height="120" class="rounded-circle me-2">
+			<p><strong><%=nickname %> 님</strong></p>
+			<table>
+			<tr>
+			<td><a class="dropdown-item" href="">쪽지</a></td>
+			<td><a class="dropdown-item" href="UserProfile">내정보</a></td>
+			</tr>
+			<tr>			
+			<td colspan="1"><a class="dropdown-item" href="Logout">로그아웃</a></td>
+			</tr>
+			</table>
+			</div>
 		<%
 		}
 		%>
 	</div>
 	<hr>
 	<ul class="nav nav-pills flex-column mb-auto">
-		<li class="nav-item"><a href="#" class="nav-link" aria-current="page"> Home </a></li>
-		<li><a href="#" class="nav-link link-dark"> 나만의맛집 </a></li>		
-		<li class="mb-1">
-			<button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">커뮤니티</button>
-			<div class="collapse" id="account-collapse">
-				<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-					<li><a href="#" class="link-dark rounded">공지사함</a></li>
-					<li><a href="#" class="link-dark rounded">맛집방문기</a></li>
-					<li><a href="#" class="link-dark rounded">나만의레시피</a></li>
-					<li><a href="#" class="link-dark rounded">자유게시판</a></li>
-					<li><a href="#" class="link-dark rounded">문의사항</a></li>
-				</ul>
-			</div>
-		</li>		
+		<li class="nav-item"><a href="index.jsp" class="nav-link link-dark"> Home </a></li>
+		<li><a href="TasteMap" class="nav-link link-dark"> 맛지도 </a></li>		
+		<li><a href="GetRestaurantListPro" class="nav-link link-dark"> 나만의맛집 </a></li>	
+		<li><hr></li>	
+		<li>Community</li>					
+				
+					<li><a href="GetBoardListPro?boardtype=notice" class="nav-link link-dark">공지사함</a></li>
+					<li><a href="GetBoardListPro?boardtype=review" class="nav-link link-dark">맛집방문기</a></li>
+					<li><a href="GetBoardListPro?boardtype=recipe" class="nav-link link-dark">나만의레시피</a></li>
+					<li><a href="GetBoardListPro?boardtype=free" class="nav-link link-dark">자유게시판</a></li>
+					<li><a href="GetBoardListPro?boardtype=questions" class="nav-link link-dark">문의사항</a></li>
+										
 	</ul>
 	<hr>
 </div>

@@ -1,3 +1,5 @@
+<%@page import="com.company.board.vo.ReplyBoardVO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.company.board.vo.RestaurantVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
@@ -8,6 +10,7 @@ String nickname = (String) session.getAttribute("nickname");
 //1.Servlet이 전달한 데이터를 받는다.
 
 RestaurantVO r = (RestaurantVO) request.getAttribute("restaurant");
+ArrayList<ReplyBoardVO> replylist = (ArrayList<ReplyBoardVO>) request.getAttribute("replylist");
 
 //게시글 작성자의 닉네임.
 String WriterNn = r.getNickname();
@@ -15,7 +18,7 @@ String WriterNn = r.getNickname();
 String imageurl = r.getImageurl();
 String[] imageurlArry = null;
 if (imageurl != null) {
-	imageurlArry = imageurl.split(",");
+	imageurlArry = imageurl.split("\n");
 }
 %>
 <!DOCTYPE html>
@@ -34,6 +37,12 @@ ul {
 	width: 800px;
 	height: 600px;
 	object-fit: contain;
+}
+
+
+
+.starrating{
+  -webkit-text-fill-color: gold;
 }
 </style>
 </head>
@@ -128,19 +137,71 @@ ul {
 			if (nickname.equals(WriterNn)) {
 			%>
 			<button type="button" class="btn btn-success" onclick="">수정</button>
-			<button type="button" class="btn btn-success" onclick="deleteBoard();">삭제</button>
+			<button type="button" class="btn btn-success" onclick="deleteRestaurnat()">삭제</button>
 			<%
 			}
 			%>
 		</div>
+				<!--댓글 리스트-->
+		<div id="replyList" style="width: 820px; margin: auto auto">
+
+			<ul style="list-style: none;">
+				<%
+				if (replylist.size() == 0) {//답글이 없는 경우. null이 아니라 size로 해줘야 함.
+				%>
+
+				<li>댓글이 없습니다. 댓글을 작성해주세요!</li>
+
+				<%
+				} else {
+				for (int i = 0; i < replylist.size(); i++) {
+					ReplyBoardVO vo = replylist.get(i);
+				%>
+				<li style="margin-bottom: 15px">
+					<div class="container">
+					
+						<img alt="" src="./resource/images/default_profile.jpg" width="72px" height="76px" style = "object-fit: fill"> 
+						
+						<span><b><%=vo.getNickname()%></b></span>
+					<span><span class="starrating">★</span><%=vo.getStarrating()%>/5</span> 
+						<span style="color: gray; font-size: 12px;">(<%=vo.getRegdate()%>)</span>
+
+						<!--세션 닉네임과 댓글 닉네임이 같을 경우 수정/삭제 가능  -->
+						<%
+						if (nickname.equals(vo.getNickname())) {
+						%>
+						<form action="" name="replymodi<%=vo.getSeq()%>" style="display: inline;">
+							<span style="margin-left: 300px">
+								<button type="button" id="modifyR_Btn" class="btn btn-success btn-sm modify">수정</button>
+								<button type="button" style="display: none;" id="modifyRS_Btn"  class="btn btn-success btn-sm modify"onclick="replymodi(boardseq_r,seq_r,replaytext);">전송</button>
+								<button type="button" style="display: none;" id="modifyRC_Btn" class="btn btn-success btn-sm modify">취소</button>
+								<button type="button" id="modifyRD_Btn" class="btn btn-success btn-sm modify" onclick="delectR_Btn(boardseq_r,seq_r); return false;">삭제</button>
+							</span>
+							<%
+							}
+							%>
+				
+							<input id="boardseq_r" type="hidden" value="<%=vo.getBoardseq()%>"> <input id="seq_r" type="hidden" value="<%=vo.getSeq()%>">
+							<textarea id="replaytext" class="form-control replyarea" rows="2" style="border: 0 solid black; background-color: white; resize: none; outline: none" cols="90" readonly="readonly" ><%=vo.getReply()%></textarea>
+					</form>
+						<hr>
+					</div>
+				</li>
+
+				<%
+				}
+				}
+				%>
+			</ul>
+		</div>
+		<br>
+		<br>
 		<div>
-			<jsp:include page="comments.jsp">
+			<jsp:include page="commentsRestaurant.jsp">
 				<jsp:param value="<%=nickname%>" name="nickname" />
 				<jsp:param value="<%=r.getSeq()%>" name="seq" />
 			</jsp:include>
 		</div>
 	</div>
-
-
 </body>
 </html>

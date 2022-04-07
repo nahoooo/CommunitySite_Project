@@ -61,10 +61,9 @@ var marker = new kakao.maps.Marker({
 
 // 마커가 지도 위에 표시되도록 설정합니다
 marker.setMap(map);  
-
 // 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 var content =  '<div class="customoverlay">' +
-'  <a href="https://map.kakao.com/?q='+Restaurantname+'" target="_blank">' +
+'  <a href="https://map.kakao.com/link/to/'+Restaurantname+','+PlaceLO+','+PlaceLa+'" target="_blank">' +
 '    <span class="title" style="padding-bottom:0px";>'+Restaurantname+'</span>' +
 '    <span class="title" style="font-size:0.7em;padding-top:0px;padding-bottom:0px">지도보기</span>' +
 '  </a>' +

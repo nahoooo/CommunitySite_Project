@@ -49,13 +49,11 @@ ArrayList<RestaurantVO> RestaurantList = (ArrayList<RestaurantVO>) request.getAt
 					<div class="col" style="width: 280px; height: 402px; ">
 						<div class="card shadow-sm">							
 							<div class="card-body" style="padding: 0px; ">
-							<%if(r.getImageurl()!=null){
-						String imageurl = r.getImageurl();
-						String [] imageurlArry = imageurl.split(",");
-						%>
-					 <img class="card-img-top"  src="<%=imageurlArry[0]%>" width="280px" height="224px"  >
+							<%if(r.getThumbnail()!=null){%> 
+					 <img class="card-img-top"  src="<%=r.getThumbnail()%>" width="280px" height="224px">					
 						<%}else{ %>
-						<div><img alt="" src="./resource/images/no_image.png" width="280px" height="224px" style = "object-fit: fill"></div> 
+						<div><img alt="" src="./resource/images/no_image.png" width="280px" height="224px" style = "object-fit: fill">						
+						</div> 
 						<%} %>
 								<a class="boardtitle" href="GetRestaurantPro?seq=<%=r.getSeq()%>"><%=r.getTitle()%></a>
 								<p class="card-text"><%=r.getRestaurantname() %><br><%=r.getNickname() %><br><%=r.getOnelinereview() %></p>
@@ -71,7 +69,8 @@ ArrayList<RestaurantVO> RestaurantList = (ArrayList<RestaurantVO>) request.getAt
 							</div>
 						</div>
 					</div>
-				
+			
+
 				<%} %>
 				</div>
 		</div>

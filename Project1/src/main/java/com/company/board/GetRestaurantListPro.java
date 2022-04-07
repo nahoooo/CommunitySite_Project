@@ -39,8 +39,7 @@ System.out.println("/GetBoardListPro");
 		else 
 			page=Integer.parseInt(request.getParameter("page"));
 		
-		String boardtype = request.getParameter("boardtype");
-		
+			
 		HttpSession session=request.getSession();
 		String nickname2=(String)session.getAttribute("nickname");
 		
@@ -87,6 +86,7 @@ System.out.println("/GetBoardListPro");
 						String placeLo = rs.getString("placeLo");
 						String content = rs.getString("content");										
 						String imageurl=rs.getString("imageurl");
+						String thumbnail=rs.getString("thumbnail");
 						Date regdate=rs.getDate("regdate");
 						int cnt=rs.getInt("cnt");
 						int like_cnt=rs.getInt("like_cnt");
@@ -107,6 +107,7 @@ System.out.println("/GetBoardListPro");
 						restaurant.setPlaceLO(placeLo);
 						restaurant.setContent(content);
 						restaurant.setImageurl(imageurl);
+						restaurant.setThumbnail(thumbnail);						
 						restaurant.setRegdate(regdate);
 						restaurant.setCnt(cnt);
 						restaurant.setLike_cnt(like_cnt);

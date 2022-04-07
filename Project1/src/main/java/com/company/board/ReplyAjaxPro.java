@@ -37,24 +37,24 @@ public class ReplyAjaxPro extends HttpServlet {
 		System.out.println(nickname);
 		System.out.println(comment);
 		System.out.println(seq);
-		System.out.println(boardtype);
-
+		System.out.println(boardtype); 	
+		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 
 		int result = 0;
 		try {
-
 			conn = JDBCConnection.getConnection();
-			String sql = "insert into replyboard_(boardseq,boardtype,seq,nickname,reply) values(?,?,(select nvl(max(seq),0)+1 from replyboard_ where boardseq =? and boardtype = ?),?,?)";
-			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, seq);
-			stmt.setString(2, boardtype);
-			stmt.setInt(3, seq);
-			stmt.setString(4, boardtype);
-			stmt.setString(5, nickname);
-			stmt.setString(6, comment);
-
+						
+				String sql = "insert into replyboard_(boardseq,boardtype,seq,nickname,reply) values(?,?,(select nvl(max(seq),0)+1 from replyboard_ where boardseq =? and boardtype = ?),?,?)";
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, seq);
+				stmt.setString(2, boardtype);
+				stmt.setInt(3, seq);
+				stmt.setString(4, boardtype);
+				stmt.setString(5, nickname);
+				stmt.setString(6, comment);
+				
 			int cnt = stmt.executeUpdate();
 
 			if (cnt != 0) {

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,21 +44,33 @@ public class AddRestaurantPro extends HttpServlet {
 		String content = request.getParameter("content"); // 내용
 
 		// 이미지 url 추출. String으로 한번에 저장되기 때문에 다시 사용할 때 파싱 필요.
-		String imageurl = "";
+		String imageurl="";
+		
+		ArrayList<String> s = new ArrayList<String>();
+		
 		Pattern pattern = Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>"); // img 태그 src 추출 정규표현식
 		Matcher matcher = pattern.matcher(content);
 
-		while (matcher.find()) {
-			imageurl += matcher.group(1)+",";
-			
+		
+		while (matcher.find()) {	
+			imageurl+=matcher.group(1);
+			s.add((String)matcher.group(1));
 		}
+		String thumbnail =s.get(0).trim();
 		System.out.println(imageurl);
+		System.out.println("----------------");
+		System.out.println(s.get(0).trim());
+		System.out.println(s.get(1).trim());
+		System.out.println(s.get(2).trim());
+		System.out.println("----------------");		
+		System.out.println(thumbnail);
+		System.out.println("입력시작");
 		Connection conn = null;
 		PreparedStatement stmt = null;
 
 		try {
 			conn = JDBCConnection.getConnection();
-			String sql = "insert into recommend_R(seq,nickname,title,restaurantname,restaurantaddr,onelinereview,tel,openinghours,parking,closed,placeLa,placeLo,content,imageurl) values((select nvl(max(seq),0)+1 from recommend_R),?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into recommend_R(seq,nickname,title,restaurantname,restaurantaddr,onelinereview,tel,openinghours,parking,closed,placeLa,placeLo,content,imageurl,thumbnail) values((select nvl(max(seq),0)+1 from recommend_R),?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, nickname);
 			stmt.setString(2, title);
@@ -72,9 +85,12 @@ public class AddRestaurantPro extends HttpServlet {
 			stmt.setString(11, placeLo);
 			stmt.setString(12, content);
 			stmt.setString(13, imageurl);
+			stmt.setString(14, thumbnail);
+		
 
 			int cnt = stmt.executeUpdate();
 			if (cnt != 0)
+				System.out.println("입력완료");
 
 				response.sendRedirect("GetRestaurantListPro");
 

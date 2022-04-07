@@ -23,6 +23,7 @@ public class LoginPro extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		System.out.println("/LoginPro");
 		String id = request.getParameter("Id");
 		String saveid = request.getParameter("saveid");
 		
@@ -47,16 +48,19 @@ public class LoginPro extends HttpServlet {
 		
 		try {
 			conn=JDBCConnection.getConnection();
-			String sql="select nickname from member where id=?";
+			String sql="select nickname,userprofile from member where id=?";
 			stmt=conn.prepareStatement(sql);
 			stmt.setString(1, id);
 			
 			rs=stmt.executeQuery();
 			if(rs.next()) {
 				String nickname = rs.getString(1);
+				String userProfile = rs.getString(2);
 				HttpSession session=request.getSession();
 				System.out.println(nickname);
+				System.out.println(userProfile);
 				session.setAttribute("nickname", nickname);
+				session.setAttribute("userProfile", userProfile);
 				response.sendRedirect("index.jsp");
 			}else {
 			

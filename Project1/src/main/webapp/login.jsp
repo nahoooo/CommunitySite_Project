@@ -18,7 +18,7 @@
 			<form style="width: 350px;" name="loginForm" action="LoginPro">
 				<img class="mb-4" src="./resource/images/restaurant.png" alt="" width="50" height="50">
 				<div class="form-floating" style="margin-bottom: 10px">
-					<input type="text" class="form-control" name="Id" id="floatingInput" placeholder="아이디를 입력해주세요"  value="<%=cookie%>" > <label for="floatingInput">아이디</label>
+					<input type="text" class="form-control" name="Id" id="floatingInput" placeholder="아이디를 입력해주세요"  <%-- value="<%=cookie%>" --%> value="qqq123" > <label for="floatingInput">아이디</label>
 				</div>
 				<div class="form-floating">
 					<input type="password" class="form-control" id="floatingPassword" placeholder="비밀번호를 입력해주세요" value="qweqwe123!" > <label for="floatingPassword">비밀번호</label>

@@ -11,23 +11,15 @@ if (filePath == null) {
 }
 
 String nickname = (String) session.getAttribute("nickname");
+String userProfile = (String) session.getAttribute("userProfile");
 %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Agency - Start Bootstrap Theme</title>
-        <!-- Favicon-->
-        <link rel="icon" type="resource/image/x-icon" href="resource/assets/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
+
+        <title>헤더 네비게이션</title>
         <link href="./resource/css/styles.css" rel="stylesheet" />
     </head>
     <body >
@@ -59,8 +51,13 @@ String nickname = (String) session.getAttribute("nickname");
 						<li class="nav-item"><a class="nav-link" href="index.jsp?filePath=login">Login</a></li>
 						<%
 						} else if (nickname != null) {
-						%>					
-						<li class="nav-item"><a class="nav-link" href="#"><%=nickname%>님</a></li>
+						%>	
+													
+									
+						<li class="nav-item" style="margin-top: -6px">
+							
+							<a class="nav-link" href="UserProfile"><img style="border-radius:20px; display: inline-block;" src=".${sessionScope.userProfile }" width="40px" height="40px"><%=nickname%>님</a>
+						</li>
 						<li class="nav-item"><a class="nav-link" href="Logout">LOGOUT</a></li>
 						<%
 						}
@@ -74,8 +71,8 @@ String nickname = (String) session.getAttribute("nickname");
             <div class="container">
                 <div class="masthead-subheading">오늘 뭐먹지?</div>
                 <div class="masthead-heading text-uppercase">여러분의 맛집을 공유해주세요!</div>
-                <a class="btn btn-primary btn-xl text-uppercase" href="GetRestaurantListPro">맛집공유하기</a>
-                <a class="btn btn-outline-warning" href="GetRestaurantListPro">맛집공유하기</a>
+                <a class="btn btn-success btn-xl text-uppercase" href="GetRestaurantListPro">맛집공유하기</a>
+            
             </div>
         </header>
         <%}else{ %>
@@ -84,9 +81,5 @@ String nickname = (String) session.getAttribute("nickname");
             </div>
         </header>
         <%} %>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->   
-      <!--   <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script> -->
     </body>
 </html>
