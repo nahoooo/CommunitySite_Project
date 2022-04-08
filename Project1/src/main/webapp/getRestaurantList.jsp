@@ -35,9 +35,10 @@ ArrayList<RestaurantVO> RestaurantList = (ArrayList<RestaurantVO>) request.getAt
 <title>Insert title here</title>
 </head>
 <body>
-	<div class="col align-self-center" style="width: 920px; text-align: center; margin-top: 50px">
+	<div class="col align-self-center" style="width: 920px; text-align: center; margin-top: -100px">
 		<h3>나만의 맛집 리스트</h3>
 		<br> <br> <br>	
+		<div style="margin-left: 180px">
 		<div class="album py-5">
 			<div class="container">
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -58,7 +59,7 @@ ArrayList<RestaurantVO> RestaurantList = (ArrayList<RestaurantVO>) request.getAt
 								<a class="boardtitle" href="GetRestaurantPro?seq=<%=r.getSeq()%>"><%=r.getTitle()%></a>
 								<p class="card-text"><%=r.getRestaurantname() %><br><%=r.getNickname() %><br><%=r.getOnelinereview() %></p>
 								<div class="d-flex justify-content-between align-items-center">
-									<div class="btn-group">
+									<div class="btn-group" style="margin-left: 10px">
 										
 										<p> <img src="./resource/images/eye.svg">  <%=r.getCnt() %></p>&nbsp;&nbsp;
 										<p> <img src="./resource/images/chat-dots.svg">  <%=r.getComment_cnt() %></p>
@@ -75,6 +76,7 @@ ArrayList<RestaurantVO> RestaurantList = (ArrayList<RestaurantVO>) request.getAt
 				</div>
 		</div>
 
+	</div>
 	</div>
 	<!-- 페이지 리스트 삽입 시작 부분-->
 	<%

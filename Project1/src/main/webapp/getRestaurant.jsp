@@ -155,13 +155,11 @@ ul {
 				<%
 				} else {
 				for (int i = 0; i < replylist.size(); i++) {
-					ReplyBoardVO vo = replylist.get(i);
+					ReplyBoardVO vo = replylist.get(i);				
 				%>
 				<li style="margin-bottom: 15px">
-					<div class="container">
-					
-						<img alt="" src="./resource/images/default_profile.jpg" width="72px" height="76px" style = "object-fit: fill"> 
-						
+					<div class="container">				
+						<img alt="" src="<%=vo.getUserprofilephto()%>" width="70px" height="70px" style = "object-fit: fill;border-radius: 35px"> 
 						<span><b><%=vo.getNickname()%></b></span>
 					<span><span class="starrating">★</span><%=vo.getStarrating()%>/5</span> 
 						<span style="color: gray; font-size: 12px;">(<%=vo.getRegdate()%>)</span>
@@ -204,4 +202,92 @@ ul {
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+//댓글 수정 버튼 이벤트
+const modifyR_Btn = document.querySelectorAll('#modifyR_Btn');
+
+modifyR_Btn.forEach(function(item) {
+	item.addEventListener('click', function() { // 클릭 이벤트 발생시,
+		$(this).css("display",'none')
+		$(this).nextAll("textarea").attr("readonly", false).focus(); // 클릭 이벤트가 발생한 버튼에 제일 가까운 textarea 찾고, 
+
+		$(this).nextAll("#modifyRS_Btn").css("display", '');
+		$(this).nextAll("#modifyRC_Btn").css("display", '');
+		$(this).nextAll("#modifyRD_Btn").css("display", 'none');
+	});
+});
+
+//수정된 댓글 전송		
+function replymodi(boardtype_r,boardseq_r,seq_r,replaytext) {
+	
+	//값 확인
+	console.log(boardtype_r.value);
+	console.log(boardseq_r.value);
+	console.log(seq_r.value);
+	console.log(replaytext.value);
+
+	$.ajax({
+		type : "post", //통신타입 설정. get,post등의 방식 사용.
+		url : "ReplyUpdateAjaxPro", //요청 url 자원의 고유 위치
+		data : {
+			seq : seq_r.value,
+			boardtype : boardtype_r.value,
+			boardseq : boardseq_r.value,
+			replytext : replaytext.value
+		},
+		//서버에 요청할때 보낼 매개변수 설정. 보낼변수 이름 : 변수 값				
+		async : true, //기본값은 false. 비동기 전송 여부
+		success : function(result) { //요청한 페이지에서 보내온 값을 data란 변수로 받아온다.
+			if (result == 1) {
+				location.reload();
+			} else {
+				alert('댓글 수정 실패');
+			}
+
+		}, //요청응답에 성공했을 때 처리 할 구문.
+		error : function() {
+			alert('전송 실패')
+		}//요청 실패시 나오는 구문.
+	});
+}
+
+//댓글 수정 취소
+const modifyRC_Btn = document.querySelectorAll('#modifyRC_Btn');
+
+modifyRC_Btn.forEach(function(item) {
+	item.addEventListener('click', function() { // 클릭 이벤트 발생시,
+		$(this).nextAll("textarea").attr("readonly", true); // 클릭 이벤트가 발생한 버튼에 제일 가까운 textarea 찾고,  				
+		$(this).nextAll("#modifyRS_Btn").css("display", '');
+		location.reload();
+	});
+});
+
+//댓글 삭제	
+function delectR_Btn(boardtype_r,boardseq_r,seq_r) {
+	if(confirm("댓글을 삭제하시겠습니까?")){
+		$.ajax({
+			type : "post", //통신타입 설정. get,post등의 방식 사용.
+			url : "ReplyDeleteAjaxPro", //요청 url 자원의 고유 위치
+			data : {
+				seq : seq_r.value,
+				boardtype : boardtype_r.value,
+				boardseq : boardseq_r.value
+			},
+			//서버에 요청할때 보낼 매개변수 설정. 보낼변수 이름 : 변수 값				
+			async : true, //기본값은 false. 비동기 전송 여부
+			success : function(result) { //요청한 페이지에서 보내온 값을 data란 변수로 받아온다.
+				if (result == 1) {
+					location.reload();
+				} else {
+					alert('댓글 삭제 실패');
+				}
+
+			}, //요청응답에 성공했을 때 처리 할 구문.
+			error : function() {
+				alert('전송 실패')
+			}//요청 실패시 나오는 구문.
+		});
+	}
+}
+</script>
 </html>

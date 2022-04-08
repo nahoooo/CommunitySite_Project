@@ -100,7 +100,7 @@ public class GetRestaurantPro extends HttpServlet {
 			stmt.close();
 			rs.close();
 			
-			sql="select boardseq,seq,nickname,starrating,reply,to_char(regdate,'YYYY-MM-DD HH24:MI:SS') from R_replyboard_ where boardseq=? order by seq desc";
+			sql="select boardseq,seq,nickname,starrating,reply,userprofilephto,to_char(regdate,'YYYY-MM-DD HH24:MI:SS') from R_replyboard_ where boardseq=? order by seq desc";
 			
 			stmt=conn.prepareStatement(sql);
 			stmt.setInt(1, seq);
@@ -117,7 +117,9 @@ public class GetRestaurantPro extends HttpServlet {
 				vo.setNickname(rs.getString("nickname"));
 				vo.setStarrating(rs.getInt("starrating"));
 				vo.setReply(rs.getString("reply"));
-				vo.setRegdate(rs.getString(6));				
+				vo.setUserprofilephto(rs.getString("userprofilephto"));		
+				vo.setRegdate(rs.getString(7));				
+					
 				replylist.add(vo);
 				comment_cnt++;
 				System.out.println("댓글 리스트 ");

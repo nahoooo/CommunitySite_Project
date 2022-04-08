@@ -31,23 +31,23 @@ public class UserProfile extends HttpServlet {
 		
 
 		HttpSession session=request.getSession();
-		String nickname=(String)session.getAttribute("nickname");
+		String sessionID=(String)session.getAttribute("sessionID");
 		
-		if (nickname == null) {
+		if (sessionID == null) {
 			response.sendRedirect("index.jsp?filePath=login");
 			return;
 		}
-		System.out.println(nickname);
+		System.out.println(sessionID);
 		
 		Connection conn=null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		
+		String sql = null;
 		try {
 			conn=JDBCConnection.getConnection();
-			String sql = "select * from member where nickname=?";
+			sql = "select * from member where id=?";
 			stmt=conn.prepareStatement(sql);
-			stmt.setString(1, nickname);
+			stmt.setString(1, sessionID);
 			
 			rs=stmt.executeQuery();
 			
@@ -64,6 +64,11 @@ public class UserProfile extends HttpServlet {
 			}
 			
 			request.setAttribute("user", user);
+			
+//			rs.close();
+//			stmt.close();
+
+			
 			RequestDispatcher view=request.getRequestDispatcher("index.jsp?filePath=userProfile");
 			view.forward(request, response);
 		} catch (ClassNotFoundException e) {

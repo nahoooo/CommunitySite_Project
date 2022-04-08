@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.company.common.JDBCConnection;
 
@@ -29,6 +30,10 @@ public class R_ReplyAjaxPro extends HttpServlet {
 		System.out.println("/R_ReplyAjaxPro");
 		request.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
+		
+	
+		
+		String userProfilephto = request.getParameter("userProfilephto");
 		String nickname = request.getParameter("nickname");
 		String comment = request.getParameter("comment");
 		int seq = Integer.parseInt(request.getParameter("seq"));
@@ -40,6 +45,7 @@ public class R_ReplyAjaxPro extends HttpServlet {
 		System.out.println(comment);
 		System.out.println(seq);
 		System.out.println(starrating);
+		System.out.println(userProfilephto);
 
 
 		Connection conn = null;
@@ -49,18 +55,20 @@ public class R_ReplyAjaxPro extends HttpServlet {
 		try {
 			conn = JDBCConnection.getConnection();
 
-			sql = "insert into R_replyboard_(boardseq,seq,nickname,reply,starrating) values(?,(select nvl(max(seq),0)+1 from R_replyboard_ where boardseq =?),?,?,?)";
+			sql = "insert into R_replyboard_(boardseq,seq,nickname,reply,starrating,userprofilephto) values(?,(select nvl(max(seq),0)+1 from R_replyboard_ where boardseq =?),?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, seq);	
 			stmt.setInt(2, seq);
 			stmt.setString(3, nickname);
 			stmt.setString(4, comment);
 			stmt.setInt(5, starrating);
+			stmt.setString(6, userProfilephto);
 			
 			stmt.executeUpdate();								
 			stmt.close();
 
 			
+			//댓글 별졈 평균을 해당 맛집추천 테이블에 삽입
 			sql="update recommend_R a set(starrating)=(select avg(b.starrating) from R_replyboard_ b  where b.seq=a.seq) where a.seq=?";
 			stmt=conn.prepareStatement(sql);
 			stmt.setInt(1, seq);

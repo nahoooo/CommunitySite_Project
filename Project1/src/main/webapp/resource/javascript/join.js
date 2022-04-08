@@ -62,8 +62,29 @@ $("#nickname").blur(function() {
 			$('#checknickname').css('color', 'red');
 			$("#nickname").focus();
 		} else {
-			$('#checknickname').text('');
-			passnickname = true;
+			$.ajax({
+				url: "NicknameChk",
+				type: "post",
+				data: {
+					userNickname: nickname
+				},
+				dataType: 'json', //text,html,xml,json
+				success: function(result) {
+					if (result == 0) {
+						$("#checknickname").html('이미 사용중인 닉네임 입니다.');
+						$("#checknickname").attr('color', 'red');
+						$("#nickname").focus();
+						
+					} else {
+						$("#checknickname").html('사용할 수 있는 닉네임입니다.');
+						$("#checknickname").attr('color', '#198754');
+						passnickname = true;
+					}
+				},
+				error: function() {
+					alert("서버요청실패");
+				}
+			})
 		}
 	}
 });

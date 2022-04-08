@@ -64,7 +64,7 @@ case "questions":
 		<br>
 		<br>
 		<div class="table" >
-			<table class="table table-hover" style="width: 850px; margin-left: 100px" >
+			<table class="table table-hover" style="width: 850px; margin-left: 150px" >
 				<thead style="text-align: center">
 					<tr>
 						<th scope="col" width="55">번호</th>

@@ -21,7 +21,8 @@ String boardtype = request.getParameter("boardtype");
 			<table class="table" style="width: 800px">
 				<tr>
 				<td width="73px">
-					<img alt="" src="./resource/images/default_profile.jpg" width="72px" height="76px" style = "object-fit: fill"> 
+					<img  src="${sessionScope.userProfile}" width="70px" height="70px" style = "object-fit: fill; "> 
+					<input type="hidden" value="${sessionScope.userProfile}" id="userProfilephto">
 				</td>
 					<td>
 						<input type="hidden" value="<%=nickname%>" name="nickname" id="nickname"> <input type="hidden" value="<%=seq%>" name="seq" id="seq">
@@ -49,13 +50,14 @@ String boardtype = request.getParameter("boardtype");
 								
 	function reply() {		
 		 var comment = $("#comment").val(); 
+		 var userProfilephto = $("#userProfilephto").val();		
 		if (comment == 0 || comment == null || comment == "") {			
 			alert("댓글을 입력하세요");
 		} else {
 			$.ajax({
 				type : "post", //통신타입 설정. get,post등의 방식 사용.
 				url : "ReplyAjaxPro", //요청 url 자원의 고유 위치
-				data : {nickname : nickname,seq : seq,boardtype : boardtype,comment : comment},							
+				data : {nickname : nickname,seq : seq,boardtype : boardtype,comment : comment,userProfilephto : userProfilephto},							
 				//서버에 요청할때 보낼 매개변수 설정. 보낼변수 이름 : 변수 값				
 				async : true, //기본값은 false. 비동기 전송 여부
 				success : function(result) { //요청한 페이지에서 보내온 값을 data란 변수로 받아온다.

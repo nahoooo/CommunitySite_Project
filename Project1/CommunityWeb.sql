@@ -11,6 +11,8 @@ GRADE VARCHAR2(7) DEFAULT 'User', --회원등급
 USERPROFILE VARCHAR2(100) --회원프로필사진
 )
 
+update member set nickname='매실차' email='qweqwe123@qweqwe.com' where id='qqq123'
+
 UPDATE MEMBER SET userProfile='/userProfile/20210115051410309_photo_fe1650f3c4307.jpg' WHERE nickname='말랑카우'
 
 --커뮤니티게시판 테이블(다중게시판)
@@ -28,8 +30,8 @@ imageurl varchar2(500), --이미지 경로
 constraint board_PK primary key(seq,boardtype)
 )
 
-select * from recommend_R
-drop table BOARD_
+select * from replyboard_
+drop table replyboard_
 
 
 --게시판 댓글 테이블  대댓글도 만들어야....
@@ -40,6 +42,7 @@ seq number(5) not null, --같은 게시물의 댓글들의 순번을 지정하�
 nickname varchar2(30) not null, --댓글 남긴 사람 닉네임.
 regdate date default sysdate, --댓글 남긴 시간.
 reply varchar2(1000) not null, --댓글 내용.
+userprofilephto varchar2(100), -- 댓글 작성자 프로필 사진.
 primary key(boardseq,boardtype,seq) --두 개의 필드를 조합해서 기본키로 정의
 )
 --댓글 삭제를 위한 외래키 설정
@@ -73,6 +76,8 @@ placeLa varchar2(30), --식당 위도
 placeLO varchar2(30) --식당 경도
 )
 
+drop table recommend_R 
+
 --맛집추천 댓글(별점추가)
 create table R_replyboard_(
 boardseq number(5) not null, --board테이블의 seq를 참고하는 필드(외래키)
@@ -81,8 +86,13 @@ nickname varchar2(30) not null, --댓글 남긴 사람 닉네임.
 regdate date default sysdate, --댓글 남긴 시간.
 reply varchar2(1000) not null, --댓글 내용.
 starrating number(5), --별점.
+userprofilephto varchar2(100), -- 댓글 작성자 프로필 사진.
 primary key(boardseq,seq) --두 개의 필드를 조합해서 기본키로 정의
 )
+
+select * from R_replyboard_
+
+drop table R_replyboard_
 
 insert into R_replyboard_(boardseq,seq,nickname,reply,starrating) values(1,(select nvl(max(seq),0)+1 from R_replyboard_ where boardseq =1),'말랑카우','말랑카우',3)
 

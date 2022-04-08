@@ -61,7 +61,6 @@ public class AddRestaurantPro extends HttpServlet {
 		System.out.println("----------------");
 		System.out.println(s.get(0).trim());
 		System.out.println(s.get(1).trim());
-		System.out.println(s.get(2).trim());
 		System.out.println("----------------");		
 		System.out.println(thumbnail);
 		System.out.println("입력시작");

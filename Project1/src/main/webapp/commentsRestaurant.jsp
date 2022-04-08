@@ -3,6 +3,8 @@
 request.setCharacterEncoding("utf-8");
 String nickname = request.getParameter("nickname");
 String seq = request.getParameter("seq");
+
+String userProfile = (String) session.getAttribute("userProfile");
 %>
 <!DOCTYPE html>
 <html>
@@ -66,7 +68,9 @@ String seq = request.getParameter("seq");
 			<table class="table" style="width: 800px">
 				<tr>
 				<td width="73px">
-					<img alt="" src="./resource/images/default_profile.jpg" width="72px" height="76px" style = "object-fit: fill"> 
+				
+					  <img  src="${sessionScope.userProfile}" width="70px" height="70px" style = "object-fit: fill; "> 
+						<input type="hidden" value="${sessionScope.userProfile}" id="userProfilephto">
 				</td>
 					<td>
 						<input type="hidden" value="<%=nickname%>" name="nickname" id="nickname"> <input type="hidden" value="<%=seq%>" name="seq" id="seq">						
@@ -86,33 +90,38 @@ String seq = request.getParameter("seq");
 	//ajax방식		
 		var nickname = $("#nickname").val();		
 		var seq = $("#seq").val();		
+	
+		
 				
 // 		var c = document.commentForm.comment;
 									
 	function reply() {		
-		 var comment = $("#comment").val(); 
+		var comment = $("#comment").val(); 		 
 		var ratingVar = $('input[name=rating]:checked').val();
-		if (comment == 0 || comment == null || comment == "") {			
-			alert("댓글을 입력하세요");
-		} else {
-			$.ajax({
-				type : "post", //통신타입 설정. get,post등의 방식 사용.
-				url : "R_ReplyAjaxPro", //요청 url 자원의 고유 위치
-				data : {nickname : nickname,seq : seq,comment : comment,starrating : ratingVar},							
-				//서버에 요청할때 보낼 매개변수 설정. 보낼변수 이름 : 변수 값				
-				async : true, //기본값은 false. 비동기 전송 여부
-				success : function(result) { //요청한 페이지에서 보내온 값을 data란 변수로 받아온다.
-					if(result==1){			
-						location.reload();
-					}else{
-						alert('댓글 입력 실패');
-					}
+		var userProfilephto = $("#userProfilephto").val();		
+		console.log(userProfilephto)
+		
+ 		if (comment == 0 || comment == null || comment == "") {			
+ 			alert("댓글을 입력하세요");
+ 		} else {
+ 			$.ajax({
+ 				type : "post", //통신타입 설정. get,post등의 방식 사용.
+ 				url : "R_ReplyAjaxPro", //요청 url 자원의 고유 위치
+ 				data : {nickname : nickname,seq : seq,comment : comment,starrating : ratingVar,userProfilephto : userProfilephto},							
+ 				//서버에 요청할때 보낼 매개변수 설정. 보낼변수 이름 : 변수 값				
+ 				async : true, //기본값은 false. 비동기 전송 여부
+ 				success : function(result) { //요청한 페이지에서 보내온 값을 data란 변수로 받아온다.
+ 					if(result==1){								
+ 						location.reload();
+ 					}else{
+ 						alert('댓글 입력 실패');
+ 					}
 					
-				}, //요청응답에 성공했을 때 처리 할 구문.
-				error : function() {
-					alert('전송 실패')
-				}//요청 실패시 나오는 구문.
-			});		
+ 				}, //요청응답에 성공했을 때 처리 할 구문.
+ 				error : function() {
+ 					alert('전송 실패')
+ 				}//요청 실패시 나오는 구문.
+ 			});		
 		}
 	}		 
 </script>

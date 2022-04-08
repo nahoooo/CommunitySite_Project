@@ -79,7 +79,7 @@ ArrayList<ReplyBoardVO> replylist = (ArrayList<ReplyBoardVO>) request.getAttribu
 				<li style="margin-bottom: 15px">
 					<div class="container">
 
-						<img alt="" src="./resource/images/default_profile.jpg" width="72px" height="76px" style = "object-fit: fill"> 
+						<img alt="" src="<%=vo.getUserprofilephto()%>" width="70px" height="70px" style = "object-fit: fill;border-radius: 35px"> 
 						<span><b><%=vo.getNickname()%></b></span><span style="color: gray; font-size: 12px;">(<%=vo.getRegdate()%>)
 						</span>
 
@@ -89,7 +89,7 @@ ArrayList<ReplyBoardVO> replylist = (ArrayList<ReplyBoardVO>) request.getAttribu
 						if (nickname.equals(vo.getNickname())) {
 						%>
 						<form action="" name="replymodi<%=vo.getSeq()%>" style="display: inline;">
-							<span style="margin-left: 300px">
+							<span style="margin-left: 400px">
 								<button type="button" id="modifyR_Btn" class="btn btn-success btn-sm">수정</button>
 								<button type="button" style="display: none;" id="modifyRS_Btn" class="btn btn-success btn-sm" onclick="replymodi(boardtype_r,boardseq_r,seq_r,replaytext);">전송</button>
 								<button type="button" style="display: none;" id="modifyRC_Btn" class="btn btn-success btn-sm">취소</button>

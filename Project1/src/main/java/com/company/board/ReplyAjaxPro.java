@@ -32,12 +32,14 @@ public class ReplyAjaxPro extends HttpServlet {
 		String comment = request.getParameter("comment");
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		String boardtype = request.getParameter("boardtype");
+		String userProfilephto = request.getParameter("userProfilephto");
 
 		// 값이 오는지 확인하기
 		System.out.println(nickname);
 		System.out.println(comment);
 		System.out.println(seq);
 		System.out.println(boardtype); 	
+		System.out.println(userProfilephto); 	
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -46,7 +48,7 @@ public class ReplyAjaxPro extends HttpServlet {
 		try {
 			conn = JDBCConnection.getConnection();
 						
-				String sql = "insert into replyboard_(boardseq,boardtype,seq,nickname,reply) values(?,?,(select nvl(max(seq),0)+1 from replyboard_ where boardseq =? and boardtype = ?),?,?)";
+				String sql = "insert into replyboard_(boardseq,boardtype,seq,nickname,reply,userProfilephto) values(?,?,(select nvl(max(seq),0)+1 from replyboard_ where boardseq =? and boardtype = ?),?,?,?)";
 				stmt = conn.prepareStatement(sql);
 				stmt.setInt(1, seq);
 				stmt.setString(2, boardtype);
@@ -54,6 +56,7 @@ public class ReplyAjaxPro extends HttpServlet {
 				stmt.setString(4, boardtype);
 				stmt.setString(5, nickname);
 				stmt.setString(6, comment);
+				stmt.setString(7, userProfilephto);
 				
 			int cnt = stmt.executeUpdate();
 

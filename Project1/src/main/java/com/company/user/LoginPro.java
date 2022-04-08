@@ -48,7 +48,7 @@ public class LoginPro extends HttpServlet {
 		
 		try {
 			conn=JDBCConnection.getConnection();
-			String sql="select nickname,userprofile from member where id=?";
+			String sql="select nickname,userprofile,id from member where id=?";
 			stmt=conn.prepareStatement(sql);
 			stmt.setString(1, id);
 			
@@ -56,11 +56,13 @@ public class LoginPro extends HttpServlet {
 			if(rs.next()) {
 				String nickname = rs.getString(1);
 				String userProfile = rs.getString(2);
+				String sessionID = rs.getString(3);
 				HttpSession session=request.getSession();
 				System.out.println(nickname);
 				System.out.println(userProfile);
 				session.setAttribute("nickname", nickname);
 				session.setAttribute("userProfile", userProfile);
+				session.setAttribute("sessionID", sessionID);
 				response.sendRedirect("index.jsp");
 			}else {
 			

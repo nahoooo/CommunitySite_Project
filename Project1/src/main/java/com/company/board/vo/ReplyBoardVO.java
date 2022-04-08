@@ -8,9 +8,16 @@ public class ReplyBoardVO {
 	private String reply;
 	private String boardtype;
 	private int starrating;
+	private String userprofilephto;
 
-	
-	
+	public String getUserprofilephto() {
+		return userprofilephto;
+	}
+
+	public void setUserprofilephto(String userprofilephto) {
+		this.userprofilephto = userprofilephto;
+	}
+
 	public int getStarrating() {
 		return starrating;
 	}

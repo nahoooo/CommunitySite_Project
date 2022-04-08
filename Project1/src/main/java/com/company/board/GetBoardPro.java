@@ -87,7 +87,7 @@ public class GetBoardPro extends HttpServlet {
 			stmt.close();
 			rs.close();
 			
-			sql="select boardseq,seq,boardtype,nickname,reply,to_char(regdate,'YYYY-MM-DD HH24:MI:SS') from replyboard_ where boardseq=? and boardtype=? order by seq desc";
+			sql="select boardseq,seq,boardtype,nickname,reply,to_char(regdate,'YYYY-MM-DD HH24:MI:SS'),userprofilephto from replyboard_ where boardseq=? and boardtype=? order by seq desc";
 			
 			stmt=conn.prepareStatement(sql);
 			stmt.setInt(1, seq);
@@ -106,6 +106,7 @@ public class GetBoardPro extends HttpServlet {
 				vo.setNickname(rs.getString("nickname"));
 				vo.setReply(rs.getString("reply"));
 				vo.setRegdate(rs.getString(6));				
+				vo.setUserprofilephto(rs.getString(7));				
 				replylist.add(vo);
 				comment_cnt++;
 				System.out.println("댓글 리스트 ");
