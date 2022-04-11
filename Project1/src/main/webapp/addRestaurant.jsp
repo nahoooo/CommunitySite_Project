@@ -8,6 +8,7 @@ if (nickname == null) {
 	return;
 }
 
+String sessionID = (String) session.getAttribute("sessionID");
 %>
 <!DOCTYPE html>
 <html>
@@ -26,7 +27,10 @@ if (nickname == null) {
 			id="AddRestaurantForm">
 			<table class="table" style="width: 900px; margin: auto auto">
 				<tr>
-				<td><input type="hidden" name="nickname" value="<%=nickname%>"></td>						
+				<td>
+				<input type="hidden" name="nickname" value="<%=nickname%>">
+				<input type="hidden" name="id" value="<%=sessionID%>">
+				</td>						
 				</tr>
 				<tr>
 					<th>제목</th>

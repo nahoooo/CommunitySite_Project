@@ -3,6 +3,8 @@
 <%
 String boardtype = request.getParameter("boardtype");
 String nickname =(String)session.getAttribute("nickname");
+String id =(String)session.getAttribute("sessionID");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -22,6 +24,7 @@ String nickname =(String)session.getAttribute("nickname");
 			<table class="table" style="width: 100%; margin: auto auto">
 				<tr>
 				<td><input type="hidden" name="nickname" value="<%=nickname%>"></td>
+				<td><input type="hidden" name="id" value="<%=id%>"></td>
 				<td><input type="hidden" name="boardtype" value="<%=boardtype%>"></td>				
 				</tr>
 				<tr>

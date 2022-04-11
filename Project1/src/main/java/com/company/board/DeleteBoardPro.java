@@ -1,6 +1,7 @@
 package com.company.board;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -22,12 +23,14 @@ public class DeleteBoardPro extends HttpServlet {
     
   
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println("/DeleteBoardPro");
+		PrintWriter out = response.getWriter();
 		HttpSession session=request.getSession();
 		String nickname=(String)session.getAttribute("nickname");
 		System.out.println(nickname);
+	
 		
 		if(nickname==null) {
 			response.sendRedirect("index.jsp?filePath=login");
@@ -38,8 +41,12 @@ public class DeleteBoardPro extends HttpServlet {
 		String boardtype = request.getParameter("boardtype");
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		
+		System.out.println(boardtype);
+		System.out.println(seq);
+		
 		Connection conn=null;
 		PreparedStatement stmt=null;
+		
 		
 		try {
 			conn=JDBCConnection.getConnection();
@@ -48,12 +55,19 @@ public class DeleteBoardPro extends HttpServlet {
 			stmt.setInt(1, seq);
 			stmt.setString(2, boardtype);
 			
+			int result = 0;
+			
 			int cnt=stmt.executeUpdate();
 			
-			if(cnt!=0)
-				System.out.println(cnt+"개 삭제");
+			if (cnt != 0) {
+				System.out.println(cnt+"개 삭제완료");
+				result = 1; // 댓글 입력완료.
+			} else {
+				result = 0;// 실패
+			}
+			out.write(result + "");
 				
-				response.sendRedirect("GetBoardListPro?boardtype="+boardtype);
+//				response.sendRedirect("GetBoardListPro?boardtype="+boardtype);
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -64,17 +78,6 @@ public class DeleteBoardPro extends HttpServlet {
 		}
 	
 	}
-
-
 	
-	
-	
-	
-	
-	
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-	}
 
 }

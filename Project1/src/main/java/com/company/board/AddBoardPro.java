@@ -30,6 +30,7 @@ public class AddBoardPro extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String title = request.getParameter("title");
 		String nickname = request.getParameter("nickname");
+		String id = request.getParameter("id");
 		String content = request.getParameter("content");
 		System.out.println(content);
 		String imageurl="";
@@ -54,14 +55,15 @@ public class AddBoardPro extends HttpServlet {
 
 		try {
 			conn = JDBCConnection.getConnection();
-			String sql = "insert into board_(seq,title,nickname,content,boardtype,imageurl) values((select nvl(max(seq),0)+1 from board_ where boardtype = ? ),?,?,?,?,?)";
+			String sql = "insert into board_(seq,title,nickname,id,content,boardtype,imageurl) values((select nvl(max(seq),0)+1 from board_ where boardtype = ? ),?,?,?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, boardtype);
 			stmt.setString(2, title);
 			stmt.setString(3, nickname);
-			stmt.setString(4, content);
-			stmt.setString(5, boardtype);
-			stmt.setString(6, imageurl);
+			stmt.setString(4, id);
+			stmt.setString(5, content);
+			stmt.setString(6, boardtype);
+			stmt.setString(7, imageurl);
 
 			int cnt = stmt.executeUpdate();
 			if (cnt != 0)

@@ -137,7 +137,7 @@ ul {
 			if (nickname.equals(WriterNn)) {
 			%>
 			<button type="button" class="btn btn-success" onclick="">수정</button>
-			<button type="button" class="btn btn-success" onclick="deleteRestaurnat()">삭제</button>
+			<button type="button" class="btn btn-success" onclick="deleteRestaurnat(<%=r.getSeq()%>)">삭제</button>
 			<%
 			}
 			%>
@@ -203,6 +203,38 @@ ul {
 	</div>
 </body>
 <script type="text/javascript">
+
+//게시글 삭제
+function deleteRestaurnat(seq) {
+	if (confirm("게시글을 삭제하시겠습니까?")) {
+		$.ajax({
+			type : "post", //통신타입 설정. get,post등의 방식 사용.
+			url : "DeleteRestaurantPro", //요청 url 자원의 고유 위치
+			data : {seq : seq},							
+			//서버에 요청할때 보낼 매개변수 설정. 보낼변수 이름 : 변수 값				
+			async : true, //기본값은 false. 비동기 전송 여부
+			success : function(result) { //요청한 페이지에서 보내온 값을 data란 변수로 받아온다.
+				if(result==1){								
+					location.replace('GetRestaurantListPro'); 
+				}else{
+					alert('게시글 삭제 실패');
+				}						
+			}, //요청응답에 성공했을 때 처리 할 구문.
+			error : function() {
+				alert('전송 실패')
+			}//요청 실패시 나오는 구문.
+		});				
+	} else {
+		return false;
+	}
+}
+
+
+
+
+
+
+
 //댓글 수정 버튼 이벤트
 const modifyR_Btn = document.querySelectorAll('#modifyR_Btn');
 

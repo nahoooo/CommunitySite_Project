@@ -73,7 +73,8 @@ String userProfile = (String) session.getAttribute("userProfile");
 						<input type="hidden" value="${sessionScope.userProfile}" id="userProfilephto">
 				</td>
 					<td>
-						<input type="hidden" value="<%=nickname%>" name="nickname" id="nickname"> <input type="hidden" value="<%=seq%>" name="seq" id="seq">						
+						<input type="hidden" value="<%=nickname%>" name="nickname" id="nickname"> <input type="hidden" value="<%=seq%>" name="seq" id="seq">
+						<input type="hidden" value="${sessionScope.sessionID}" name="id" id="id">						
 						<textarea class="form-control" rows="3" cols="30" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
 						<br>
 						<div align="right">
@@ -98,7 +99,8 @@ String userProfile = (String) session.getAttribute("userProfile");
 	function reply() {		
 		var comment = $("#comment").val(); 		 
 		var ratingVar = $('input[name=rating]:checked').val();
-		var userProfilephto = $("#userProfilephto").val();		
+		var userProfilephto = $("#userProfilephto").val();	
+		var id = $("#id").val();		
 		console.log(userProfilephto)
 		
  		if (comment == 0 || comment == null || comment == "") {			
@@ -107,7 +109,7 @@ String userProfile = (String) session.getAttribute("userProfile");
  			$.ajax({
  				type : "post", //통신타입 설정. get,post등의 방식 사용.
  				url : "R_ReplyAjaxPro", //요청 url 자원의 고유 위치
- 				data : {nickname : nickname,seq : seq,comment : comment,starrating : ratingVar,userProfilephto : userProfilephto},							
+ 				data : {nickname : nickname,seq : seq,comment : comment,starrating : ratingVar,userProfilephto : userProfilephto,id : id},							
  				//서버에 요청할때 보낼 매개변수 설정. 보낼변수 이름 : 변수 값				
  				async : true, //기본값은 false. 비동기 전송 여부
  				success : function(result) { //요청한 페이지에서 보내온 값을 data란 변수로 받아온다.

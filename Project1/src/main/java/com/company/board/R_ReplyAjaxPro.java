@@ -36,6 +36,7 @@ public class R_ReplyAjaxPro extends HttpServlet {
 		String userProfilephto = request.getParameter("userProfilephto");
 		String nickname = request.getParameter("nickname");
 		String comment = request.getParameter("comment");
+		String id = request.getParameter("id");
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		int starrating = Integer.parseInt(request.getParameter("starrating"));
 
@@ -46,6 +47,7 @@ public class R_ReplyAjaxPro extends HttpServlet {
 		System.out.println(seq);
 		System.out.println(starrating);
 		System.out.println(userProfilephto);
+		System.out.println(id);
 
 
 		Connection conn = null;
@@ -55,7 +57,7 @@ public class R_ReplyAjaxPro extends HttpServlet {
 		try {
 			conn = JDBCConnection.getConnection();
 
-			sql = "insert into R_replyboard_(boardseq,seq,nickname,reply,starrating,userprofilephto) values(?,(select nvl(max(seq),0)+1 from R_replyboard_ where boardseq =?),?,?,?,?)";
+			sql = "insert into R_replyboard_(boardseq,seq,nickname,reply,starrating,userprofilephto,id) values(?,(select nvl(max(seq),0)+1 from R_replyboard_ where boardseq =?),?,?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, seq);	
 			stmt.setInt(2, seq);
@@ -63,6 +65,7 @@ public class R_ReplyAjaxPro extends HttpServlet {
 			stmt.setString(4, comment);
 			stmt.setInt(5, starrating);
 			stmt.setString(6, userProfilephto);
+			stmt.setString(7, id);
 			
 			stmt.executeUpdate();								
 			stmt.close();

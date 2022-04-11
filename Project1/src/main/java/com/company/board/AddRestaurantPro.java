@@ -31,6 +31,7 @@ public class AddRestaurantPro extends HttpServlet {
 		System.out.println("/AddRestaurantPro");
 
 		String nickname = request.getParameter("nickname"); // 작성자 닉네임
+		String id = request.getParameter("id"); // 작성자 닉네임
 		String title = request.getParameter("title"); // 제목
 		String restaurantname = request.getParameter("restaurantname"); // 식당이름
 		String restaurantaddr = request.getParameter("restaurantaddr"); // 식당주소
@@ -69,7 +70,7 @@ public class AddRestaurantPro extends HttpServlet {
 
 		try {
 			conn = JDBCConnection.getConnection();
-			String sql = "insert into recommend_R(seq,nickname,title,restaurantname,restaurantaddr,onelinereview,tel,openinghours,parking,closed,placeLa,placeLo,content,imageurl,thumbnail) values((select nvl(max(seq),0)+1 from recommend_R),?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into recommend_R(seq,nickname,title,restaurantname,restaurantaddr,onelinereview,tel,openinghours,parking,closed,placeLa,placeLo,content,imageurl,thumbnail,id) values((select nvl(max(seq),0)+1 from recommend_R),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, nickname);
 			stmt.setString(2, title);
@@ -85,6 +86,7 @@ public class AddRestaurantPro extends HttpServlet {
 			stmt.setString(12, content);
 			stmt.setString(13, imageurl);
 			stmt.setString(14, thumbnail);
+			stmt.setString(15, id);
 		
 
 			int cnt = stmt.executeUpdate();
